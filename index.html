@@ -380,7 +380,7 @@ tr:hover td{background:#fafaf8;}
           </div>
           <div class="fg" style="margin-bottom:20px;">
             <label>Link que abrirá el chofer</label>
-            <div id="qr-url-display" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--rsm);padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--text2);word-break:break-all;">https://transportesodimac.netlify.app?view=form</div>
+            <div id="qr-url-display" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--rsm);padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--text2);word-break:break-all;">https://sodimac-cd.github.io/transporte?view=form</div>
           </div>
           <button class="bp" style="width:100%;" onclick="genQR()">Generar código QR</button>
         </div>
@@ -737,8 +737,8 @@ function selQRMod(mod) {
     el.style.fontWeight = isActive ? '500' : '400';
   });
   const url = mod==='devolucion'
-    ? 'https://transportesodimac.netlify.app?view=devolucion'
-    : 'https://transportesodimac.netlify.app?view=form';
+    ? 'https://sodimac-cd.github.io/transporte?view=devolucion'
+    : 'https://sodimac-cd.github.io/transporte?view=form';
   document.getElementById('qr-url-display').textContent = url;
 }
 
@@ -748,8 +748,8 @@ function genQR() {
   const defaultTitulo = qrModulo==='devolucion' ? 'Devolución Vacíos — Sodimac' : 'Retiro Puerto — Sodimac';
   const titulo = document.getElementById('qr-titulo').value || defaultTitulo;
   const url = qrModulo==='devolucion'
-    ? 'https://transportesodimac.netlify.app?view=devolucion'
-    : 'https://transportesodimac.netlify.app?view=form';
+    ? 'https://sodimac-cd.github.io/transporte?view=devolucion'
+    : 'https://sodimac-cd.github.io/transporte?view=form';
   const box = document.getElementById('qr-box');
   box.innerHTML = '<div id="qr-output"></div>';
   box.style.border = '1px solid var(--border)';
