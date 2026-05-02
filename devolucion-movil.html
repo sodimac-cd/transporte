@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Devolución Vacíos — CD Lo Espejo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2563eb;--blue-dark:#1d4ed8;--green:#16a34a;--red:#dc2626;--border:#e2e8f0;--bg:#f1f5f9;--text:#1e293b;--muted:#64748b;--white:#fff}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.header{background:var(--blue);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:12px}
+.header-icon{width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.header h1{font-size:16px;font-weight:700}
+.header p{font-size:12px;opacity:.7;margin-top:1px}
+.content{padding:16px}
+.card{background:var(--white);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--border)}
+.section-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:13px;font-weight:500;margin-bottom:5px;color:var(--text)}
+.req{color:var(--red)}
+.form-group input,.form-group select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;background:var(--white);color:var(--text);outline:none;-webkit-appearance:none;appearance:none}
+.form-group input:focus,.form-group select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-submit{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;margin-top:8px}
+.btn-submit:hover{background:var(--blue-dark)}
+.btn-submit:disabled{opacity:.6}
+.loading{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e293b;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;opacity:0;transition:all .3s;z-index:999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.error{background:var(--red)}
+.success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center}
+.success-screen.show{display:flex}
+.success-icon{width:72px;height:72px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:32px}
+.success-screen h2{font-size:20px;font-weight:700;color:var(--green);margin-bottom:8px}
+.success-screen p{font-size:14px;color:var(--muted);margin-bottom:24px}
+.btn-new{padding:12px 28px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" stroke="#fff" stroke-width="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" stroke="#fff" stroke-width="2"/></svg>
+  </div>
+  <div>
+    <h1>Devolución Vacíos</h1>
+    <p>CD Lo Espejo — Nueva Devolución</p>
+  </div>
+</div>
+
+<div id="form-content" class="content">
+  <div class="card">
+    <div class="section-title">Datos de Devolución</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Fecha <span class="req">*</span></label>
+        <input type="date" id="d-fecha">
+      </div>
+      <div class="form-group">
+        <label>Depósito <span class="req">*</span></label>
+        <select id="d-deposito">
+          <option value="">Depósito...</option>
+          <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option>
+          <option>HGT SAN ANTONIO</option><option>MEDLOG VALPARAISO</option>
+          <option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
+          <option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option>
+          <option>HGT SANTIAGO</option><option>DEPOSITO CD</option><option>TERCOP</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Transportista <span class="req">*</span></label>
+      <select id="d-transporte">
+        <option value="">Seleccionar transporte...</option>
+        <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
+        <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
+        <option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option>
+        <option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option>
+        <option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option>
+        <option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option>
+        <option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option>
+        <option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option>
+        <option>76.381.392-4 JULIO HIDALGO</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Contenedor <span class="req">*</span></label>
+        <input type="text" id="d-contenedor" placeholder="XXXX1234567">
+      </div>
+      <div class="form-group">
+        <label>EIR <span class="req">*</span></label>
+        <input type="text" id="d-eir" placeholder="Número EIR">
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-submit" onclick="guardar()" id="btn-guardar">Guardar Devolución</button>
+</div>
+
+<div id="success-screen" class="success-screen">
+  <div class="success-icon">✓</div>
+  <h2>¡Guardado!</h2>
+  <p>La devolución fue registrada correctamente en Google Sheets.</p>
+  <button class="btn-new" onclick="nueva()">Nueva Devolución</button>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbwAcA060GAWPjTHD-WY4G93GW3vRFWftbkq51Ocfz8r6nwyCxq3Nz1MefScnpDA7iXV/exec';
+document.getElementById('d-fecha').value = new Date().toISOString().split('T')[0];
+
+function toast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+async function guardar() {
+  const btn = document.getElementById('btn-guardar');
+  const vals = {
+    tipo_registro: 'DEVOLUCION_VACIO',
+    fecha: document.getElementById('d-fecha').value,
+    deposito: document.getElementById('d-deposito').value,
+    transporte: document.getElementById('d-transporte').value,
+    contenedor: document.getElementById('d-contenedor').value,
+    eir: document.getElementById('d-eir').value,
+  };
+  if (!vals.fecha||!vals.deposito||!vals.transporte||!vals.contenedor||!vals.eir) {
+    toast('Completa todos los campos obligatorios *', 'error'); return;
+  }
+  btn.innerHTML = '<span class="loading"></span> Guardando...';
+  btn.disabled = true;
+  try {
+    await fetch(API, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(vals)});
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('success-screen').classList.add('show');
+  } catch {
+    toast('Error al guardar. Intenta nuevamente', 'error');
+    btn.innerHTML = 'Guardar Devolución';
+    btn.disabled = false;
+  }
+}
+
+function nueva() {
+  document.getElementById('success-screen').classList.remove('show');
+  document.getElementById('form-content').style.display = 'block';
+  document.querySelectorAll('input[type=text]').forEach(i => i.value = '');
+  document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+  document.getElementById('d-fecha').value = new Date().toISOString().split('T')[0];
+}
+</script>
+</body>
+</html>
