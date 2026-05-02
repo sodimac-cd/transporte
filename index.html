@@ -438,7 +438,30 @@ tr:hover td{background:#f8fafc}
     </div>
     <!-- CONTENEDORES -->
     <div class="tab-content" id="page-contenedores">
-      <div class="section-card"><div class="empty-state" style="padding:80px"><div class="empty-icon">📦</div><p style="font-size:15px">Selecciona Retiro Puerto o Devolución Vacíos</p></div></div>
+      <div class="cards-grid">
+        <div class="stat-card">
+          <div class="sc-header"><div class="sc-icon green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 8h14M5 12h14M5 16h8" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+          <div class="sc-value green" id="cont-retiro">0</div>
+          <div class="sc-label">Retiro Puerto</div>
+          <div class="mini-bar"><div class="mini-bar-fill green" id="cont-bar-retiro" style="width:0%"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-header"><div class="sc-icon blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" stroke="#2563eb" stroke-width="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" stroke="#2563eb" stroke-width="2"/></svg></div></div>
+          <div class="sc-value blue" id="cont-devolucion">0</div>
+          <div class="sc-label">Devolución Naviera</div>
+          <div class="mini-bar"><div class="mini-bar-fill blue" id="cont-bar-dev" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="section-card">
+          <div class="section-header"><h3>Retiro Puerto — por depósito</h3></div>
+          <div style="padding:16px" id="cont-retiro-dep"><div class="empty-state"><p>Sin datos</p></div></div>
+        </div>
+        <div class="section-card">
+          <div class="section-header"><h3>Devolución — por depósito</h3></div>
+          <div style="padding:16px" id="cont-dev-dep"><div class="empty-state"><p>Sin datos</p></div></div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -631,6 +654,15 @@ function updateDashboard() {
   };
   renderDep(countBy(retiroData,'deposito'),'dash-retiro-dep','var(--green)');
   renderDep(countBy(devData,'deposito'),'dash-dev-dep','var(--blue)');
+  // contenedores page
+  if(document.getElementById('cont-retiro')){
+    document.getElementById('cont-retiro').textContent=tr;
+    document.getElementById('cont-devolucion').textContent=dv;
+    document.getElementById('cont-bar-retiro').style.width=total?(tr/total*100)+'%':'0%';
+    document.getElementById('cont-bar-dev').style.width=total?(dv/total*100)+'%':'0%';
+    renderDep(countBy(retiroData,'deposito'),'cont-retiro-dep','var(--green)');
+    renderDep(countBy(devData,'deposito'),'cont-dev-dep','var(--blue)');
+  }
 }
 
 async function loadRetiro() {
