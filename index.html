@@ -457,7 +457,7 @@ tr:hover td{background:#fafaf8;}
 <div class="toast" id="toast"></div>
 
 <script>
-const SU='https://script.google.com/macros/s/AKfycbxi6aNDWzvKkHVumzsgzjzEP6pJzJIvtdZ6BrFH1Tffocj313NuTkAqAUj8rqACOrncqg/exec';
+const SU='https://script.google.com/macros/s/AKfycbzwhpA_gUa2oxDGSOZacfTYiVOYCBMagvUjNG3CvB2kztbbckWDm0clqe___E36t2sLPA/exec';
 let aD=[], devD=[];
 
 // Init dates
@@ -584,7 +584,8 @@ async function guardar() {
   };
   lov(true,'Guardando...'); document.getElementById('bgs').disabled = true;
   try {
-    await fetch(SU,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    const params = new URLSearchParams({...data, accion:'GUARDAR'});
+    await fetch(SU+'?'+params.toString(), {method:'GET', mode:'no-cors'});
     toast('✓ Asignación guardada'); limpiar();
   } catch(e) { toast('Error al guardar','err'); }
   finally { lov(false); document.getElementById('bgs').disabled = false; }
@@ -954,11 +955,8 @@ async function eliminarDevSel() {
     for(const idx of indices) {
       const item = devD[idx];
       if(!item) continue;
-      await fetch(SU, {
-        method:'POST', mode:'no-cors',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({...item, accion:'ELIMINAR', hoja:'DEVOLUCION VACIOS'})
-      });
+      const ep2 = new URLSearchParams({...item, accion:'ELIMINAR', hoja:'DEVOLUCION VACIOS'});
+      await fetch(SU+'?'+ep2.toString(), {method:'GET', mode:'no-cors'});
     }
     indices.forEach(idx => { devD[idx] = null; });
     devD = devD.filter(r => r !== null);
@@ -997,11 +995,8 @@ async function eliminarSeleccionados() {
     for(const idx of indices) {
       const item = aD[idx];
       if(!item) continue;
-      await fetch(SU, {
-        method:'POST', mode:'no-cors',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({...item, accion:'ELIMINAR', hoja:'RETIRO PUERTO'})
-      });
+      const ep = new URLSearchParams({...item, accion:'ELIMINAR', hoja:'RETIRO PUERTO'});
+      await fetch(SU+'?'+ep.toString(), {method:'GET', mode:'no-cors'});
     }
     // Remove from local array only — do NOT reload from Sheets
     indices.forEach(idx => { aD[idx] = null; });
