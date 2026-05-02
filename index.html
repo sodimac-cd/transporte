@@ -371,14 +371,29 @@
           <input type="text" id="r-tracto" placeholder="Patente tracto">
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row full">
         <div class="form-group">
           <label>Rampla</label>
           <input type="text" id="r-rampla" placeholder="Patente rampla">
         </div>
+      </div>
+      <div class="form-row full">
         <div class="form-group">
-          <label>GPS</label>
-          <input type="text" id="r-gps" placeholder="Empresa GPS">
+          <label>Ubicación GPS *</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:2px">
+            <label style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;cursor:pointer;border-right:1px solid var(--border);font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;transition:background .15s" id="gps-label-1">
+              <input type="radio" name="r-gps" id="r-gps" value="RAMPLA-TRACTO" style="accent-color:var(--red)">
+              Rampla-Tracto
+            </label>
+            <label style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;cursor:pointer;border-right:1px solid var(--border);font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;transition:background .15s" id="gps-label-2">
+              <input type="radio" name="r-gps" value="SOLO TRACTO" style="accent-color:var(--red)">
+              Solo Tracto
+            </label>
+            <label style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;cursor:pointer;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;transition:background .15s" id="gps-label-3">
+              <input type="radio" name="r-gps" value="SOLO RAMPLA" style="accent-color:var(--red)">
+              Solo Rampla
+            </label>
+          </div>
         </div>
       </div>
       <div class="form-row full">
@@ -509,7 +524,7 @@ async function guardarRetiro() {
     telefono: document.getElementById('r-telefono').value,
     tracto: document.getElementById('r-tracto').value,
     rampla: document.getElementById('r-rampla').value,
-    gps: document.getElementById('r-gps').value,
+    gps: document.querySelector('input[name="r-gps"]:checked')?.value || '',
     reemplazo: document.getElementById('r-reemplazo').value,
   };
   if (!vals.fecha || !vals.deposito || !vals.transporte || !vals.chofer || !vals.rut) {
@@ -578,9 +593,10 @@ async function eliminarDevolucion(row) {
 
 function clearForm(type) {
   const ids = type === 'retiro'
-    ? ['r-fecha','r-deposito','r-tipo','r-transporte','r-chofer','r-rut','r-telefono','r-tracto','r-rampla','r-gps','r-reemplazo']
+    ? ['r-fecha','r-deposito','r-tipo','r-transporte','r-chofer','r-rut','r-telefono','r-tracto','r-rampla','r-reemplazo']
     : ['d-fecha','d-deposito','d-transporte','d-contenedor','d-eir'];
   ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  if (type === 'retiro') document.querySelectorAll('input[name="r-gps"]').forEach(r => r.checked = false);
 }
 
 function fmtDate(val) {
