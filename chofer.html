@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Asignación Chofer — Sodimac</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--rojo:#CC0000;--rojo-dark:#aa0000;--bg:#f4f4f2;--surface:#fff;--border:rgba(0,0,0,.12);--border2:rgba(0,0,0,.20);--text:#1a1a1a;--text2:#555;--text3:#999;--rsm:8px;--font:'IBM Plex Sans',sans-serif;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+.hdr{background:var(--rojo);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+.logo{background:#fff;color:var(--rojo);font-weight:700;font-size:13px;padding:4px 9px;border-radius:4px;}
+.htitle{color:#fff;font-size:15px;font-weight:500;}
+.page{max-width:520px;margin:0 auto;padding:20px 16px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
+.slbl{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+label{font-size:13px;font-weight:500;color:var(--text2);}
+.req{color:var(--rojo);}
+input[type=text],input[type=email],input[type=date],select{font-family:var(--font);font-size:14px;padding:11px 13px;border:1px solid var(--border2);border-radius:var(--rsm);background:var(--surface);color:var(--text);width:100%;transition:border-color .15s;appearance:none;-webkit-appearance:none;}
+input:focus,select:focus{outline:none;border-color:var(--rojo);box-shadow:0 0 0 3px rgba(204,0,0,.08);}
+input::placeholder{color:var(--text3);}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:36px;}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ro{display:flex;align-items:center;gap:9px;padding:11px 13px;border:1px solid var(--border2);border-radius:var(--rsm);cursor:pointer;font-size:14px;transition:background .1s,border-color .1s;}
+.ro:hover{background:#fafaf8;}
+.ro input{width:16px;height:16px;accent-color:var(--rojo);flex-shrink:0;}
+.ro.sel{border-color:var(--rojo);background:#fff0f0;}
+.dep-list{border:1px solid var(--border2);border-radius:var(--rsm);overflow:hidden;}
+.dep-opt{padding:11px 14px;font-size:14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .1s;color:var(--text);}
+.dep-opt:last-child{border-bottom:none;}
+.dep-opt:hover{background:#fafaf8;}
+.dep-opt.sel{background:var(--rojo);color:#fff;font-weight:500;}
+.btn{background:var(--rojo);color:#fff;border:none;padding:14px;border-radius:var(--rsm);font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;width:100%;margin-top:8px;transition:background .15s;}
+.btn:hover{background:var(--rojo-dark);}
+.btn:disabled{background:#ccc;cursor:not-allowed;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);padding:12px 24px;border-radius:var(--rsm);font-size:14px;font-weight:500;color:#fff;opacity:0;transition:opacity .3s,transform .3s;z-index:999;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.ok{background:#1a7a3e;}
+.toast.err{background:var(--rojo-dark);}
+.spin-wrap{display:none;position:fixed;inset:0;background:rgba(255,255,255,.7);z-index:500;align-items:center;justify-content:center;}
+.spin-wrap.show{display:flex;}
+.spin{width:36px;height:36px;border:3px solid rgba(0,0,0,.1);border-top-color:var(--rojo);border-radius:50%;animation:sp .7s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div class="spin-wrap" id="lov"><div class="spin"></div></div>
+
+<header class="hdr">
+  <div class="logo">SODIMAC</div>
+  <div class="htitle">Nueva Asignación de Retiro</div>
+</header>
+
+<div class="page">
+  <div class="card">
+    <div class="slbl">Datos generales</div>
+
+    <div class="fg">
+      <label>Fecha de programación <span class="req">*</span></label>
+      <input type="date" id="ff"/>
+    </div>
+    <div class="fg">
+      <label>Tipo de registro <span class="req">*</span></label>
+      <select id="fti">
+        <option value="">Seleccionar...</option>
+        <option>Ingreso</option>
+        <option>Modificación</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Depósito de retiro de carga <span class="req">*</span></label>
+      <input type="hidden" id="fd"/>
+      <div class="dep-list">
+        <div class="dep-opt" onclick="selDep(this,'SITRANS SAN ANTONIO')">SITRANS SAN ANTONIO</div>
+        <div class="dep-opt" onclick="selDep(this,'CIS SAN ANTONIO')">CIS SAN ANTONIO</div>
+        <div class="dep-opt" onclick="selDep(this,'HGT SAN ANTONIO')">HGT SAN ANTONIO</div>
+        <div class="dep-opt" onclick="selDep(this,'MEDLOG VALPARAISO')">MEDLOG VALPARAISO</div>
+        <div class="dep-opt" onclick="selDep(this,'MEDLOG SAN ANTONIO')">MEDLOG SAN ANTONIO</div>
+        <div class="dep-opt" onclick="selDep(this,'SITRANS VALPARAISO')">SITRANS VALPARAISO</div>
+        <div class="dep-opt" onclick="selDep(this,'HGT VALPARAISO')">HGT VALPARAISO</div>
+        <div class="dep-opt" onclick="selDep(this,'SITRANS SANTIAGO')">SITRANS SANTIAGO</div>
+        <div class="dep-opt" onclick="selDep(this,'HGT SANTIAGO')">HGT SANTIAGO</div>
+        <div class="dep-opt" onclick="selDep(this,'DEPOSITO CD')">DEPOSITO CD</div>
+        <div class="dep-opt" onclick="selDep(this,'TERCOP')">TERCOP</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slbl">Empresa de transporte</div>
+    <div class="fg">
+      <label>Transportista <span class="req">*</span></label>
+      <select id="ftr">
+        <option value="">Seleccionar...</option>
+        <option>85.131.900-K CASABLANCA</option>
+        <option>76.651.987-3 FR RENTAL</option>
+        <option>76107615-9 BYD</option>
+        <option>76.840.809-2 JUC CHILE</option>
+        <option>76.421.758-6 SERMOV</option>
+        <option>96.979.980-4 SAN FABIAN</option>
+        <option>76.501.883-8 CASTELLINI</option>
+        <option>77.082.997-6 CF</option>
+        <option>77.248.307-4 GLOBAL LOGISTIC</option>
+        <option>77.079.719-5 H. BUSTOS</option>
+        <option>77.304.186-5 CELMAR</option>
+        <option>96.500.950-7 SITRANS</option>
+        <option>77.090.481-1 PRECAM</option>
+        <option>76.228.166-k TRANVIAL</option>
+        <option>76.388.144-K MOVEONTRUCK</option>
+        <option>76.172.595-5 MEDLOG</option>
+        <option>76.381.392-4 JULIO HIDALGO</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slbl">Datos del conductor</div>
+    <div class="fg">
+      <label>Nombre chofer <span class="req">*</span></label>
+      <input type="text" id="fch" placeholder="Nombre completo"/>
+    </div>
+    <div class="fg">
+      <label>RUT chofer <span class="req">*</span></label>
+      <input type="text" id="fru" placeholder="12.345.678-9"/>
+    </div>
+    <div class="fg">
+      <label>Teléfono <span class="req">*</span></label>
+      <input type="text" id="fte" placeholder="+56 9 XXXX XXXX"/>
+    </div>
+    <div class="fg">
+      <label>Patente tracto <span class="req">*</span></label>
+      <input type="text" id="fta" placeholder="ABCD12" style="text-transform:uppercase"/>
+    </div>
+    <div class="fg">
+      <label>Patente rampla <span class="req">*</span></label>
+      <input type="text" id="fra" placeholder="ABCD12" style="text-transform:uppercase"/>
+    </div>
+    <div class="fg">
+      <label>Chofer a reemplazar <span style="color:var(--text3);font-weight:400;">(solo si es modificación)</span></label>
+      <input type="text" id="fre" placeholder="Nombre del chofer anterior"/>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="slbl">Ubicación GPS</div>
+    <div class="rg">
+      <label class="ro"><input type="radio" name="gps" value="RAMPLA-TRACTO" onchange="ur()"/> Rampla + Tracto</label>
+      <label class="ro"><input type="radio" name="gps" value="SOLO TRACTO" onchange="ur()"/> Solo Tracto</label>
+      <label class="ro"><input type="radio" name="gps" value="SOLO RAMPLA" onchange="ur()"/> Solo Rampla</label>
+      <label class="ro"><input type="radio" name="gps" value="GPS" onchange="ur()"/> GPS</label>
+    </div>
+    <button class="btn" id="btnGuardar" onclick="guardar()">Guardar asignación →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SU='https://script.google.com/macros/s/AKfycbyP5lq2_xnbzwoGBIQ8vwwb8KPDxQoXNyLfj4JU9EXhIRAkyscwS8KjDgrE5knIWRM7Tg/exec';
+
+document.getElementById('ff').value=new Date().toISOString().slice(0,10);
+
+function selDep(el,val){
+  document.querySelectorAll('.dep-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('fd').value=val;
+}
+
+function ur(){
+  document.querySelectorAll('.ro').forEach(el=>{
+    el.classList.toggle('sel',el.querySelector('input').checked);
+  });
+}
+
+function toast(msg,t='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.className='toast show '+t;
+  setTimeout(()=>el.className='toast',3500);
+}
+
+function lov(s){document.getElementById('lov').className=s?'spin-wrap show':'spin-wrap';}
+
+async function guardar(){
+  const campos=[
+    {id:'ff',l:'Fecha'},{id:'fti',l:'Tipo de registro'},
+    {id:'fd',l:'Depósito'},{id:'ftr',l:'Transportista'},{id:'fch',l:'Nombre chofer'},
+    {id:'fru',l:'RUT'},{id:'fte',l:'Teléfono'},{id:'fta',l:'Patente tracto'},{id:'fra',l:'Patente rampla'}
+  ];
+  for(const c of campos){
+    if(!document.getElementById(c.id).value.trim()){
+      toast('Falta: '+c.l,'err');
+      document.getElementById(c.id).focus();
+      return;
+    }
+  }
+  const gps=document.querySelector('input[name=gps]:checked');
+  if(!gps){toast('Selecciona una opción de GPS','err');return;}
+
+  const data={
+    fecha:document.getElementById('ff').value,
+    deposito:document.getElementById('fd').value,
+    tipo:document.getElementById('fti').value,
+    transporte:document.getElementById('ftr').value,
+    chofer:document.getElementById('fch').value,
+    rut:document.getElementById('fru').value,
+    telefono:document.getElementById('fte').value,
+    tracto:document.getElementById('fta').value.toUpperCase(),
+    rampla:document.getElementById('fra').value.toUpperCase(),
+    gps:gps.value,
+    reemplazo:document.getElementById('fre').value,
+  };
+
+  lov(true);
+  document.getElementById('btnGuardar').disabled=true;
+  try{
+    await fetch(SU,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    toast('✓ Asignación guardada correctamente');
+    // Limpiar formulario
+    ['fd','fti','ftr','fch','fru','fte','fra','fre'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('ff').value=new Date().toISOString().slice(0,10);
+    document.querySelectorAll('.dep-opt').forEach(o=>o.classList.remove('sel'));
+    document.querySelectorAll('input[name=gps]').forEach(r=>r.checked=false);
+    document.querySelectorAll('.ro').forEach(el=>el.classList.remove('sel'));
+  }catch(e){
+    toast('Error al guardar. Intenta de nuevo.','err');
+  }finally{
+    lov(false);
+    document.getElementById('btnGuardar').disabled=false;
+  }
+}
+</script>
+</body>
+</html>
