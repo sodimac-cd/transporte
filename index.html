@@ -4,132 +4,144 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Área de Transporte CD Lo Espejo</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{
-    --red:#CC0000;--red-dark:#990000;--red-light:#fff0f0;
-    --bg:#f5f5f3;--white:#ffffff;--surface:#fafaf8;
-    --text:#1a1a1a;--muted:#6b6b6b;--border:#e0e0dc;
-    --green:#1a7a4a;--green-bg:#edf7f2;
-    --blue:#1a4a8a;--blue-bg:#edf2f7;
-    --amber:#8a5a00;--amber-bg:#fdf6e3;
-    --sidebar:220px;--header:56px;
-  }
-  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
-  
-  /* SIDEBAR */
-  #sidebar{width:var(--sidebar);background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100}
-  .sidebar-logo{padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-  .logo-badge{background:var(--red);color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:4px;letter-spacing:.5px}
-  .logo-text{font-size:12px;font-weight:500;color:var(--muted);line-height:1.3}
-  .sidebar-nav{flex:1;padding:8px 0;overflow-y:auto}
-  .nav-section{padding:16px 16px 6px;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-  .nav-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;font-size:13px;color:var(--muted);border-left:2px solid transparent;transition:all .15s}
-  .nav-item:hover{background:var(--bg);color:var(--text)}
-  .nav-item.active{background:var(--red-light);color:var(--red);border-left-color:var(--red);font-weight:500}
-  .nav-sub{padding-left:32px;font-size:12px}
-  .nav-icon{width:16px;height:16px;opacity:.7;flex-shrink:0}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#2563eb;--blue-dark:#1d4ed8;--blue-light:#eff6ff;--blue-mid:#3b82f6;
+  --nav-bg:#1e3a5f;--nav-hover:#2d5a8e;--nav-active:#2563eb;
+  --header-bg:#2563eb;--header-text:#fff;
+  --bg:#f1f5f9;--white:#ffffff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;
+  --green:#16a34a;--green-bg:#f0fdf4;--green-light:#dcfce7;
+  --red:#dc2626;--red-bg:#fef2f2;
+  --amber:#d97706;--amber-bg:#fffbeb;
+  --sidebar:220px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;font-size:14px}
 
-  /* MAIN */
-  #main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
-  #topbar{height:var(--header);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:50}
-  .topbar-title{font-size:14px;font-weight:500;color:var(--muted)}
-  .topbar-sep{width:1px;height:16px;background:var(--border)}
-  .topbar-page{font-size:14px;font-weight:500}
-  .topbar-right{margin-left:auto;display:flex;gap:8px}
-  
-  #content{padding:24px;flex:1}
+/* SIDEBAR */
+#sidebar{width:var(--sidebar);background:var(--nav-bg);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100}
+.sidebar-logo{padding:16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:18px;height:18px;fill:#fff}
+.logo-text{font-size:13px;font-weight:600;color:#fff;line-height:1.3}
+.logo-sub{font-size:10px;color:rgba(255,255,255,.5);font-weight:400}
+.sidebar-nav{flex:1;padding:8px 0;overflow-y:auto}
+.nav-section{padding:16px 16px 4px;font-size:10px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:1.2px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.7);transition:all .15s;border-left:3px solid transparent}
+.nav-item:hover{background:var(--nav-hover);color:#fff}
+.nav-item.active{background:rgba(37,99,235,.3);color:#fff;border-left-color:var(--blue-mid)}
+.nav-sub{padding-left:40px;font-size:12px}
+.nav-icon{width:16px;height:16px;flex-shrink:0;opacity:.8}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);flex-shrink:0}
+.nav-item.active .nav-dot{background:var(--blue-mid)}
 
-  /* CARDS */
-  .page{display:none}.page.active{display:block}
-  .page-header{margin-bottom:24px}
-  .page-header h1{font-size:20px;font-weight:600;margin-bottom:4px}
-  .page-header p{font-size:13px;color:var(--muted)}
+/* HEADER */
+#main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
+#header{background:var(--header-bg);color:#fff;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.header-left{display:flex;align-items:center;gap:16px}
+.header-title{font-size:15px;font-weight:600}
+.header-sub{font-size:12px;opacity:.7}
+.header-right{display:flex;align-items:center;gap:8px}
 
-  .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
-  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px}
-  .stat-card .label{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-  .stat-card .value{font-size:28px;font-weight:600;font-family:'DM Mono',monospace}
-  .stat-card .sub{font-size:11px;color:var(--muted);margin-top:2px}
-  .stat-card.green .value{color:var(--green)}
-  .stat-card.blue .value{color:var(--blue)}
-  .stat-card.amber .value{color:var(--amber)}
-  .stat-card.red .value{color:var(--red)}
+/* TABS */
+.tabs-bar{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0}
+.tab-btn{padding:12px 20px;font-size:13px;font-weight:500;cursor:pointer;color:var(--muted);border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
+.tab-icon{width:14px;height:14px}
 
-  /* TABLE */
-  .table-card{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
-  .table-toolbar{padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
-  .table-toolbar h3{font-size:14px;font-weight:500}
-  .table-toolbar .count{background:var(--bg);border:1px solid var(--border);border-radius:20px;font-size:11px;padding:2px 8px;color:var(--muted);font-family:'DM Mono',monospace}
-  .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text);transition:all .15s;font-family:'DM Sans',sans-serif}
-  .btn:hover{background:var(--bg)}
-  .btn.primary{background:var(--red);color:#fff;border-color:var(--red)}
-  .btn.primary:hover{background:var(--red-dark)}
-  .btn-ml{margin-left:auto}
-  .tbl-wrap{overflow-x:auto}
-  table{width:100%;border-collapse:collapse;font-size:12px}
-  thead tr{background:var(--bg)}
-  th{padding:8px 12px;text-align:left;font-weight:500;font-size:11px;color:var(--muted);white-space:nowrap;text-transform:uppercase;letter-spacing:.3px}
-  td{padding:9px 12px;border-top:1px solid var(--border);color:var(--text);vertical-align:middle}
-  tr:hover td{background:var(--bg)}
-  .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
-  .badge.green{background:var(--green-bg);color:var(--green)}
-  .badge.blue{background:var(--blue-bg);color:var(--blue)}
-  .badge.amber{background:var(--amber-bg);color:var(--amber)}
-  .del-btn{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:4px;transition:all .15s;font-size:14px}
-  .del-btn:hover{color:var(--red);background:var(--red-light)}
-  .empty-state{text-align:center;padding:48px 24px;color:var(--muted)}
-  .empty-state .icon{font-size:32px;margin-bottom:8px}
-  .empty-state p{font-size:13px}
+#content{padding:24px;flex:1}
+.tab-content{display:none}.tab-content.active{display:block}
 
-  /* MODAL */
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center}
-  .modal-overlay.open{display:flex}
-  .modal{background:var(--white);border-radius:12px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
-  .modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-  .modal-header h2{font-size:16px;font-weight:600}
-  .close-btn{background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px}
-  .close-btn:hover{background:var(--bg)}
-  .modal-body{padding:20px 24px}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-  .form-row.full{grid-template-columns:1fr}
-  .form-group{display:flex;flex-direction:column;gap:4px}
-  .form-group label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
-  .form-group input,.form-group select{padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);outline:none;transition:border .15s}
-  .form-group input:focus,.form-group select:focus{border-color:var(--red)}
-  .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+/* CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:8px}
+.stat-card .sc-header{display:flex;align-items:center;justify-content:space-between}
+.stat-card .sc-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.stat-card .sc-icon.green{background:var(--green-light)}
+.stat-card .sc-icon.blue{background:var(--blue-light)}
+.stat-card .sc-icon.amber{background:var(--amber-bg)}
+.stat-card .sc-icon.red{background:var(--red-bg)}
+.stat-card .sc-value{font-size:32px;font-weight:700;line-height:1}
+.stat-card .sc-value.green{color:var(--green)}
+.stat-card .sc-value.blue{color:var(--blue)}
+.stat-card .sc-label{font-size:12px;color:var(--muted);font-weight:500}
 
-  /* DASHBOARD */
-  .dashboard-banner{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);border-radius:12px;padding:24px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-content:space-between}
-  .dashboard-banner h2{font-size:18px;font-weight:600;margin-bottom:4px}
-  .dashboard-banner p{font-size:13px;opacity:.6}
-  .banner-total{text-align:right}
-  .banner-total .label{font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.5px}
-  .banner-total .number{font-size:36px;font-weight:600;font-family:'DM Mono',monospace}
+/* TABLE */
+.section-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px}
+.section-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.section-header h3{font-size:14px;font-weight:600;flex:1}
+.count-badge{background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text);transition:all .15s;font-family:'Inter',sans-serif}
+.btn:hover{background:var(--bg)}
+.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.primary:hover{background:var(--blue-dark)}
+.btn.sm{padding:5px 12px;font-size:12px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:var(--bg)}
+th{padding:10px 14px;text-align:left;font-weight:600;font-size:11px;color:var(--muted);white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
+td{padding:10px 14px;border-top:1px solid var(--border);color:var(--text);vertical-align:middle}
+tr:hover td{background:#f8fafc}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge.green{background:var(--green-light);color:var(--green)}
+.badge.blue{background:var(--blue-light);color:var(--blue)}
+.badge.amber{background:var(--amber-bg);color:var(--amber)}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--muted);padding:5px;border-radius:6px;transition:all .15s;font-size:13px}
+.del-btn:hover{color:var(--red);background:var(--red-bg)}
+.empty-state{text-align:center;padding:56px 24px;color:var(--muted)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty-state p{font-size:13px}
 
-  .section-title{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
-  .mini-bar{height:4px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden}
-  .mini-bar-fill{height:100%;border-radius:2px;transition:width .5s}
-  .mini-bar-fill.green{background:var(--green)}
-  .mini-bar-fill.blue{background:var(--blue)}
+/* FORM PAGE */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
+.form-section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.form-grid.full{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:12px;font-weight:500;color:var(--text)}
+.form-group label .req{color:var(--red)}
+.form-group input,.form-group select{padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;background:var(--white);color:var(--text);outline:none;transition:border .15s}
+.form-group input:focus,.form-group select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.gps-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.gps-option{border:1px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .15s}
+.gps-option:hover{border-color:var(--blue);background:var(--blue-light)}
+.gps-option input{accent-color:var(--blue);width:16px;height:16px}
+.gps-option span{font-size:12px;font-weight:500}
+.gps-option.selected{border-color:var(--blue);background:var(--blue-light)}
+.form-actions{display:flex;justify-content:flex-end;gap:10px;padding-top:16px;border-top:1px solid var(--border);margin-top:8px}
 
-  /* LOADING */
-  .loading{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .6s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
+/* DASHBOARD BANNER */
+.dash-banner{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dark) 100%);border-radius:12px;padding:24px;margin-bottom:24px;color:#fff;display:flex;align-items:center;justify-content:space-between}
+.dash-banner h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.dash-banner p{font-size:13px;opacity:.7}
+.dash-total{text-align:right}
+.dash-total .label{font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.dash-total .number{font-size:40px;font-weight:700;line-height:1}
 
-  /* TOAST */
-  #toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
-  #toast.show{opacity:1;transform:translateY(0)}
+/* LOADING/TOAST */
+.loading{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#toast{position:fixed;bottom:24px;right:24px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;display:flex;align-items:center;gap:8px}
+#toast.show{opacity:1;transform:translateY(0)}
+#toast.error{background:var(--red)}
 
-  /* Tabs */
-  .tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px;width:fit-content}
-  .tab{padding:7px 16px;font-size:12px;font-weight:500;cursor:pointer;background:var(--white);color:var(--muted);border:none;transition:all .15s;font-family:'DM Sans',sans-serif}
-  .tab.active{background:var(--text);color:#fff}
-  .tab:hover:not(.active){background:var(--bg)}
+.refresh-btn{padding:7px 14px;border:1px solid rgba(255,255,255,.3);border-radius:8px;background:rgba(255,255,255,.1);cursor:pointer;font-size:12px;color:#fff;display:flex;align-items:center;gap:6px;transition:all .15s;font-family:'Inter',sans-serif}
+.refresh-btn:hover{background:rgba(255,255,255,.2)}
 
-  .refresh-btn{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--white);cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px}
-  .refresh-btn:hover{background:var(--bg)}
+/* MINI BARS */
+.mini-bar{height:4px;background:var(--border);border-radius:2px;margin-top:6px}
+.mini-bar-fill{height:100%;border-radius:2px;transition:width .6s}
+.mini-bar-fill.green{background:var(--green)}
+.mini-bar-fill.blue{background:var(--blue)}
+
+.dep-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.dep-name{font-size:11px;color:var(--muted);width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dep-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.dep-bar-fill{height:100%;border-radius:3px;background:var(--blue)}
+.dep-count{font-size:12px;font-weight:600;min-width:24px;text-align:right}
 </style>
 </head>
 <body>
@@ -137,46 +149,54 @@
 <!-- SIDEBAR -->
 <nav id="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-badge">SODIMAC</div>
-    <div class="logo-text">Área de Transporte<br>CD Lo Espejo</div>
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+    </div>
+    <div>
+      <div class="logo-text">CD Lo Espejo</div>
+      <div class="logo-sub">Área de Transporte</div>
+    </div>
   </div>
   <div class="sidebar-nav">
     <div class="nav-section">Principal</div>
-    <div class="nav-item active" onclick="navigate('dashboard',this)">
-      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".7"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".7"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".7"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".3"/></svg>
+    <div class="nav-item active" onclick="navTo('dashboard',this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".8"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".8"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".8"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".3"/></svg>
       Dashboard
     </div>
     <div class="nav-section">Módulos</div>
-    <div class="nav-item" onclick="navigate('abastecimiento',this)">
+    <div class="nav-item" onclick="navTo('abastecimiento',this)">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       Abastecimiento Tienda
     </div>
-    <div class="nav-item" onclick="navigate('despacho',this)">
+    <div class="nav-item" onclick="navTo('despacho',this)">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M1 11l3-7h8l3 7H1z" stroke="currentColor" stroke-width="1.2"/><circle cx="5" cy="13" r="1.2" fill="currentColor"/><circle cx="11" cy="13" r="1.2" fill="currentColor"/></svg>
       Despacho a Domicilio
     </div>
-    <div class="nav-item" onclick="navigate('retiro',this)">
+    <div class="nav-item" onclick="navTo('contenedores',this)">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 4V3a2 2 0 014 0v1" stroke="currentColor" stroke-width="1.2"/></svg>
-      <span style="font-size:12px">Contenedores</span>
+      Contenedores
     </div>
-    <div class="nav-item nav-sub" onclick="navigate('retiro',this)" id="nav-retiro">
-      Retiro Puerto
+    <div class="nav-item nav-sub" onclick="navTo('retiro',this)">
+      <div class="nav-dot"></div> Retiro Puerto
     </div>
-    <div class="nav-item nav-sub" onclick="navigate('devolucion',this)" id="nav-devolucion">
-      Devolución Vacíos
+    <div class="nav-item nav-sub" onclick="navTo('devolucion',this)">
+      <div class="nav-dot"></div> Devolución Vacíos
     </div>
   </div>
 </nav>
 
 <!-- MAIN -->
 <div id="main">
-  <div id="topbar">
-    <span class="topbar-title">CD Lo Espejo</span>
-    <div class="topbar-sep"></div>
-    <span class="topbar-page" id="topbar-page">Dashboard</span>
-    <div class="topbar-right">
+  <div id="header">
+    <div class="header-left">
+      <div>
+        <div class="header-title">Área de Transporte</div>
+        <div class="header-sub" id="header-sub">Dashboard</div>
+      </div>
+    </div>
+    <div class="header-right">
       <button class="refresh-btn" onclick="refreshAll()">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 0110.4-4M14 8a6 6 0 01-10.4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 4l.4 2.4L10 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 0110.4-4M14 8a6 6 0 01-10.4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 4l.4 2.4L10 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         Actualizar
       </button>
     </div>
@@ -185,288 +205,242 @@
   <div id="content">
 
     <!-- DASHBOARD -->
-    <div class="page active" id="page-dashboard">
-      <div class="dashboard-banner">
+    <div class="tab-content active" id="page-dashboard">
+      <div class="dash-banner">
         <div>
           <h2>Dashboard de Transporte</h2>
           <p>Resumen de asignaciones en tiempo real</p>
         </div>
-        <div class="banner-total">
-          <div class="label">Total</div>
+        <div class="dash-total">
+          <div class="label">Total Registros</div>
           <div class="number" id="dash-total">0</div>
         </div>
       </div>
       <div class="cards-grid">
-        <div class="stat-card green">
-          <div class="label">Retiro Puerto</div>
-          <div class="value" id="dash-retiro">0</div>
-          <div class="sub">asignaciones registradas</div>
+        <div class="stat-card">
+          <div class="sc-header">
+            <div class="sc-icon green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 8h14M5 12h14M5 16h8" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="sc-value green" id="dash-retiro">0</div>
+          <div class="sc-label">Retiro Puerto</div>
           <div class="mini-bar"><div class="mini-bar-fill green" id="bar-retiro" style="width:0%"></div></div>
         </div>
-        <div class="stat-card blue">
-          <div class="label">Devolución Naviera</div>
-          <div class="value" id="dash-devolucion">0</div>
-          <div class="sub">devoluciones registradas</div>
+        <div class="stat-card">
+          <div class="sc-header">
+            <div class="sc-icon blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" stroke="#2563eb" stroke-width="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" stroke="#2563eb" stroke-width="2"/></svg></div>
+          </div>
+          <div class="sc-value blue" id="dash-devolucion">0</div>
+          <div class="sc-label">Devolución Naviera</div>
           <div class="mini-bar"><div class="mini-bar-fill blue" id="bar-dev" style="width:0%"></div></div>
         </div>
-        <div class="stat-card amber">
-          <div class="label">Abastecimiento</div>
-          <div class="value">—</div>
-          <div class="sub">módulo próximamente</div>
+        <div class="stat-card">
+          <div class="sc-icon amber" style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#d97706" stroke-width="2"/></svg></div>
+          <div class="sc-value" style="color:var(--muted)">—</div>
+          <div class="sc-label">Abastecimiento</div>
         </div>
-        <div class="stat-card red">
-          <div class="label">Despacho</div>
-          <div class="value">—</div>
-          <div class="sub">módulo próximamente</div>
+        <div class="stat-card">
+          <div class="sc-icon red" style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M1 3h15l-3 9H4L1 3z" stroke="#dc2626" stroke-width="2"/><circle cx="10" cy="20" r="1" fill="#dc2626"/><circle cx="17" cy="20" r="1" fill="#dc2626"/></svg></div>
+          <div class="sc-value" style="color:var(--muted)">—</div>
+          <div class="sc-label">Despacho</div>
         </div>
       </div>
-
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div class="table-card">
-          <div class="table-toolbar">
-            <h3>Retiro Puerto — por depósito</h3>
-          </div>
-          <div style="padding:12px 16px" id="dash-retiro-deposito"><div class="empty-state"><p>Sin datos</p></div></div>
+        <div class="section-card">
+          <div class="section-header"><h3>Retiro Puerto — por depósito</h3></div>
+          <div style="padding:16px" id="dash-retiro-dep"><div class="empty-state"><p>Sin datos</p></div></div>
         </div>
-        <div class="table-card">
-          <div class="table-toolbar">
-            <h3>Devolución — por depósito</h3>
-          </div>
-          <div style="padding:12px 16px" id="dash-dev-deposito"><div class="empty-state"><p>Sin datos</p></div></div>
+        <div class="section-card">
+          <div class="section-header"><h3>Devolución — por depósito</h3></div>
+          <div style="padding:16px" id="dash-dev-dep"><div class="empty-state"><p>Sin datos</p></div></div>
         </div>
       </div>
     </div>
 
     <!-- RETIRO PUERTO -->
-    <div class="page" id="page-retiro">
-      <div class="page-header">
-        <h1>Retiro Puerto</h1>
-        <p>Registro de asignaciones de retiro en puerto</p>
+    <div class="tab-content" id="page-retiro">
+      <!-- TABS -->
+      <div class="tabs-bar" style="margin:-24px -24px 24px;padding:0 24px">
+        <button class="tab-btn active" onclick="switchTab('retiro','registros',this)">
+          <svg class="tab-icon" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 7h12M2 10h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Registros
+        </button>
+        <button class="tab-btn" onclick="switchTab('retiro','nueva',this)">
+          <svg class="tab-icon" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Nueva Asignación
+        </button>
       </div>
-      <div class="table-card">
-        <div class="table-toolbar">
-          <h3>Asignaciones</h3>
-          <span class="count" id="retiro-count">0</span>
-          <button class="btn primary btn-ml" onclick="openModal('retiro')">+ Nueva asignación</button>
+
+      <div id="retiro-tab-registros">
+        <div class="section-card">
+          <div class="section-header">
+            <h3>Asignaciones Retiro Puerto</h3>
+            <span class="count-badge" id="retiro-count">0</span>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr>
+                <th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th>
+                <th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th><th></th>
+              </tr></thead>
+              <tbody id="retiro-tbody"><tr><td colspan="11"><div class="empty-state"><div class="empty-icon">📦</div><p>Sin registros</p></div></td></tr></tbody>
+            </table>
+          </div>
         </div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th>
-              <th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th><th></th>
-            </tr></thead>
-            <tbody id="retiro-tbody"><tr><td colspan="11"><div class="empty-state"><div class="icon">📦</div><p>Sin registros</p></div></td></tr></tbody>
-          </table>
+      </div>
+
+      <div id="retiro-tab-nueva" style="display:none">
+        <div class="form-card">
+          <div class="form-section-title">Datos Generales</div>
+          <div class="form-grid">
+            <div class="form-group"><label>Fecha <span class="req">*</span></label><input type="date" id="r-fecha"></div>
+            <div class="form-group"><label>Tipo de registro <span class="req">*</span></label>
+              <select id="r-tipo"><option value="">Seleccionar...</option><option>Ingreso</option><option>Salida</option></select>
+            </div>
+          </div>
+          <div class="form-grid full">
+            <div class="form-group"><label>Depósito de retiro de carga <span class="req">*</span></label>
+              <select id="r-deposito">
+                <option value="">Seleccionar depósito...</option>
+                <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option>
+                <option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
+                <option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option><option>HGT SANTIAGO</option>
+                <option>DEPOSITO CD</option><option>TERCOP</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-card">
+          <div class="form-section-title">Empresa de Transporte</div>
+          <div class="form-grid full">
+            <div class="form-group"><label>Transportista <span class="req">*</span></label>
+              <select id="r-transporte">
+                <option value="">Seleccionar transporte...</option>
+                <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
+                <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
+                <option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option>
+                <option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option>
+                <option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option>
+                <option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option>
+                <option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option>
+                <option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option>
+                <option>76.381.392-4 JULIO HIDALGO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-card">
+          <div class="form-section-title">Datos del Conductor</div>
+          <div class="form-grid cols-3">
+            <div class="form-group"><label>Nombre chofer <span class="req">*</span></label><input type="text" id="r-chofer" placeholder="Nombre completo"></div>
+            <div class="form-group"><label>RUT chofer <span class="req">*</span></label><input type="text" id="r-rut" placeholder="12.345.678-9"></div>
+            <div class="form-group"><label>Teléfono <span class="req">*</span></label><input type="text" id="r-telefono" placeholder="+56 9 XXXX XXXX"></div>
+          </div>
+          <div class="form-grid cols-3">
+            <div class="form-group"><label>Patente tracto <span class="req">*</span></label><input type="text" id="r-tracto" placeholder="XXXX00"></div>
+            <div class="form-group"><label>Patente rampla <span class="req">*</span></label><input type="text" id="r-rampla" placeholder="XXXX00"></div>
+            <div class="form-group"><label>Chofer a reemplazar</label><input type="text" id="r-reemplazo" placeholder="Solo si es modificación"></div>
+          </div>
+          <div class="form-group" style="margin-top:4px">
+            <label>Ubicación GPS <span class="req">*</span></label>
+            <div class="gps-grid">
+              <label class="gps-option" onclick="selectGps(this,'RAMPLA-TRACTO')"><input type="radio" name="r-gps" value="RAMPLA-TRACTO"><span>Rampla + Tracto</span></label>
+              <label class="gps-option" onclick="selectGps(this,'SOLO TRACTO')"><input type="radio" name="r-gps" value="SOLO TRACTO"><span>Solo Tracto</span></label>
+              <label class="gps-option" onclick="selectGps(this,'SOLO RAMPLA')"><input type="radio" name="r-gps" value="SOLO RAMPLA"><span>Solo Rampla</span></label>
+              <label class="gps-option" onclick="selectGps(this,'SIN GPS')"><input type="radio" name="r-gps" value="SIN GPS"><span>Sin GPS</span></label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" onclick="limpiarRetiro()">Limpiar</button>
+            <button class="btn primary" onclick="guardarRetiro()" id="btn-guardar-retiro">Guardar en Google Sheets</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- DEVOLUCION VACIOS -->
-    <div class="page" id="page-devolucion">
-      <div class="page-header">
-        <h1>Devolución Vacíos Navieros</h1>
-        <p>Registro de devoluciones de contenedores vacíos</p>
+    <!-- DEVOLUCION -->
+    <div class="tab-content" id="page-devolucion">
+      <div class="tabs-bar" style="margin:-24px -24px 24px;padding:0 24px">
+        <button class="tab-btn active" onclick="switchTab('devolucion','registros',this)">
+          <svg class="tab-icon" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 7h12M2 10h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Registros
+        </button>
+        <button class="tab-btn" onclick="switchTab('devolucion','nueva',this)">
+          <svg class="tab-icon" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Nueva Devolución
+        </button>
       </div>
-      <div class="table-card">
-        <div class="table-toolbar">
-          <h3>Devoluciones</h3>
-          <span class="count" id="dev-count">0</span>
-          <button class="btn primary btn-ml" onclick="openModal('devolucion')">+ Nueva devolución</button>
+
+      <div id="devolucion-tab-registros">
+        <div class="section-card">
+          <div class="section-header">
+            <h3>Devoluciones Vacíos Navieros</h3>
+            <span class="count-badge" id="dev-count">0</span>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Fecha</th><th>Depósito</th><th>Transporte</th><th>Contenedor</th><th>EIR</th><th>Creado</th><th></th></tr></thead>
+              <tbody id="dev-tbody"><tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📦</div><p>Sin registros</p></div></td></tr></tbody>
+            </table>
+          </div>
         </div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th>Fecha</th><th>Depósito</th><th>Transporte</th><th>Contenedor</th><th>EIR</th><th>Creado</th><th></th>
-            </tr></thead>
-            <tbody id="dev-tbody"><tr><td colspan="7"><div class="empty-state"><div class="icon">📦</div><p>Sin registros</p></div></td></tr></tbody>
-          </table>
+      </div>
+
+      <div id="devolucion-tab-nueva" style="display:none">
+        <div class="form-card">
+          <div class="form-section-title">Datos de Devolución</div>
+          <div class="form-grid">
+            <div class="form-group"><label>Fecha <span class="req">*</span></label><input type="date" id="d-fecha"></div>
+            <div class="form-group"><label>Depósito <span class="req">*</span></label>
+              <select id="d-deposito">
+                <option value="">Seleccionar depósito...</option>
+                <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option>
+                <option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
+                <option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option><option>HGT SANTIAGO</option>
+                <option>DEPOSITO CD</option><option>TERCOP</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-grid full">
+            <div class="form-group"><label>Transportista <span class="req">*</span></label>
+              <select id="d-transporte">
+                <option value="">Seleccionar transporte...</option>
+                <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
+                <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
+                <option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option>
+                <option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option>
+                <option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option>
+                <option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option>
+                <option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option>
+                <option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option>
+                <option>76.381.392-4 JULIO HIDALGO</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group"><label>Contenedor <span class="req">*</span></label><input type="text" id="d-contenedor" placeholder="XXXX1234567"></div>
+            <div class="form-group"><label>EIR <span class="req">*</span></label><input type="text" id="d-eir" placeholder="Número EIR"></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" onclick="limpiarDevolucion()">Limpiar</button>
+            <button class="btn primary" onclick="guardarDevolucion()" id="btn-guardar-dev">Guardar en Google Sheets</button>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- ABASTECIMIENTO -->
-    <div class="page" id="page-abastecimiento">
-      <div class="page-header"><h1>Abastecimiento de Tienda</h1><p>Módulo en desarrollo</p></div>
-      <div class="table-card"><div class="empty-state" style="padding:80px 24px"><div class="icon">🏗️</div><p style="font-size:15px">Módulo próximamente disponible</p></div></div>
+    <div class="tab-content" id="page-abastecimiento">
+      <div class="section-card"><div class="empty-state" style="padding:80px"><div class="empty-icon">🏗️</div><p style="font-size:15px">Módulo próximamente disponible</p></div></div>
     </div>
-
     <!-- DESPACHO -->
-    <div class="page" id="page-despacho">
-      <div class="page-header"><h1>Despacho a Domicilio</h1><p>Módulo en desarrollo</p></div>
-      <div class="table-card"><div class="empty-state" style="padding:80px 24px"><div class="icon">🚚</div><p style="font-size:15px">Módulo próximamente disponible</p></div></div>
+    <div class="tab-content" id="page-despacho">
+      <div class="section-card"><div class="empty-state" style="padding:80px"><div class="empty-icon">🚚</div><p style="font-size:15px">Módulo próximamente disponible</p></div></div>
+    </div>
+    <!-- CONTENEDORES -->
+    <div class="tab-content" id="page-contenedores">
+      <div class="section-card"><div class="empty-state" style="padding:80px"><div class="empty-icon">📦</div><p style="font-size:15px">Selecciona Retiro Puerto o Devolución Vacíos</p></div></div>
     </div>
 
-  </div>
-</div>
-
-<!-- MODAL RETIRO -->
-<div class="modal-overlay" id="modal-retiro">
-  <div class="modal">
-    <div class="modal-header">
-      <h2>Nueva asignación — Retiro Puerto</h2>
-      <button class="close-btn" onclick="closeModal('retiro')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Fecha</label>
-          <input type="date" id="r-fecha">
-        </div>
-        <div class="form-group">
-          <label>Tipo</label>
-          <select id="r-tipo">
-            <option value="">Seleccionar...</option>
-            <option>Ingreso</option>
-            <option>Salida</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row full">
-        <div class="form-group">
-          <label>Depósito</label>
-          <select id="r-deposito">
-            <option value="">Seleccionar depósito...</option>
-            <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option>
-            <option>HGT SAN ANTONIO</option><option>MEDLOG VALPARAISO</option>
-            <option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
-            <option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option>
-            <option>HGT SANTIAGO</option><option>DEPOSITO CD</option><option>TERCOP</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row full">
-        <div class="form-group">
-          <label>Transporte</label>
-          <select id="r-transporte">
-            <option value="">Seleccionar transporte...</option>
-            <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
-            <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
-            <option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option>
-            <option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option>
-            <option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option>
-            <option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option>
-            <option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option>
-            <option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option>
-            <option>76.381.392-4 JULIO HIDALGO</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Chofer</label>
-          <input type="text" id="r-chofer" placeholder="Nombre del chofer">
-        </div>
-        <div class="form-group">
-          <label>RUT</label>
-          <input type="text" id="r-rut" placeholder="12.345.678-9">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Teléfono</label>
-          <input type="text" id="r-telefono" placeholder="+56 9 XXXX XXXX">
-        </div>
-        <div class="form-group">
-          <label>Tracto</label>
-          <input type="text" id="r-tracto" placeholder="Patente tracto">
-        </div>
-      </div>
-      <div class="form-row full">
-        <div class="form-group">
-          <label>Rampla</label>
-          <input type="text" id="r-rampla" placeholder="Patente rampla">
-        </div>
-      </div>
-      <div class="form-row full">
-        <div class="form-group">
-          <label>Ubicación GPS *</label>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:2px">
-            <label style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;cursor:pointer;border-right:1px solid var(--border);font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;transition:background .15s" id="gps-label-1">
-              <input type="radio" name="r-gps" id="r-gps" value="RAMPLA-TRACTO" style="accent-color:var(--red)">
-              Rampla-Tracto
-            </label>
-            <label style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;cursor:pointer;border-right:1px solid var(--border);font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;transition:background .15s" id="gps-label-2">
-              <input type="radio" name="r-gps" value="SOLO TRACTO" style="accent-color:var(--red)">
-              Solo Tracto
-            </label>
-            <label style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;cursor:pointer;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;transition:background .15s" id="gps-label-3">
-              <input type="radio" name="r-gps" value="SOLO RAMPLA" style="accent-color:var(--red)">
-              Solo Rampla
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="form-row full">
-        <div class="form-group">
-          <label>Reemplazo (opcional)</label>
-          <input type="text" id="r-reemplazo" placeholder="Nombre reemplazo si aplica">
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeModal('retiro')">Cancelar</button>
-      <button class="btn primary" onclick="guardarRetiro()" id="btn-guardar-retiro">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL DEVOLUCION -->
-<div class="modal-overlay" id="modal-devolucion">
-  <div class="modal">
-    <div class="modal-header">
-      <h2>Nueva devolución — Vacíos Navieros</h2>
-      <button class="close-btn" onclick="closeModal('devolucion')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Fecha</label>
-          <input type="date" id="d-fecha">
-        </div>
-        <div class="form-group">
-          <label>Depósito</label>
-          <select id="d-deposito">
-            <option value="">Seleccionar depósito...</option>
-            <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option>
-            <option>HGT SAN ANTONIO</option><option>MEDLOG VALPARAISO</option>
-            <option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
-            <option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option>
-            <option>HGT SANTIAGO</option><option>DEPOSITO CD</option><option>TERCOP</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row full">
-        <div class="form-group">
-          <label>Transporte</label>
-          <select id="d-transporte">
-            <option value="">Seleccionar transporte...</option>
-            <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
-            <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
-            <option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option>
-            <option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option>
-            <option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option>
-            <option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option>
-            <option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option>
-            <option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option>
-            <option>76.381.392-4 JULIO HIDALGO</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Contenedor</label>
-          <input type="text" id="d-contenedor" placeholder="XXXX1234567">
-        </div>
-        <div class="form-group">
-          <label>EIR</label>
-          <input type="text" id="d-eir" placeholder="Número EIR">
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeModal('devolucion')">Cancelar</button>
-      <button class="btn primary" onclick="guardarDevolucion()" id="btn-guardar-dev">Guardar</button>
-    </div>
   </div>
 </div>
 
@@ -476,40 +450,46 @@
 const API = 'https://script.google.com/macros/s/AKfycbwAcA060GAWPjTHD-WY4G93GW3vRFWftbkq51Ocfz8r6nwyCxq3Nz1MefScnpDA7iXV/exec';
 let retiroData = [], devData = [];
 
-function navigate(page, el) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+function navTo(page, el) {
+  document.querySelectorAll('.tab-content').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   el.classList.add('active');
-  const titles = {dashboard:'Dashboard',retiro:'Retiro Puerto',devolucion:'Devolución Vacíos',abastecimiento:'Abastecimiento Tienda',despacho:'Despacho a Domicilio'};
-  document.getElementById('topbar-page').textContent = titles[page] || page;
+  const titles = {dashboard:'Dashboard',retiro:'Retiro Puerto',devolucion:'Devolución Vacíos Navieros',abastecimiento:'Abastecimiento de Tienda',despacho:'Despacho a Domicilio',contenedores:'Contenedores'};
+  document.getElementById('header-sub').textContent = titles[page] || page;
 }
 
-function openModal(type) {
-  const today = new Date().toISOString().split('T')[0];
-  if (type === 'retiro') {
-    document.getElementById('r-fecha').value = today;
-    document.getElementById('modal-retiro').classList.add('open');
-  } else {
-    document.getElementById('d-fecha').value = today;
-    document.getElementById('modal-devolucion').classList.add('open');
+function switchTab(module, tab, el) {
+  const tabs = document.querySelectorAll(`#page-${module} .tab-btn`);
+  tabs.forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(`${module}-tab-registros`).style.display = tab==='registros' ? 'block' : 'none';
+  document.getElementById(`${module}-tab-nueva`).style.display = tab==='nueva' ? 'block' : 'none';
+  if (tab==='nueva') {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById(module==='retiro'?'r-fecha':'d-fecha').value = today;
   }
 }
-function closeModal(type) {
-  document.getElementById('modal-' + type).classList.remove('open');
+
+function selectGps(el, val) {
+  document.querySelectorAll('.gps-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
 }
 
 function showToast(msg, ok=true) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.style.background = ok ? '#1a1a1a' : '#CC0000';
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  t.className = ok ? 'show' : 'show error';
+  setTimeout(() => t.className = '', 3000);
 }
 
 async function apiPost(data) {
-  const r = await fetch(API, {method:'POST', body:JSON.stringify(data)});
-  return r.json();
+  await fetch(API, {
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'text/plain'},
+    body:JSON.stringify(data)
+  });
+  return {ok:true};
 }
 
 async function guardarRetiro() {
@@ -527,22 +507,18 @@ async function guardarRetiro() {
     gps: document.querySelector('input[name="r-gps"]:checked')?.value || '',
     reemplazo: document.getElementById('r-reemplazo').value,
   };
-  if (!vals.fecha || !vals.deposito || !vals.transporte || !vals.chofer || !vals.rut) {
-    showToast('Completa los campos obligatorios', false); return;
+  if (!vals.fecha||!vals.deposito||!vals.transporte||!vals.chofer||!vals.rut||!vals.tracto||!vals.rampla) {
+    showToast('Completa todos los campos obligatorios', false); return;
   }
   btn.innerHTML = '<span class="loading"></span> Guardando...';
   btn.disabled = true;
   try {
-    const res = await apiPost(vals);
-    if (res.ok) {
-      showToast('Asignación guardada correctamente');
-      closeModal('retiro');
-      clearForm('retiro');
-      await loadRetiro();
-      updateDashboard();
-    } else throw new Error();
+    await apiPost(vals);
+    showToast('Asignación guardada correctamente ✓');
+    limpiarRetiro();
+    setTimeout(async () => { await loadRetiro(); updateDashboard(); }, 2000);
   } catch { showToast('Error al guardar. Intenta nuevamente', false); }
-  btn.innerHTML = 'Guardar'; btn.disabled = false;
+  btn.innerHTML = 'Guardar en Google Sheets'; btn.disabled = false;
 }
 
 async function guardarDevolucion() {
@@ -555,72 +531,64 @@ async function guardarDevolucion() {
     contenedor: document.getElementById('d-contenedor').value,
     eir: document.getElementById('d-eir').value,
   };
-  if (!vals.fecha || !vals.deposito || !vals.transporte || !vals.contenedor || !vals.eir) {
+  if (!vals.fecha||!vals.deposito||!vals.transporte||!vals.contenedor||!vals.eir) {
     showToast('Completa todos los campos', false); return;
   }
   btn.innerHTML = '<span class="loading"></span> Guardando...';
   btn.disabled = true;
   try {
-    const res = await apiPost(vals);
-    if (res.ok) {
-      showToast('Devolución guardada correctamente');
-      closeModal('devolucion');
-      clearForm('devolucion');
-      await loadDevolucion();
-      updateDashboard();
-    } else throw new Error();
+    await apiPost(vals);
+    showToast('Devolución guardada correctamente ✓');
+    limpiarDevolucion();
+    setTimeout(async () => { await loadDevolucion(); updateDashboard(); }, 2000);
   } catch { showToast('Error al guardar. Intenta nuevamente', false); }
-  btn.innerHTML = 'Guardar'; btn.disabled = false;
+  btn.innerHTML = 'Guardar en Google Sheets'; btn.disabled = false;
 }
 
 async function eliminarRetiro(row) {
   if (!confirm('¿Eliminar esta asignación?')) return;
   try {
-    const res = await apiPost({accion:'ELIMINAR', hoja:'RETIRO PUERTO', chofer:row.chofer, rut:row.rut, tracto:row.tracto});
-    if (res.ok) { showToast('Registro eliminado'); await loadRetiro(); updateDashboard(); }
-    else showToast('Error al eliminar', false);
+    await apiPost({accion:'ELIMINAR',hoja:'RETIRO PUERTO',chofer:row.chofer,rut:row.rut,tracto:row.tracto});
+    showToast('Registro eliminado');
+    setTimeout(async () => { await loadRetiro(); updateDashboard(); }, 1500);
   } catch { showToast('Error al eliminar', false); }
 }
 
 async function eliminarDevolucion(row) {
   if (!confirm('¿Eliminar esta devolución?')) return;
   try {
-    const res = await apiPost({accion:'ELIMINAR', hoja:'DEVOLUCION VACIOS', contenedor:row.contenedor, eir:row.eir});
-    if (res.ok) { showToast('Registro eliminado'); await loadDevolucion(); updateDashboard(); }
-    else showToast('Error al eliminar', false);
+    await apiPost({accion:'ELIMINAR',hoja:'DEVOLUCION VACIOS',contenedor:row.contenedor,eir:row.eir});
+    showToast('Registro eliminado');
+    setTimeout(async () => { await loadDevolucion(); updateDashboard(); }, 1500);
   } catch { showToast('Error al eliminar', false); }
 }
 
-function clearForm(type) {
-  const ids = type === 'retiro'
-    ? ['r-fecha','r-deposito','r-tipo','r-transporte','r-chofer','r-rut','r-telefono','r-tracto','r-rampla','r-reemplazo']
-    : ['d-fecha','d-deposito','d-transporte','d-contenedor','d-eir'];
-  ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-  if (type === 'retiro') document.querySelectorAll('input[name="r-gps"]').forEach(r => r.checked = false);
+function limpiarRetiro() {
+  ['r-fecha','r-deposito','r-tipo','r-transporte','r-chofer','r-rut','r-telefono','r-tracto','r-rampla','r-reemplazo'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.querySelectorAll('input[name="r-gps"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('.gps-option').forEach(o=>o.classList.remove('selected'));
+}
+function limpiarDevolucion() {
+  ['d-fecha','d-deposito','d-transporte','d-contenedor','d-eir'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
 }
 
 function fmtDate(val) {
-  if (!val) return '—';
-  try { return new Date(val).toLocaleDateString('es-CL'); } catch { return val; }
+  if(!val) return '—';
+  try{return new Date(val).toLocaleDateString('es-CL');}catch{return val;}
 }
 
 function renderRetiro() {
   const tb = document.getElementById('retiro-tbody');
   document.getElementById('retiro-count').textContent = retiroData.length;
-  if (!retiroData.length) {
-    tb.innerHTML = '<tr><td colspan="11"><div class="empty-state"><div class="icon">📦</div><p>Sin registros</p></div></td></tr>'; return;
-  }
-  tb.innerHTML = retiroData.map((r,i) => `
+  if (!retiroData.length) { tb.innerHTML='<tr><td colspan="11"><div class="empty-state"><div class="empty-icon">📦</div><p>Sin registros</p></div></td></tr>'; return; }
+  tb.innerHTML = retiroData.map((r,i)=>`
     <tr>
-      <td>${fmtDate(r.fecha)}</td>
-      <td>${r.deposito||'—'}</td>
+      <td>${fmtDate(r.fecha)}</td><td>${r.deposito||'—'}</td>
       <td><span class="badge ${r.tipo==='Ingreso'?'green':'blue'}">${r.tipo||'—'}</span></td>
       <td style="font-size:11px">${(r.transporte||'—').split(' ').slice(1).join(' ')}</td>
-      <td>${r.chofer||'—'}</td>
-      <td style="font-family:'DM Mono',monospace;font-size:11px">${r.rut||'—'}</td>
-      <td>${r.tracto||'—'}</td>
-      <td>${r.rampla||'—'}</td>
-      <td>${r.gps||'—'}</td>
+      <td>${r.chofer||'—'}</td><td style="font-size:11px">${r.rut||'—'}</td>
+      <td>${r.tracto||'—'}</td><td>${r.rampla||'—'}</td>
+      <td><span class="badge amber">${r.gps||'—'}</span></td>
       <td style="font-size:11px;color:var(--muted)">${r.creado||'—'}</td>
       <td><button class="del-btn" onclick="eliminarRetiro(retiroData[${i}])">✕</button></td>
     </tr>`).join('');
@@ -629,15 +597,12 @@ function renderRetiro() {
 function renderDevolucion() {
   const tb = document.getElementById('dev-tbody');
   document.getElementById('dev-count').textContent = devData.length;
-  if (!devData.length) {
-    tb.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="icon">📦</div><p>Sin registros</p></div></td></tr>'; return;
-  }
-  tb.innerHTML = devData.map((r,i) => `
+  if (!devData.length) { tb.innerHTML='<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📦</div><p>Sin registros</p></div></td></tr>'; return; }
+  tb.innerHTML = devData.map((r,i)=>`
     <tr>
-      <td>${fmtDate(r.fecha)}</td>
-      <td>${r.deposito||'—'}</td>
+      <td>${fmtDate(r.fecha)}</td><td>${r.deposito||'—'}</td>
       <td style="font-size:11px">${(r.transporte||'—').split(' ').slice(1).join(' ')}</td>
-      <td style="font-family:'DM Mono',monospace">${r.contenedor||'—'}</td>
+      <td style="font-weight:500">${r.contenedor||'—'}</td>
       <td>${r.eir||'—'}</td>
       <td style="font-size:11px;color:var(--muted)">${r.creado||'—'}</td>
       <td><button class="del-btn" onclick="eliminarDevolucion(devData[${i}])">✕</button></td>
@@ -645,59 +610,42 @@ function renderDevolucion() {
 }
 
 function updateDashboard() {
-  const tr = retiroData.length, dv = devData.length, total = tr + dv;
-  document.getElementById('dash-total').textContent = total;
-  document.getElementById('dash-retiro').textContent = tr;
-  document.getElementById('dash-devolucion').textContent = dv;
-  document.getElementById('bar-retiro').style.width = total ? (tr/total*100)+'%' : '0%';
-  document.getElementById('bar-dev').style.width = total ? (dv/total*100)+'%' : '0%';
-
-  const countBy = (arr, key) => arr.reduce((acc,r) => { acc[r[key]] = (acc[r[key]]||0)+1; return acc; }, {});
-  const rDep = countBy(retiroData, 'deposito');
-  const dDep = countBy(devData, 'deposito');
-
-  const renderDep = (obj, elId) => {
-    const el = document.getElementById(elId);
-    const entries = Object.entries(obj).sort((a,b)=>b[1]-a[1]);
-    if (!entries.length) { el.innerHTML = '<div class="empty-state"><p>Sin datos</p></div>'; return; }
-    const max = entries[0][1];
-    el.innerHTML = entries.map(([dep, cnt]) => `
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <div style="font-size:11px;color:var(--muted);width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${dep}</div>
-        <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden">
-          <div style="width:${cnt/max*100}%;height:100%;background:var(--green);border-radius:3px"></div>
-        </div>
-        <div style="font-size:12px;font-family:'DM Mono',monospace;font-weight:500;min-width:20px;text-align:right">${cnt}</div>
+  const tr=retiroData.length, dv=devData.length, total=tr+dv;
+  document.getElementById('dash-total').textContent=total;
+  document.getElementById('dash-retiro').textContent=tr;
+  document.getElementById('dash-devolucion').textContent=dv;
+  document.getElementById('bar-retiro').style.width=total?(tr/total*100)+'%':'0%';
+  document.getElementById('bar-dev').style.width=total?(dv/total*100)+'%':'0%';
+  const countBy=(arr,key)=>arr.reduce((acc,r)=>{acc[r[key]]=(acc[r[key]]||0)+1;return acc;},{});
+  const renderDep=(obj,elId,color)=>{
+    const el=document.getElementById(elId);
+    const entries=Object.entries(obj).sort((a,b)=>b[1]-a[1]);
+    if(!entries.length){el.innerHTML='<div class="empty-state"><p>Sin datos</p></div>';return;}
+    const max=entries[0][1];
+    el.innerHTML=entries.map(([dep,cnt])=>`
+      <div class="dep-row">
+        <div class="dep-name">${dep}</div>
+        <div class="dep-bar"><div class="dep-bar-fill" style="width:${cnt/max*100}%;background:${color}"></div></div>
+        <div class="dep-count">${cnt}</div>
       </div>`).join('');
   };
-  renderDep(rDep, 'dash-retiro-deposito');
-  renderDep(dDep, 'dash-dev-deposito');
+  renderDep(countBy(retiroData,'deposito'),'dash-retiro-dep','var(--green)');
+  renderDep(countBy(devData,'deposito'),'dash-dev-dep','var(--blue)');
 }
 
 async function loadRetiro() {
-  try {
-    const r = await fetch(API + '?sheet=RETIRO PUERTO');
-    retiroData = await r.json();
-    if (!Array.isArray(retiroData)) retiroData = [];
-  } catch { retiroData = []; }
+  try{const r=await fetch(API+'?sheet=RETIRO PUERTO');retiroData=await r.json();if(!Array.isArray(retiroData))retiroData=[];}catch{retiroData=[];}
   renderRetiro();
 }
-
 async function loadDevolucion() {
-  try {
-    const r = await fetch(API + '?sheet=DEVOLUCION VACIOS');
-    devData = await r.json();
-    if (!Array.isArray(devData)) devData = [];
-  } catch { devData = []; }
+  try{const r=await fetch(API+'?sheet=DEVOLUCION VACIOS');devData=await r.json();if(!Array.isArray(devData))devData=[];}catch{devData=[];}
   renderDevolucion();
 }
-
 async function refreshAll() {
-  await Promise.all([loadRetiro(), loadDevolucion()]);
+  await Promise.all([loadRetiro(),loadDevolucion()]);
   updateDashboard();
   showToast('Datos actualizados');
 }
-
 refreshAll();
 </script>
 </body>
