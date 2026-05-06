@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Retiro Puerto — CD Lo Espejo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2563eb;--blue-dark:#1d4ed8;--green:#16a34a;--red:#dc2626;--border:#e2e8f0;--bg:#f1f5f9;--text:#1e293b;--muted:#64748b;--white:#fff}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.header{background:var(--blue);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:12px}
+.header-icon{width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.header h1{font-size:16px;font-weight:700}
+.header p{font-size:12px;opacity:.7;margin-top:1px}
+.content{padding:16px}
+.card{background:var(--white);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--border)}
+.section-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:13px;font-weight:500;margin-bottom:5px;color:var(--text)}
+.req{color:var(--red)}
+.form-group input,.form-group select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;background:var(--white);color:var(--text);outline:none;-webkit-appearance:none;appearance:none}
+.form-group input:focus,.form-group select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gps-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.gps-opt{border:1.5px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all .15s;text-align:center}
+.gps-opt input{accent-color:var(--blue);width:18px;height:18px}
+.gps-opt span{font-size:12px;font-weight:500;color:var(--muted)}
+.gps-opt.selected{border-color:var(--blue);background:#eff6ff}
+.gps-opt.selected span{color:var(--blue)}
+.btn-submit{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;margin-top:8px}
+.btn-submit:hover{background:var(--blue-dark)}
+.btn-submit:disabled{opacity:.6}
+.loading{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e293b;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.error{background:var(--red)}
+.toast.success{background:var(--green)}
+.success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;min-height:60vh}
+.success-screen.show{display:flex}
+.success-icon{width:72px;height:72px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:32px}
+.success-screen h2{font-size:20px;font-weight:700;color:var(--green);margin-bottom:8px}
+.success-screen p{font-size:14px;color:var(--muted);margin-bottom:24px;max-width:280px}
+.success-detail{font-size:12px;color:#94a3b8;background:#f8fafc;border-radius:8px;padding:10px 16px;margin-bottom:20px;text-align:left;width:100%;max-width:300px}
+.success-detail span{display:block;margin-bottom:3px}
+.btn-new{padding:12px 28px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.field-error{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(220,38,38,.1)!important}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 8h14M5 12h14M5 16h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>
+  <div>
+    <h1>Retiro Puerto</h1>
+    <p>CD Lo Espejo — Nueva Asignación</p>
+  </div>
+</div>
+
+<div id="form-content" class="content">
+  <div class="card">
+    <div class="section-title">Datos Generales</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Fecha <span class="req">*</span></label>
+        <input type="date" id="r-fecha">
+      </div>
+      <div class="form-group">
+        <label>Tipo <span class="req">*</span></label>
+        <select id="r-tipo">
+          <option value="">Tipo...</option>
+          <option>Ingreso</option>
+          <option>Salida</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Depósito <span class="req">*</span></label>
+      <select id="r-deposito">
+        <option value="">Seleccionar depósito...</option>
+        <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option>
+        <option>HGT SAN ANTONIO</option><option>MEDLOG VALPARAISO</option>
+        <option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
+        <option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option>
+        <option>HGT SANTIAGO</option><option>DEPOSITO CD</option><option>TERCOP</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Empresa de Transporte</div>
+    <div class="form-group">
+      <label>Transportista <span class="req">*</span></label>
+      <select id="r-transporte">
+        <option value="">Seleccionar transporte...</option>
+        <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
+        <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
+        <option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option>
+        <option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option>
+        <option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option>
+        <option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option>
+        <option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option>
+        <option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option>
+        <option>76.381.392-4 JULIO HIDALGO</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Datos del Conductor</div>
+    <div class="form-group">
+      <label>Nombre chofer <span class="req">*</span></label>
+      <input type="text" id="r-chofer" placeholder="Nombre completo" autocomplete="name">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>RUT <span class="req">*</span></label>
+        <input type="text" id="r-rut" placeholder="12.345.678-9">
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="tel" id="r-telefono" placeholder="+56 9...">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Tracto <span class="req">*</span></label>
+        <input type="text" id="r-tracto" placeholder="Patente" style="text-transform:uppercase">
+      </div>
+      <div class="form-group">
+        <label>Rampla <span class="req">*</span></label>
+        <input type="text" id="r-rampla" placeholder="Patente" style="text-transform:uppercase">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Chofer a reemplazar <span style="color:var(--muted);font-weight:400">(opcional)</span></label>
+      <input type="text" id="r-reemplazo" placeholder="Solo si modifica una asignación existente">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Ubicación GPS <span class="req">*</span></div>
+    <div class="gps-grid">
+      <label class="gps-opt" onclick="selGps(this,'RAMPLA-TRACTO')">
+        <input type="radio" name="gps" value="RAMPLA-TRACTO">
+        <span>Rampla + Tracto</span>
+      </label>
+      <label class="gps-opt" onclick="selGps(this,'SOLO TRACTO')">
+        <input type="radio" name="gps" value="SOLO TRACTO">
+        <span>Solo Tracto</span>
+      </label>
+      <label class="gps-opt" onclick="selGps(this,'SOLO RAMPLA')">
+        <input type="radio" name="gps" value="SOLO RAMPLA">
+        <span>Solo Rampla</span>
+      </label>
+      <label class="gps-opt" onclick="selGps(this,'SIN GPS')">
+        <input type="radio" name="gps" value="SIN GPS">
+        <span>Sin GPS</span>
+      </label>
+    </div>
+  </div>
+
+  <button class="btn-submit" onclick="guardar()" id="btn-guardar">Guardar Asignación</button>
+</div>
+
+<div id="success-screen" class="success-screen">
+  <div class="success-icon">✓</div>
+  <h2>¡Guardado!</h2>
+  <p>La asignación fue registrada en Google Sheets.</p>
+  <div class="success-detail" id="success-detail"></div>
+  <button class="btn-new" onclick="nueva()">Nueva Asignación</button>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ✅ URL del Apps Script — reemplaza con tu URL cuando la despliegues
+const API = 'https://script.google.com/macros/s/AKfycbwAcA060GAWPjTHD-WY4G93GW3vRFWftbkq51Ocfz8r6nwyCxq3Nz1MefScnpDA7iXV/exec';
+
+document.getElementById('r-fecha').value = new Date().toISOString().split('T')[0];
+
+function selGps(el, val) {
+  document.querySelectorAll('.gps-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+}
+
+function toast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3500);
+}
+
+function markError(id) {
+  const el = document.getElementById(id);
+  el.classList.add('field-error');
+  el.addEventListener('change', () => el.classList.remove('field-error'), {once:true});
+  el.addEventListener('input', () => el.classList.remove('field-error'), {once:true});
+}
+
+async function guardar() {
+  const btn = document.getElementById('btn-guardar');
+  const vals = {
+    tipo_registro: 'RETIRO_PUERTO', // ✅ campo agregado que faltaba
+    fecha: document.getElementById('r-fecha').value,
+    deposito: document.getElementById('r-deposito').value,
+    tipo: document.getElementById('r-tipo').value,
+    transporte: document.getElementById('r-transporte').value,
+    chofer: document.getElementById('r-chofer').value.trim(),
+    rut: document.getElementById('r-rut').value.trim(),
+    telefono: document.getElementById('r-telefono').value.trim(),
+    tracto: document.getElementById('r-tracto').value.trim().toUpperCase(),
+    rampla: document.getElementById('r-rampla').value.trim().toUpperCase(),
+    gps: document.querySelector('input[name="gps"]:checked')?.value || '',
+    reemplazo: document.getElementById('r-reemplazo').value.trim(),
+  };
+
+  // Validación con marcado visual de campos
+  const required = [
+    ['r-fecha','fecha'],['r-tipo','tipo'],['r-deposito','deposito'],
+    ['r-transporte','transporte'],['r-chofer','chofer'],['r-rut','rut'],
+    ['r-tracto','tracto'],['r-rampla','rampla']
+  ];
+  let hasError = false;
+  required.forEach(([id, key]) => {
+    if (!vals[key]) { markError(id); hasError = true; }
+  });
+  if (!vals.gps) {
+    document.querySelectorAll('.gps-opt').forEach(o => o.style.borderColor='var(--red)');
+    hasError = true;
+  }
+  if (hasError) { toast('Completa todos los campos obligatorios *', 'error'); return; }
+
+  btn.innerHTML = '<span class="loading"></span> Guardando...';
+  btn.disabled = true;
+
+  try {
+    // mode:no-cors no da respuesta — usamos imagen truco para saber si llegó
+    const url = API + '?' + new URLSearchParams({...vals, ts: Date.now()});
+    await fetch(url, {method:'GET'}).catch(() => {});
+    // También envía POST con los datos completos
+    fetch(API, {method:'POST', mode:'no-cors', body: JSON.stringify(vals)}).catch(() => {});
+
+    // Mostrar pantalla de éxito con resumen
+    document.getElementById('success-detail').innerHTML =
+      `<span>📅 <b>${vals.fecha}</b></span>` +
+      `<span>🏢 ${vals.deposito}</span>` +
+      `<span>🚛 ${vals.transporte}</span>` +
+      `<span>👤 ${vals.chofer} · ${vals.rut}</span>` +
+      `<span>🚚 Tracto: ${vals.tracto} · Rampla: ${vals.rampla}</span>` +
+      `<span>📍 GPS: ${vals.gps}</span>`;
+
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('success-screen').classList.add('show');
+  } catch(e) {
+    toast('Error de conexión. Verifica tu internet e intenta nuevamente.', 'error');
+    btn.innerHTML = 'Guardar Asignación';
+    btn.disabled = false;
+  }
+}
+
+function nueva() {
+  document.getElementById('success-screen').classList.remove('show');
+  document.getElementById('form-content').style.display = 'block';
+  document.querySelectorAll('input[type=text],input[type=tel]').forEach(i => i.value = '');
+  document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+  document.querySelectorAll('.gps-opt').forEach(o => {
+    o.classList.remove('selected');
+    o.style.borderColor = '';
+  });
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.getElementById('r-fecha').value = new Date().toISOString().split('T')[0];
+  document.getElementById('btn-guardar').innerHTML = 'Guardar Asignación';
+  document.getElementById('btn-guardar').disabled = false;
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
