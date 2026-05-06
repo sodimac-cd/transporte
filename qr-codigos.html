@@ -10,61 +10,69 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:#f1f5f9;min-height:100vh;padding:32px 24px}
 h1{font-size:22px;font-weight:700;color:#1e293b;margin-bottom:4px}
-p{font-size:14px;color:#64748b;margin-bottom:32px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:600px;margin:0 auto}
+.subtitle{font-size:14px;color:#64748b;margin-bottom:32px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:620px;margin:0 auto}
 .card{background:#fff;border-radius:16px;padding:28px;border:1px solid #e2e8f0;text-align:center}
 .card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
 .card-icon.green{background:#dcfce7}
 .card-icon.blue{background:#eff6ff}
 .card h2{font-size:16px;font-weight:700;color:#1e293b;margin-bottom:4px}
-.card p{font-size:12px;color:#64748b;margin-bottom:20px}
-.qr-box{background:#f8fafc;border-radius:12px;padding:16px;display:inline-block;margin-bottom:16px}
-.url{font-size:11px;color:#94a3b8;word-break:break-all;margin-bottom:16px;background:#f1f5f9;padding:8px 12px;border-radius:8px}
+.card .desc{font-size:12px;color:#64748b;margin-bottom:20px}
+.qr-box{background:#f8fafc;border-radius:12px;padding:16px;display:inline-block;margin-bottom:16px;border:1px solid #e2e8f0}
+.url{font-size:10px;color:#94a3b8;word-break:break-all;margin-bottom:16px;background:#f1f5f9;padding:8px 12px;border-radius:8px;text-align:left}
 .btn-print{padding:10px 20px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;color:#1e293b;transition:all .15s}
 .btn-print:hover{background:#f1f5f9}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;margin-bottom:12px}
+.badge.green{background:#dcfce7;color:#15803d}
+.badge.blue{background:#dbeafe;color:#1d4ed8}
 @media print{body{background:#fff;padding:16px}.btn-print{display:none}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<h1>Códigos QR — Formularios Móvil</h1>
-<p>CD Lo Espejo · Área de Transporte · Escanea con el celular para ingresar datos</p>
-
+<h1>Códigos QR — Acceso transportistas</h1>
+<p class="subtitle">Escanea para ingresar directamente al panel correspondiente sin ver el dashboard completo</p>
 <div class="grid">
   <div class="card">
     <div class="card-icon green">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 8h14M5 12h14M5 16h8" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg>
     </div>
+    <span class="badge green">Retiro Puerto</span>
     <h2>Retiro Puerto</h2>
-    <p>Nueva asignación de retiro</p>
+    <p class="desc">Nueva asignación de retiro</p>
     <div class="qr-box"><div id="qr-retiro"></div></div>
     <div class="url" id="url-retiro"></div>
     <button class="btn-print" onclick="window.print()">Imprimir</button>
   </div>
-
   <div class="card">
     <div class="card-icon blue">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" stroke="#2563eb" stroke-width="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" stroke="#2563eb" stroke-width="2"/></svg>
     </div>
+    <span class="badge blue">Devolución Vacíos</span>
     <h2>Devolución Vacíos</h2>
-    <p>Nueva devolución naviera</p>
+    <p class="desc">Nueva devolución naviera</p>
     <div class="qr-box"><div id="qr-devolucion"></div></div>
     <div class="url" id="url-devolucion"></div>
     <button class="btn-print" onclick="window.print()">Imprimir</button>
   </div>
 </div>
-
 <script>
+// ✅ CORREGIDO: URLs apuntan a los archivos correctos en el repo
 const base = 'https://sodimac-cd.github.io/transporte';
 const urls = {
-  retiro: base + '/retiro-movil.html',
-  devolucion: base + '/devolucion-movil.html'
+  retiro: base + '/retiro-movil_1.html',
+  devolucion: base + '/devolucion-movil_1.html'
 };
-
 document.getElementById('url-retiro').textContent = urls.retiro;
 document.getElementById('url-devolucion').textContent = urls.devolucion;
-
-new QRCode(document.getElementById('qr-retiro'), {text: urls.retiro, width: 180, height: 180, colorDark:'#1e293b', colorLight:'#f8fafc'});
-new QRCode(document.getElementById('qr-devolucion'), {text: urls.devolucion, width: 180, height: 180, colorDark:'#1e293b', colorLight:'#f8fafc'});
+new QRCode(document.getElementById('qr-retiro'), {
+  text: urls.retiro, width: 180, height: 180,
+  colorDark:'#1e293b', colorLight:'#f8fafc'
+});
+new QRCode(document.getElementById('qr-devolucion'), {
+  text: urls.devolucion, width: 180, height: 180,
+  colorDark:'#1e293b', colorLight:'#f8fafc'
+});
 </script>
 </body>
 </html>
