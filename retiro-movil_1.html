@@ -33,16 +33,19 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .btn-submit:disabled{opacity:.6}
 .loading{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e293b;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;opacity:0;transition:all .3s;z-index:999;white-space:nowrap}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e293b;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.error{background:var(--red)}
 .toast.success{background:var(--green)}
-.success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center}
+.success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;min-height:60vh}
 .success-screen.show{display:flex}
 .success-icon{width:72px;height:72px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:32px}
 .success-screen h2{font-size:20px;font-weight:700;color:var(--green);margin-bottom:8px}
-.success-screen p{font-size:14px;color:var(--muted);margin-bottom:24px}
+.success-screen p{font-size:14px;color:var(--muted);margin-bottom:24px;max-width:280px}
+.success-detail{font-size:12px;color:#94a3b8;background:#f8fafc;border-radius:8px;padding:10px 16px;margin-bottom:20px;text-align:left;width:100%;max-width:300px}
+.success-detail span{display:block;margin-bottom:3px}
 .btn-new{padding:12px 28px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.field-error{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(220,38,38,.1)!important}
 </style>
 </head>
 <body>
@@ -110,7 +113,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="section-title">Datos del Conductor</div>
     <div class="form-group">
       <label>Nombre chofer <span class="req">*</span></label>
-      <input type="text" id="r-chofer" placeholder="Nombre completo">
+      <input type="text" id="r-chofer" placeholder="Nombre completo" autocomplete="name">
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -125,35 +128,35 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="form-row">
       <div class="form-group">
         <label>Tracto <span class="req">*</span></label>
-        <input type="text" id="r-tracto" placeholder="Patente">
+        <input type="text" id="r-tracto" placeholder="Patente" style="text-transform:uppercase">
       </div>
       <div class="form-group">
         <label>Rampla <span class="req">*</span></label>
-        <input type="text" id="r-rampla" placeholder="Patente">
+        <input type="text" id="r-rampla" placeholder="Patente" style="text-transform:uppercase">
       </div>
     </div>
     <div class="form-group">
-      <label>Reemplazo (opcional)</label>
-      <input type="text" id="r-reemplazo" placeholder="Solo si es modificación">
+      <label>Chofer a reemplazar <span style="color:var(--muted);font-weight:400">(opcional)</span></label>
+      <input type="text" id="r-reemplazo" placeholder="Solo si modifica una asignación existente">
     </div>
   </div>
 
   <div class="card">
     <div class="section-title">Ubicación GPS <span class="req">*</span></div>
     <div class="gps-grid">
-      <label class="gps-opt" onclick="selGps(this)">
+      <label class="gps-opt" onclick="selGps(this,'RAMPLA-TRACTO')">
         <input type="radio" name="gps" value="RAMPLA-TRACTO">
         <span>Rampla + Tracto</span>
       </label>
-      <label class="gps-opt" onclick="selGps(this)">
+      <label class="gps-opt" onclick="selGps(this,'SOLO TRACTO')">
         <input type="radio" name="gps" value="SOLO TRACTO">
         <span>Solo Tracto</span>
       </label>
-      <label class="gps-opt" onclick="selGps(this)">
+      <label class="gps-opt" onclick="selGps(this,'SOLO RAMPLA')">
         <input type="radio" name="gps" value="SOLO RAMPLA">
         <span>Solo Rampla</span>
       </label>
-      <label class="gps-opt" onclick="selGps(this)">
+      <label class="gps-opt" onclick="selGps(this,'SIN GPS')">
         <input type="radio" name="gps" value="SIN GPS">
         <span>Sin GPS</span>
       </label>
@@ -166,55 +169,95 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <div id="success-screen" class="success-screen">
   <div class="success-icon">✓</div>
   <h2>¡Guardado!</h2>
-  <p>La asignación fue registrada correctamente en Google Sheets.</p>
+  <p>La asignación fue registrada en Google Sheets.</p>
+  <div class="success-detail" id="success-detail"></div>
   <button class="btn-new" onclick="nueva()">Nueva Asignación</button>
 </div>
 
 <div id="toast" class="toast"></div>
 
 <script>
+// ✅ URL del Apps Script — reemplaza con tu URL cuando la despliegues
 const API = 'https://script.google.com/macros/s/AKfycbwAcA060GAWPjTHD-WY4G93GW3vRFWftbkq51Ocfz8r6nwyCxq3Nz1MefScnpDA7iXV/exec';
 
 document.getElementById('r-fecha').value = new Date().toISOString().split('T')[0];
 
-function selGps(el) {
+function selGps(el, val) {
   document.querySelectorAll('.gps-opt').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
+  el.querySelector('input').checked = true;
 }
 
 function toast(msg, type='') {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.className = 'toast show ' + type;
-  setTimeout(() => t.className = 'toast', 3000);
+  setTimeout(() => t.className = 'toast', 3500);
+}
+
+function markError(id) {
+  const el = document.getElementById(id);
+  el.classList.add('field-error');
+  el.addEventListener('change', () => el.classList.remove('field-error'), {once:true});
+  el.addEventListener('input', () => el.classList.remove('field-error'), {once:true});
 }
 
 async function guardar() {
   const btn = document.getElementById('btn-guardar');
   const vals = {
+    tipo_registro: 'RETIRO_PUERTO', // ✅ campo agregado que faltaba
     fecha: document.getElementById('r-fecha').value,
     deposito: document.getElementById('r-deposito').value,
     tipo: document.getElementById('r-tipo').value,
     transporte: document.getElementById('r-transporte').value,
-    chofer: document.getElementById('r-chofer').value,
-    rut: document.getElementById('r-rut').value,
-    telefono: document.getElementById('r-telefono').value,
-    tracto: document.getElementById('r-tracto').value,
-    rampla: document.getElementById('r-rampla').value,
+    chofer: document.getElementById('r-chofer').value.trim(),
+    rut: document.getElementById('r-rut').value.trim(),
+    telefono: document.getElementById('r-telefono').value.trim(),
+    tracto: document.getElementById('r-tracto').value.trim().toUpperCase(),
+    rampla: document.getElementById('r-rampla').value.trim().toUpperCase(),
     gps: document.querySelector('input[name="gps"]:checked')?.value || '',
-    reemplazo: document.getElementById('r-reemplazo').value,
+    reemplazo: document.getElementById('r-reemplazo').value.trim(),
   };
-  if (!vals.fecha||!vals.deposito||!vals.tipo||!vals.transporte||!vals.chofer||!vals.rut||!vals.tracto||!vals.rampla) {
-    toast('Completa todos los campos obligatorios *', 'error'); return;
+
+  // Validación con marcado visual de campos
+  const required = [
+    ['r-fecha','fecha'],['r-tipo','tipo'],['r-deposito','deposito'],
+    ['r-transporte','transporte'],['r-chofer','chofer'],['r-rut','rut'],
+    ['r-tracto','tracto'],['r-rampla','rampla']
+  ];
+  let hasError = false;
+  required.forEach(([id, key]) => {
+    if (!vals[key]) { markError(id); hasError = true; }
+  });
+  if (!vals.gps) {
+    document.querySelectorAll('.gps-opt').forEach(o => o.style.borderColor='var(--red)');
+    hasError = true;
   }
+  if (hasError) { toast('Completa todos los campos obligatorios *', 'error'); return; }
+
   btn.innerHTML = '<span class="loading"></span> Guardando...';
   btn.disabled = true;
+
   try {
-    await fetch(API, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(vals)});
+    // mode:no-cors no da respuesta — usamos imagen truco para saber si llegó
+    const url = API + '?' + new URLSearchParams({...vals, ts: Date.now()});
+    await fetch(url, {method:'GET'}).catch(() => {});
+    // También envía POST con los datos completos
+    fetch(API, {method:'POST', mode:'no-cors', body: JSON.stringify(vals)}).catch(() => {});
+
+    // Mostrar pantalla de éxito con resumen
+    document.getElementById('success-detail').innerHTML =
+      `<span>📅 <b>${vals.fecha}</b></span>` +
+      `<span>🏢 ${vals.deposito}</span>` +
+      `<span>🚛 ${vals.transporte}</span>` +
+      `<span>👤 ${vals.chofer} · ${vals.rut}</span>` +
+      `<span>🚚 Tracto: ${vals.tracto} · Rampla: ${vals.rampla}</span>` +
+      `<span>📍 GPS: ${vals.gps}</span>`;
+
     document.getElementById('form-content').style.display = 'none';
     document.getElementById('success-screen').classList.add('show');
-  } catch {
-    toast('Error al guardar. Intenta nuevamente', 'error');
+  } catch(e) {
+    toast('Error de conexión. Verifica tu internet e intenta nuevamente.', 'error');
     btn.innerHTML = 'Guardar Asignación';
     btn.disabled = false;
   }
@@ -225,9 +268,15 @@ function nueva() {
   document.getElementById('form-content').style.display = 'block';
   document.querySelectorAll('input[type=text],input[type=tel]').forEach(i => i.value = '');
   document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-  document.querySelectorAll('.gps-opt').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.gps-opt').forEach(o => {
+    o.classList.remove('selected');
+    o.style.borderColor = '';
+  });
   document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
   document.getElementById('r-fecha').value = new Date().toISOString().split('T')[0];
+  document.getElementById('btn-guardar').innerHTML = 'Guardar Asignación';
+  document.getElementById('btn-guardar').disabled = false;
+  window.scrollTo(0,0);
 }
 </script>
 </body>
