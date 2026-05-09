@@ -8,48 +8,45 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;background:#f0f4ff;min-height:100vh;color:#1a1a2e}
 .header{background:#1a3a8f;color:#fff;padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
-.header-icon{width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hico{width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .header h1{font-size:16px;font-weight:600}
 .header p{font-size:11px;opacity:.75;margin-top:1px}
 .body{padding:16px;max-width:480px;margin:0 auto}
 .card{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07)}
-.section-title{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #f0f0f0}
-.form-group{margin-bottom:13px}
-.form-group label{display:block;font-size:12px;font-weight:600;color:#444;margin-bottom:5px}
-.form-group input,.form-group select{width:100%;padding:10px 12px;border:1.5px solid #dde2f0;border-radius:8px;font-size:14px;color:#1a1a2e;background:#fff;outline:none;-webkit-appearance:none}
-.form-group input:focus,.form-group select:focus{border-color:#1a3a8f;box-shadow:0 0 0 3px rgba(26,58,143,0.1)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn-guardar{width:100%;background:#1a3a8f;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
-.btn-guardar:active{background:#15317a}
-.btn-limpiar{width:100%;background:#fff;color:#666;border:1.5px solid #dde2f0;padding:11px;border-radius:10px;font-size:14px;cursor:pointer;margin-top:8px}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a3a8f;color:#fff;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:500;display:none;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+.sec{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #f0f0f0}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:12px;font-weight:600;color:#444;margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:11px 12px;border:1.5px solid #dde2f0;border-radius:8px;font-size:15px;color:#1a1a2e;background:#fff;outline:none;-webkit-appearance:none;appearance:none}
+.fg input:focus,.fg select:focus{border-color:#1a3a8f;box-shadow:0 0 0 3px rgba(26,58,143,0.1)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-save{width:100%;background:#1a3a8f;color:#fff;border:none;padding:15px;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px}
+.btn-save:active{background:#15317a;transform:scale(0.98)}
+.btn-save:disabled{background:#9aa8c9;cursor:not-allowed}
+.btn-clear{width:100%;background:#fff;color:#666;border:1.5px solid #dde2f0;padding:12px;border-radius:10px;font-size:14px;cursor:pointer;margin-top:8px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:13px 24px;border-radius:10px;font-size:14px;font-weight:500;display:none;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.2);min-width:220px;text-align:center}
+.toast.ok{background:#1a3a8f;color:#fff}
+.toast.err{background:#dc2626;color:#fff}
 .toast.show{display:block}
+.req{color:#dc2626}
 </style>
 </head>
 <body>
 <div class="header">
-  <div class="header-icon">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M7 7V5a2 2 0 014 0v2"/></svg>
-  </div>
-  <div>
-    <h1>Devolución Vacíos</h1>
-    <p>CD Lo Espejo — Área de Transporte</p>
-  </div>
+  <div class="hico"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M7 7V5a2 2 0 014 0v2"/></svg></div>
+  <div><h1>Devolución Vacíos</h1><p>CD Lo Espejo — Área de Transporte</p></div>
 </div>
 <div class="body">
   <div class="card">
-    <div class="section-title">Datos de la devolución</div>
-    <div class="form-row">
-      <div class="form-group"><label>Fecha *</label><input type="date" id="f-fecha"/></div>
-    </div>
-    <div class="form-group"><label>Depósito *</label>
+    <div class="sec">Datos de la devolución</div>
+    <div class="fg"><label>Fecha <span class="req">*</span></label><input type="date" id="f-fecha"/></div>
+    <div class="fg"><label>Depósito <span class="req">*</span></label>
       <select id="f-deposito"><option value="">Seleccionar depósito...</option>
         <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option>
         <option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
         <option>HGT VALPARAISO</option><option>DEPOSITO CD</option><option>TERCOP</option>
       </select>
     </div>
-    <div class="form-group"><label>Transportista *</label>
+    <div class="fg"><label>Transportista <span class="req">*</span></label>
       <select id="f-trans"><option value="">Seleccionar transporte...</option>
         <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
         <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
@@ -64,29 +61,47 @@ body{font-family:'Segoe UI',sans-serif;background:#f0f4ff;min-height:100vh;color
     </div>
   </div>
   <div class="card">
-    <div class="section-title">Datos del contenedor</div>
-    <div class="form-group"><label>Número de contenedor *</label><input type="text" id="f-contenedor" placeholder="XXXX0000000" style="text-transform:uppercase"/></div>
-    <div class="form-group"><label>EIR *</label><input type="text" id="f-eir" placeholder="Número EIR"/></div>
+    <div class="sec">Datos del contenedor</div>
+    <div class="fg"><label>Número de contenedor <span class="req">*</span></label>
+      <input type="text" id="f-cont" placeholder="XXXX0000000" style="text-transform:uppercase"/>
+    </div>
+    <div class="fg"><label>EIR <span class="req">*</span></label>
+      <input type="text" id="f-eir" placeholder="Número EIR"/>
+    </div>
   </div>
-  <button class="btn-guardar" onclick="guardar()">Guardar en Google Sheets</button>
-  <button class="btn-limpiar" onclick="limpiar()">Limpiar formulario</button>
-  <div style="height:30px"></div>
+  <button class="btn-save" id="btn-save" onclick="guardar()">Guardar en Google Sheets</button>
+  <button class="btn-clear" onclick="limpiar()">Limpiar formulario</button>
+  <div style="height:40px"></div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},3000);}
+var APPS_URL='https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec';
+function toast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'ok')+' show';setTimeout(function(){t.classList.remove('show');},3500);}
 function guardar(){
-  var d={fecha:document.getElementById('f-fecha').value,deposito:document.getElementById('f-deposito').value,transportista:document.getElementById('f-trans').value,contenedor:document.getElementById('f-contenedor').value,eir:document.getElementById('f-eir').value};
-  if(!d.fecha||!d.deposito||!d.transportista||!d.contenedor||!d.eir){toast('⚠️ Completa los campos obligatorios');return;}
-  var url=localStorage.getItem('asUrl');
-  if(!url){toast('Sin URL de Apps Script configurada');return;}
-  fetch(url,{method:'POST',body:JSON.stringify({modulo:'devolucion',datos:d})})
-    .then(function(){toast('✓ Guardado correctamente');limpiar();})
-    .catch(function(){toast('Error al guardar');});
+  var btn=document.getElementById('btn-save');
+  var d={
+    fecha:document.getElementById('f-fecha').value,
+    deposito:document.getElementById('f-deposito').value,
+    transportista:document.getElementById('f-trans').value,
+    contenedor:document.getElementById('f-cont').value.trim().toUpperCase(),
+    eir:document.getElementById('f-eir').value.trim()
+  };
+  if(!d.fecha||!d.deposito||!d.transportista||!d.contenedor||!d.eir){
+    toast('Completa todos los campos obligatorios (*)','err');return;
+  }
+  btn.disabled=true;btn.textContent='Guardando...';
+  fetch(APPS_URL,{method:'POST',body:JSON.stringify({modulo:'devolucion',datos:d})})
+    .then(function(r){return r.json();})
+    .then(function(res){
+      if(res.ok){toast('✓ Guardado correctamente');limpiar();}
+      else{toast('Error: '+(res.error||'desconocido'),'err');}
+    })
+    .catch(function(){toast('Error de conexión. Intenta de nuevo.','err');})
+    .finally(function(){btn.disabled=false;btn.textContent='Guardar en Google Sheets';});
 }
 function limpiar(){
   ['f-deposito','f-trans'].forEach(function(id){document.getElementById(id).selectedIndex=0;});
-  ['f-contenedor','f-eir'].forEach(function(id){document.getElementById(id).value='';});
+  ['f-cont','f-eir'].forEach(function(id){document.getElementById(id).value='';});
   document.getElementById('f-fecha').valueAsDate=new Date();
 }
 document.getElementById('f-fecha').valueAsDate=new Date();

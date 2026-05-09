@@ -8,47 +8,46 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;background:#f0f4ff;min-height:100vh;color:#1a1a2e}
 .header{background:#1a3a8f;color:#fff;padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
-.header-icon{width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hico{width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .header h1{font-size:16px;font-weight:600}
 .header p{font-size:11px;opacity:.75;margin-top:1px}
 .body{padding:16px;max-width:480px;margin:0 auto}
 .card{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07)}
-.section-title{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #f0f0f0}
-.form-group{margin-bottom:13px}
-.form-group label{display:block;font-size:12px;font-weight:600;color:#444;margin-bottom:5px}
-.form-group input,.form-group select{width:100%;padding:10px 12px;border:1.5px solid #dde2f0;border-radius:8px;font-size:14px;color:#1a1a2e;background:#fff;outline:none;-webkit-appearance:none}
-.form-group input:focus,.form-group select:focus{border-color:#1a3a8f;box-shadow:0 0 0 3px rgba(26,58,143,0.1)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.gps-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
-.gps-opt{border:1.5px solid #dde2f0;border-radius:8px;padding:10px;text-align:center;cursor:pointer;font-size:13px;color:#555;transition:all .15s}
-.gps-opt.sel{border-color:#1a3a8f;background:#e8f0fe;color:#1a3a8f;font-weight:600}
-.btn-guardar{width:100%;background:#1a3a8f;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;letter-spacing:.02em}
-.btn-guardar:active{background:#15317a}
-.btn-limpiar{width:100%;background:#fff;color:#666;border:1.5px solid #dde2f0;padding:11px;border-radius:10px;font-size:14px;cursor:pointer;margin-top:8px}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a3a8f;color:#fff;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:500;display:none;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+.sec{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #f0f0f0}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:12px;font-weight:600;color:#444;margin-bottom:5px}
+.fg input,.fg select{width:100%;padding:11px 12px;border:1.5px solid #dde2f0;border-radius:8px;font-size:15px;color:#1a1a2e;background:#fff;outline:none;-webkit-appearance:none;appearance:none}
+.fg input:focus,.fg select:focus{border-color:#1a3a8f;box-shadow:0 0 0 3px rgba(26,58,143,0.1)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gps-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
+.go{border:1.5px solid #dde2f0;border-radius:8px;padding:11px;text-align:center;cursor:pointer;font-size:13px;color:#555;transition:all .15s;user-select:none}
+.go.sel{border-color:#1a3a8f;background:#e8f0fe;color:#1a3a8f;font-weight:600}
+.btn-save{width:100%;background:#1a3a8f;color:#fff;border:none;padding:15px;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px;letter-spacing:.02em}
+.btn-save:active{background:#15317a;transform:scale(0.98)}
+.btn-save:disabled{background:#9aa8c9;cursor:not-allowed}
+.btn-clear{width:100%;background:#fff;color:#666;border:1.5px solid #dde2f0;padding:12px;border-radius:10px;font-size:14px;cursor:pointer;margin-top:8px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:13px 24px;border-radius:10px;font-size:14px;font-weight:500;display:none;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.2);min-width:220px;text-align:center}
+.toast.ok{background:#1a3a8f;color:#fff}
+.toast.err{background:#dc2626;color:#fff}
 .toast.show{display:block}
+.req{color:#dc2626}
 </style>
 </head>
 <body>
 <div class="header">
-  <div class="header-icon">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M1 3h15v13H1zm15 4l5 3v6h-5z"/></svg>
-  </div>
-  <div>
-    <h1>Retiro Puerto</h1>
-    <p>CD Lo Espejo — Área de Transporte</p>
-  </div>
+  <div class="hico"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M1 3h15v13H1zm15 4l5 3v6h-5z"/></svg></div>
+  <div><h1>Retiro Puerto</h1><p>CD Lo Espejo — Área de Transporte</p></div>
 </div>
 <div class="body">
   <div class="card">
-    <div class="section-title">Datos generales</div>
-    <div class="form-group"><label>Fecha *</label><input type="date" id="f-fecha"/></div>
-    <div class="form-row">
-      <div class="form-group"><label>Tipo *</label>
+    <div class="sec">Datos generales</div>
+    <div class="fg"><label>Fecha <span class="req">*</span></label><input type="date" id="f-fecha"/></div>
+    <div class="frow">
+      <div class="fg"><label>Tipo <span class="req">*</span></label>
         <select id="f-tipo"><option value="">Seleccionar...</option><option>Ingreso</option><option>Salida</option></select>
       </div>
     </div>
-    <div class="form-group"><label>Depósito *</label>
+    <div class="fg"><label>Depósito <span class="req">*</span></label>
       <select id="f-deposito"><option value="">Seleccionar depósito...</option>
         <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option>
         <option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
@@ -58,8 +57,8 @@ body{font-family:'Segoe UI',sans-serif;background:#f0f4ff;min-height:100vh;color
     </div>
   </div>
   <div class="card">
-    <div class="section-title">Empresa de Transporte</div>
-    <div class="form-group"><label>Transportista *</label>
+    <div class="sec">Empresa de transporte</div>
+    <div class="fg"><label>Transportista <span class="req">*</span></label>
       <select id="f-trans"><option value="">Seleccionar transporte...</option>
         <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
         <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
@@ -74,61 +73,72 @@ body{font-family:'Segoe UI',sans-serif;background:#f0f4ff;min-height:100vh;color
     </div>
   </div>
   <div class="card">
-    <div class="section-title">Datos del Conductor</div>
-    <div class="form-group"><label>Nombre chofer *</label><input type="text" id="f-chofer" placeholder="Nombre completo"/></div>
-    <div class="form-row">
-      <div class="form-group"><label>RUT *</label><input type="text" id="f-rut" placeholder="12.345.678-9"/></div>
-      <div class="form-group"><label>Teléfono *</label><input type="tel" id="f-tel" placeholder="+56 9 xxxx"/></div>
+    <div class="sec">Datos del conductor</div>
+    <div class="fg"><label>Nombre chofer <span class="req">*</span></label><input type="text" id="f-chofer" placeholder="Nombre completo" autocomplete="name"/></div>
+    <div class="frow">
+      <div class="fg"><label>RUT <span class="req">*</span></label><input type="text" id="f-rut" placeholder="12.345.678-9"/></div>
+      <div class="fg"><label>Teléfono</label><input type="tel" id="f-tel" placeholder="+56 9 xxxx"/></div>
     </div>
-    <div class="form-row">
-      <div class="form-group"><label>Patente tracto *</label><input type="text" id="f-tracto" placeholder="ABCD-12"/></div>
-      <div class="form-group"><label>Patente rampla *</label><input type="text" id="f-rampla" placeholder="ABCD-12"/></div>
+    <div class="frow">
+      <div class="fg"><label>Patente tracto <span class="req">*</span></label><input type="text" id="f-tracto" placeholder="ABCD-12" style="text-transform:uppercase"/></div>
+      <div class="fg"><label>Patente rampla <span class="req">*</span></label><input type="text" id="f-rampla" placeholder="ABCD-12" style="text-transform:uppercase"/></div>
     </div>
-    <div class="form-group"><label>Chofer a reemplazar</label><input type="text" id="f-reemplazo" placeholder="Opcional"/></div>
+    <div class="fg"><label>Chofer a reemplazar</label><input type="text" id="f-reemplazo" placeholder="Opcional"/></div>
   </div>
   <div class="card">
-    <div class="section-title">Ubicación GPS *</div>
-    <div class="gps-options">
-      <div class="gps-opt sel" id="gps-0" onclick="selGPS(0)">Rampla + Tracto</div>
-      <div class="gps-opt" id="gps-1" onclick="selGPS(1)">Solo Tracto</div>
-      <div class="gps-opt" id="gps-2" onclick="selGPS(2)">Solo Rampla</div>
-      <div class="gps-opt" id="gps-3" onclick="selGPS(3)">Sin GPS</div>
+    <div class="sec">Ubicación GPS <span class="req">*</span></div>
+    <div class="gps-opts">
+      <div class="go sel" id="gps-0" onclick="selGPS(0)">Rampla + Tracto</div>
+      <div class="go" id="gps-1" onclick="selGPS(1)">Solo Tracto</div>
+      <div class="go" id="gps-2" onclick="selGPS(2)">Solo Rampla</div>
+      <div class="go" id="gps-3" onclick="selGPS(3)">Sin GPS</div>
     </div>
   </div>
-  <button class="btn-guardar" onclick="guardar()">Guardar en Google Sheets</button>
-  <button class="btn-limpiar" onclick="limpiar()">Limpiar formulario</button>
-  <div style="height:30px"></div>
+  <button class="btn-save" id="btn-save" onclick="guardar()">Guardar en Google Sheets</button>
+  <button class="btn-clear" onclick="limpiar()">Limpiar formulario</button>
+  <div style="height:40px"></div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-var gpsOpts=['Rampla + Tracto','Solo Tracto','Solo Rampla','Sin GPS'];
+var APPS_URL='https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec';
+var GPS_OPTS=['Rampla + Tracto','Solo Tracto','Solo Rampla','Sin GPS'];
 var gpsIdx=0;
-function selGPS(i){
-  gpsIdx=i;
-  document.querySelectorAll('.gps-opt').forEach(function(el,j){el.classList.toggle('sel',j===i)});
-}
-function toast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show')},3000);
-}
+function selGPS(i){gpsIdx=i;document.querySelectorAll('.go').forEach(function(el,j){el.classList.toggle('sel',j===i);});}
+function toast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'ok')+' show';setTimeout(function(){t.classList.remove('show');},3500);}
 function guardar(){
-  var d={fecha:document.getElementById('f-fecha').value,tipo:document.getElementById('f-tipo').value,deposito:document.getElementById('f-deposito').value,transportista:document.getElementById('f-trans').value,chofer:document.getElementById('f-chofer').value,rut:document.getElementById('f-rut').value,tel:document.getElementById('f-tel').value,tracto:document.getElementById('f-tracto').value,rampla:document.getElementById('f-rampla').value,reemplazo:document.getElementById('f-reemplazo').value,gps:gpsOpts[gpsIdx]};
-  if(!d.fecha||!d.tipo||!d.deposito||!d.transportista||!d.chofer||!d.rut){toast('⚠️ Completa los campos obligatorios');return;}
-  var url=localStorage.getItem('asUrl');
-  if(!url){toast('Sin URL de Apps Script configurada');return;}
-  fetch(url,{method:'POST',body:JSON.stringify({modulo:'retiro',datos:d})})
-    .then(function(){toast('✓ Guardado correctamente');limpiar();})
-    .catch(function(){toast('Error al guardar — revisa la conexión');});
+  var btn=document.getElementById('btn-save');
+  var d={
+    fecha:document.getElementById('f-fecha').value,
+    tipo:document.getElementById('f-tipo').value,
+    deposito:document.getElementById('f-deposito').value,
+    transportista:document.getElementById('f-trans').value,
+    chofer:document.getElementById('f-chofer').value.trim(),
+    rut:document.getElementById('f-rut').value.trim(),
+    tel:document.getElementById('f-tel').value.trim(),
+    tracto:document.getElementById('f-tracto').value.trim().toUpperCase(),
+    rampla:document.getElementById('f-rampla').value.trim().toUpperCase(),
+    reemplazo:document.getElementById('f-reemplazo').value.trim(),
+    gps:GPS_OPTS[gpsIdx]
+  };
+  if(!d.fecha||!d.tipo||!d.deposito||!d.transportista||!d.chofer||!d.rut||!d.tracto||!d.rampla){
+    toast('Completa todos los campos obligatorios (*)','err');return;
+  }
+  btn.disabled=true;btn.textContent='Guardando...';
+  fetch(APPS_URL,{method:'POST',body:JSON.stringify({modulo:'retiro',datos:d})})
+    .then(function(r){return r.json();})
+    .then(function(res){
+      if(res.ok){toast('✓ Guardado correctamente');limpiar();}
+      else{toast('Error: '+(res.error||'desconocido'),'err');}
+    })
+    .catch(function(){toast('Error de conexión. Intenta de nuevo.','err');})
+    .finally(function(){btn.disabled=false;btn.textContent='Guardar en Google Sheets';});
 }
 function limpiar(){
-  ['f-fecha','f-tipo','f-deposito','f-trans','f-chofer','f-rut','f-tel','f-tracto','f-rampla','f-reemplazo'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el.tagName==='SELECT') el.selectedIndex=0; else el.value='';
-  });
+  ['f-tipo','f-deposito','f-trans'].forEach(function(id){document.getElementById(id).selectedIndex=0;});
+  ['f-chofer','f-rut','f-tel','f-tracto','f-rampla','f-reemplazo'].forEach(function(id){document.getElementById(id).value='';});
   selGPS(0);
+  document.getElementById('f-fecha').valueAsDate=new Date();
 }
-// set today
 document.getElementById('f-fecha').valueAsDate=new Date();
 </script>
 </body>
