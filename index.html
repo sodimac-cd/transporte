@@ -468,12 +468,16 @@ var store={retiro:[],devolucion:[],programacion:[]};
 
 // ── CONFIG ────────────────────────────────────────────────────
 function guardarUrl(){var u=document.getElementById('asUrl').value.trim();if(u){localStorage.setItem('asUrl',u);cargarDatos();}}
+localStorage.setItem('asUrl', localStorage.getItem('asUrl')||'https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec');
 var _su=localStorage.getItem('asUrl');if(_su)document.getElementById('asUrl').value=_su;
 
 // ── LOAD DATA ─────────────────────────────────────────────────
+var APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec';
 function cargarDatos(){
-  var url=localStorage.getItem('asUrl');
+  var url=localStorage.getItem('asUrl')||APPS_SCRIPT_URL;
   if(!url)return;
+  localStorage.setItem('asUrl',url);
+  document.getElementById('asUrl').value=url;
   fetch(url,{redirect:'follow'})
     .then(function(r){return r.json();})
     .then(function(d){
