@@ -468,29 +468,32 @@ var store={retiro:[],devolucion:[],programacion:[]};
 
 // ── CONFIG ────────────────────────────────────────────────────
 function guardarUrl(){var u=document.getElementById('asUrl').value.trim();if(u){localStorage.setItem('asUrl',u);cargarDatos();}}
-localStorage.setItem('asUrl', localStorage.getItem('asUrl')||'https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec');
-var _su=localStorage.getItem('asUrl');if(_su)document.getElementById('asUrl').value=_su;
+// URL set in cargarDatos
 
 // ── LOAD DATA ─────────────────────────────────────────────────
-var APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec';
+var APPS_URL='https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec';
 function cargarDatos(){
-  var url=localStorage.getItem('asUrl')||APPS_SCRIPT_URL;
-  if(!url)return;
+  var url=localStorage.getItem('asUrl')||APPS_URL;
   localStorage.setItem('asUrl',url);
   document.getElementById('asUrl').value=url;
-  fetch(url,{redirect:'follow'})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      if(d.debug){
-        var box=document.getElementById('debug-box');
-        var txt=document.getElementById('debug-txt');
-        if(box&&txt){box.style.display='block';txt.textContent=JSON.stringify(d.debug,null,2);}
-      }
-      if(d.retiro&&d.retiro.length)renderRetiro(d.retiro);
-      if(d.devolucion&&d.devolucion.length)renderDevolucion(d.devolucion);
-      if(d.programacion&&d.programacion.length)renderProgramacion(d.programacion);
-    })
-    .catch(function(e){console.warn('Error cargando datos:',e);});
+  var cb='cb_'+Date.now();
+  window[cb]=function(d){
+    try{delete window[cb];}catch(e){}
+    var s=document.getElementById('jsonp-script');if(s)s.remove();
+    if(d.debug){
+      var box=document.getElementById('debug-box');
+      var txt=document.getElementById('debug-txt');
+      if(box&&txt){box.style.display='block';txt.textContent=JSON.stringify(d.debug,null,2);}
+    }
+    if(d.retiro&&d.retiro.length)renderRetiro(d.retiro);
+    if(d.devolucion&&d.devolucion.length)renderDevolucion(d.devolucion);
+    if(d.programacion&&d.programacion.length)renderProgramacion(d.programacion);
+  };
+  var s=document.createElement('script');
+  s.id='jsonp-script';
+  s.src=url+'?callback='+cb+'&t='+Date.now();
+  s.onerror=function(){console.warn('JSONP error');};
+  document.head.appendChild(s);
 }
 
 // ── PILLS ─────────────────────────────────────────────────────
@@ -589,8 +592,7 @@ function exportCSV(modulo,nombre){
 
 // ── GUARDAR RETIRO ────────────────────────────────────────────
 function guardarRetiro(){
-  var url=localStorage.getItem('asUrl');
-  if(!url){alert('Configura la URL de Apps Script en Configuración.');return;}
+  var url=localStorage.getItem('asUrl')||APPS_URL;
   var d={fecha:document.getElementById('rf-f').value,tipo:document.getElementById('rf-t').value,deposito:document.getElementById('rf-d').value,transportista:document.getElementById('rf-tr').value,chofer:document.getElementById('rf-ch').value,rut:document.getElementById('rf-ru').value,tel:document.getElementById('rf-te').value,tracto:document.getElementById('rf-tc').value,rampla:document.getElementById('rf-ra').value,reemplazo:document.getElementById('rf-re').value,gps:document.getElementById('rf-gp').value};
   if(!d.fecha||!d.deposito||!d.transportista||!d.chofer||!d.rut){alert('Completa los campos obligatorios (*).');return;}
   fetch(url,{method:'POST',body:JSON.stringify({modulo:'retiro',datos:d}),redirect:'follow'})
@@ -600,8 +602,7 @@ function guardarRetiro(){
 
 // ── GUARDAR DEVOLUCIÓN ────────────────────────────────────────
 function guardarDevolucion(){
-  var url=localStorage.getItem('asUrl');
-  if(!url){alert('Configura la URL de Apps Script en Configuración.');return;}
+  var url=localStorage.getItem('asUrl')||APPS_URL;
   var d={fecha:document.getElementById('dv-f').value,deposito:document.getElementById('dv-d').value,transportista:document.getElementById('dv-tr').value,contenedor:document.getElementById('dv-co').value,eir:document.getElementById('dv-ei').value};
   if(!d.fecha||!d.deposito||!d.transportista||!d.contenedor||!d.eir){alert('Completa los campos obligatorios (*).');return;}
   fetch(url,{method:'POST',body:JSON.stringify({modulo:'devolucion',datos:d}),redirect:'follow'})
