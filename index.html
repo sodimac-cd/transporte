@@ -129,10 +129,6 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
   <div class="topbar">
     <div class="tl">CD Lo Espejo <span>Área de Transporte</span></div>
     <div class="navtabs">
-      <div class="nt on" id="nt-dashboard" onclick="go('dashboard')">Dashboard</div>
-      <div class="nt" id="nt-progRM" onclick="go('progRM')">Programación RM</div>
-      <div class="nt" id="nt-progPuerto" onclick="go('progPuerto')">Programa Puerto</div>
-      <div class="nt" id="nt-asignaciones" onclick="go('asignaciones')">Asignaciones</div>
       <div class="nt" id="nt-metricas" onclick="go('metricas')">Métricas</div>
       <div class="nt" id="nt-config" onclick="go('config')">Configuración</div>
     </div>
@@ -398,7 +394,7 @@ tick();setInterval(tick,30000);
 (function(){var u=localStorage.getItem('asUrl')||URL_AS;localStorage.setItem('asUrl',u);document.getElementById('cfgUrl').value=u;})();
 
 // NAV
-var NM={dashboard:'nt-dashboard',progRM:'nt-progRM',progPuerto:'nt-progPuerto',asignaciones:'nt-asignaciones',metricas:'nt-metricas',config:'nt-config'};
+var NM={metricas:'nt-metricas',config:'nt-config'};
 function go(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
   var pg=document.getElementById('p-'+id);if(pg)pg.classList.add('on');
