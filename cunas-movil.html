@@ -1,234 +1,167 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Instalación Cuñas — CD Lo Espejo</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Instalación Cuñas — CD Lo Espejo</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f0f4f8;
+  color: #1a202c;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+.header {
+  background: linear-gradient(135deg, #1a4fa0, #1565c0);
+  color: white;
+  padding: 1.25rem 1rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.header .logo {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+.header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.header .sub { font-size: 12px; opacity: 0.8; margin-top: 2px; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f0f4f8;
-      color: #1a202c;
-      min-height: 100vh;
-      padding-bottom: 2rem;
-    }
+.container { padding: 1rem; max-width: 480px; margin: 0 auto; }
 
-    .header {
-      background: linear-gradient(135deg, #1a4fa0, #1565c0);
-      color: white;
-      padding: 1.25rem 1rem 1rem;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    .header .logo {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      opacity: 0.85;
-      margin-bottom: 4px;
-    }
-    .header h1 {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-    .header .sub {
-      font-size: 12px;
-      opacity: 0.8;
-      margin-top: 2px;
-    }
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a4fa0;
+  margin-bottom: 1rem;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #e8f0fe;
+}
+.form-group { margin-bottom: 1rem; }
+.form-group:last-child { margin-bottom: 0; }
 
-    .container { padding: 1rem; max-width: 480px; margin: 0 auto; }
+label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 5px; }
+label .req { color: #e53e3e; }
 
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    }
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #1a202c;
+  background: #fafafa;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-appearance: none;
+}
+input[type="text"]:focus,
+input[type="date"]:focus {
+  outline: none;
+  border-color: #1a4fa0;
+  box-shadow: 0 0 0 3px rgba(26,79,160,0.12);
+  background: white;
+}
+input[type="text"]::placeholder { color: #9ca3af; }
 
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #1a4fa0;
-      margin-bottom: 1rem;
-      padding-bottom: 6px;
-      border-bottom: 2px solid #e8f0fe;
-    }
+.photo-area {
+  border: 2px dashed #c3cfe8;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  background: #f8faff;
+  transition: all 0.2s;
+  position: relative;
+}
+.photo-area:active { background: #eef2ff; border-color: #1a4fa0; }
+.photo-area .icon { font-size: 36px; margin-bottom: 6px; display: block; }
+.photo-area p { font-size: 14px; color: #6b7280; font-weight: 500; }
+.photo-area .note { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+#file-input { display: none; }
+#photo-preview-wrap { display: none; margin-top: 10px; position: relative; }
+#photo-preview { width: 100%; border-radius: 10px; max-height: 220px; object-fit: cover; display: block; }
+.remove-photo {
+  position: absolute; top: 6px; right: 6px;
+  background: rgba(0,0,0,0.55); color: white;
+  border: none; border-radius: 50%;
+  width: 28px; height: 28px;
+  font-size: 16px; line-height: 28px;
+  text-align: center; cursor: pointer;
+}
 
-    .form-group { margin-bottom: 1rem; }
-    .form-group:last-child { margin-bottom: 0; }
+.btn-save {
+  width: 100%; padding: 15px;
+  background: #1a4fa0; color: white;
+  border: none; border-radius: 12px;
+  font-size: 16px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.02em;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 3px 10px rgba(26,79,160,0.35);
+}
+.btn-save:active { transform: scale(0.98); background: #143d80; }
+.btn-save:disabled { background: #9ca3af; box-shadow: none; cursor: not-allowed; }
 
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: #374151;
-      margin-bottom: 5px;
-    }
-    label .req { color: #e53e3e; }
+.btn-clear {
+  width: 100%; padding: 12px;
+  background: transparent; color: #6b7280;
+  border: 1.5px solid #d1d5db; border-radius: 12px;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer; margin-top: 10px;
+  transition: all 0.15s;
+}
+.btn-clear:active { background: #f3f4f6; }
 
-    input[type="text"],
-    input[type="date"] {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1.5px solid #d1d5db;
-      border-radius: 10px;
-      font-size: 15px;
-      color: #1a202c;
-      background: #fafafa;
-      transition: border-color 0.15s, box-shadow 0.15s;
-      -webkit-appearance: none;
-    }
-    input[type="text"]:focus,
-    input[type="date"]:focus {
-      outline: none;
-      border-color: #1a4fa0;
-      box-shadow: 0 0 0 3px rgba(26,79,160,0.12);
-      background: white;
-    }
-    input[type="text"]::placeholder { color: #9ca3af; }
+.toast {
+  position: fixed; bottom: 24px;
+  left: 50%; transform: translateX(-50%);
+  padding: 13px 24px; border-radius: 10px;
+  font-size: 14px; font-weight: 500;
+  display: none; z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  min-width: 220px; text-align: center;
+}
+.toast.ok  { background: #1a4fa0; color: #fff; }
+.toast.err { background: #dc2626; color: #fff; }
+.toast.show { display: block; }
 
-    /* Área de foto */
-    .photo-area {
-      border: 2px dashed #c3cfe8;
-      border-radius: 12px;
-      padding: 1.5rem 1rem;
-      text-align: center;
-      cursor: pointer;
-      background: #f8faff;
-      transition: all 0.2s;
-      position: relative;
-    }
-    .photo-area:active { background: #eef2ff; border-color: #1a4fa0; }
-    .photo-area .icon {
-      font-size: 36px;
-      margin-bottom: 6px;
-      display: block;
-    }
-    .photo-area p { font-size: 14px; color: #6b7280; font-weight: 500; }
-    .photo-area .note {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-top: 4px;
-    }
-    #file-input { display: none; }
-    #photo-preview-wrap { display: none; margin-top: 10px; position: relative; }
-    #photo-preview {
-      width: 100%;
-      border-radius: 10px;
-      max-height: 220px;
-      object-fit: cover;
-      display: block;
-    }
-    .remove-photo {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      background: rgba(0,0,0,0.55);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      font-size: 16px;
-      line-height: 28px;
-      text-align: center;
-      cursor: pointer;
-    }
+.loading-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(255,255,255,0.85); z-index: 999;
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: 12px;
+}
+.loading-overlay.show { display: flex; }
+.spinner {
+  width: 40px; height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #1a4fa0;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-overlay p { font-size: 14px; color: #374151; font-weight: 500; }
 
-    /* Botón principal */
-    .btn-save {
-      width: 100%;
-      padding: 15px;
-      background: #1a4fa0;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.02em;
-      transition: background 0.15s, transform 0.1s;
-      box-shadow: 0 3px 10px rgba(26,79,160,0.35);
-    }
-    .btn-save:active { transform: scale(0.98); background: #143d80; }
-    .btn-save:disabled { background: #9ca3af; box-shadow: none; cursor: not-allowed; }
-
-    .btn-clear {
-      width: 100%;
-      padding: 12px;
-      background: transparent;
-      color: #6b7280;
-      border: 1.5px solid #d1d5db;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: all 0.15s;
-    }
-    .btn-clear:active { background: #f3f4f6; }
-
-    /* Alertas */
-    .alert {
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 1rem;
-      display: none;
-    }
-    .alert.success {
-      background: #dcfce7;
-      color: #166534;
-      border: 1px solid #bbf7d0;
-    }
-    .alert.error {
-      background: #fee2e2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
-    }
-    .alert.show { display: block; }
-
-    /* Overlay cargando */
-    .loading-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,0.85);
-      z-index: 999;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .loading-overlay.show { display: flex; }
-    .spinner {
-      width: 40px; height: 40px;
-      border: 4px solid #e5e7eb;
-      border-top-color: #1a4fa0;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-overlay p { font-size: 14px; color: #374151; font-weight: 500; }
-
-    .info-note {
-      background: #eff6ff;
-      border-left: 3px solid #1a4fa0;
-      border-radius: 0 8px 8px 0;
-      padding: 10px 12px;
-      font-size: 12px;
-      color: #1e40af;
-      line-height: 1.6;
-    }
-  </style>
+.info-note {
+  background: #eff6ff;
+  border-left: 3px solid #1a4fa0;
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+  font-size: 12px; color: #1e40af; line-height: 1.6;
+}
+</style>
 </head>
 <body>
 
@@ -240,22 +173,17 @@
 
 <div class="container">
 
-  <div class="alert" id="main-alert"></div>
-
   <div class="card">
     <div class="section-label">Datos del registro</div>
-
     <div class="form-group">
       <label for="f-patente">Patente <span class="req">*</span></label>
       <input type="text" id="f-patente" placeholder="Ej: BCDF-12" autocomplete="off"
              oninput="this.value=this.value.toUpperCase()">
     </div>
-
     <div class="form-group">
       <label for="f-anden">Andén <span class="req">*</span></label>
-      <input type="text" id="f-anden" placeholder="Ej: Andén 3" autocomplete="off">
+      <input type="text" id="f-anden" placeholder="Ej: 3" autocomplete="off">
     </div>
-
     <div class="form-group">
       <label for="f-fecha">Fecha de ingreso <span class="req">*</span></label>
       <input type="date" id="f-fecha">
@@ -264,7 +192,6 @@
 
   <div class="card">
     <div class="section-label">Foto del registro</div>
-
     <div class="photo-area" onclick="document.getElementById('file-input').click()">
       <span class="icon">📷</span>
       <p>Toca para adjuntar foto</p>
@@ -278,16 +205,18 @@
   </div>
 
   <div class="info-note">
-    Los datos (patente, andén, fecha) quedan guardados en Google Sheets hasta ser eliminados manualmente. Solo la foto expira a las 48 hrs.
+    Los datos (patente, andén, fecha) quedan guardados en Google Sheets. Solo la foto expira a las 48 hrs.
   </div>
   <br>
 
-  <button class="btn-save" id="btn-save" onclick="submitForm()">
+  <button class="btn-save" id="btn-save" onclick="guardar()">
     💾 Guardar en Google Sheets
   </button>
-  <button class="btn-clear" onclick="clearForm()">Limpiar formulario</button>
+  <button class="btn-clear" onclick="limpiarForm()">Limpiar formulario</button>
 
 </div>
+
+<div class="toast" id="toast"></div>
 
 <div class="loading-overlay" id="loading">
   <div class="spinner"></div>
@@ -295,168 +224,118 @@
 </div>
 
 <script>
-  // ── Configuración ──────────────────────────────────────────────────────────
-  // IMPORTANTE: Reemplaza esta URL con la URL de tu Apps Script Web App
-  // Es la misma que ya tienes configurada en Configuración del sistema principal.
-  const APPS_SCRIPT_URL = (() => {
-    try {
-      return localStorage.getItem('transporte_script_url') || '';
-    } catch(e) { return ''; }
-  })();
+var APPS_URL = 'https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec';
 
-  let photoBase64 = null;
+var photoBase64 = null;
 
-  // ── Fecha de hoy por defecto ────────────────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', () => {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    document.getElementById('f-fecha').value = `${yyyy}-${mm}-${dd}`;
+document.getElementById('f-fecha').valueAsDate = new Date();
+
+function previewPhoto(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  compressImage(file, function(b64) {
+    photoBase64 = b64;
+    var img  = document.getElementById('photo-preview');
+    var wrap = document.getElementById('photo-preview-wrap');
+    img.src = b64;
+    wrap.style.display = 'block';
   });
+}
 
-  // ── Preview foto ────────────────────────────────────────────────────────────
-  function previewPhoto(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    compressImage(file, (base64) => {
-      photoBase64 = base64;
-      const img = document.getElementById('photo-preview');
-      const wrap = document.getElementById('photo-preview-wrap');
-      img.src = base64;
-      wrap.style.display = 'block';
-    });
-  }
+function removePhoto(e) {
+  e.stopPropagation();
+  photoBase64 = null;
+  document.getElementById('photo-preview-wrap').style.display = 'none';
+  document.getElementById('photo-preview').src = '';
+  document.getElementById('file-input').value = '';
+}
 
-  function removePhoto(e) {
-    e.stopPropagation();
-    photoBase64 = null;
-    document.getElementById('photo-preview-wrap').style.display = 'none';
-    document.getElementById('photo-preview').src = '';
-    document.getElementById('file-input').value = '';
-  }
-
-  // Comprimir imagen antes de enviar (max ~800px, calidad 0.75)
-  function compressImage(file, callback) {
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const img = new Image();
-      img.onload = () => {
-        const maxW = 800;
-        let w = img.width, h = img.height;
-        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        callback(canvas.toDataURL('image/jpeg', 0.75));
-      };
-      img.src = ev.target.result;
+function compressImage(file, callback) {
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var img = new Image();
+    img.onload = function() {
+      var maxW = 800, w = img.width, h = img.height;
+      if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+      var canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      callback(canvas.toDataURL('image/jpeg', 0.75));
     };
-    reader.readAsDataURL(file);
-  }
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
 
-  // ── Validación ──────────────────────────────────────────────────────────────
-  function validate() {
-    const patente = document.getElementById('f-patente').value.trim();
-    const anden   = document.getElementById('f-anden').value.trim();
-    const fecha   = document.getElementById('f-fecha').value;
-    if (!patente) { showAlert('Ingresa la patente.', 'error'); return false; }
-    if (!anden)   { showAlert('Ingresa el andén.', 'error'); return false; }
-    if (!fecha)   { showAlert('Selecciona la fecha de ingreso.', 'error'); return false; }
-    return true;
-  }
+function toast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (type || 'ok') + ' show';
+  setTimeout(function() { t.classList.remove('show'); }, 3500);
+}
 
-  // ── Envío ───────────────────────────────────────────────────────────────────
-  async function submitForm() {
-    if (!validate()) return;
+function guardar() {
+  var patente = document.getElementById('f-patente').value.trim().toUpperCase();
+  var anden   = document.getElementById('f-anden').value.trim();
+  var fecha   = document.getElementById('f-fecha').value;
 
-    const scriptUrl = APPS_SCRIPT_URL ||
-      prompt('Ingresa la URL del Apps Script (la misma de Configuración):');
-    if (!scriptUrl) {
-      showAlert('No se ha configurado la URL de Google Apps Script.', 'error');
-      return;
+  if (!patente) { toast('Ingresa la patente.', 'err'); return; }
+  if (!anden)   { toast('Ingresa el andén.', 'err'); return; }
+  if (!fecha)   { toast('Selecciona la fecha de ingreso.', 'err'); return; }
+
+  var btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
+  document.getElementById('loading').className = 'loading-overlay show';
+
+  var now    = new Date();
+  var creado = now.toLocaleString('es-CL', { timeZone: 'America/Santiago' });
+  var fotoExpiry = photoBase64
+    ? new Date(now.getTime() + 48*60*60*1000).toLocaleString('es-CL', { timeZone: 'America/Santiago' })
+    : '';
+
+  var payload = {
+    modulo: 'cunas',
+    datos: {
+      fecha:      fecha,
+      patente:    patente,
+      anden:      anden,
+      creado:     creado,
+      fotoExpiry: fotoExpiry,
+      tieneFoto:  photoBase64 ? 'Sí' : 'No',
+      foto:       photoBase64 || ''
     }
-    try { localStorage.setItem('transporte_script_url', scriptUrl); } catch(e) {}
+  };
 
-    const patente = document.getElementById('f-patente').value.trim().toUpperCase();
-    const anden   = document.getElementById('f-anden').value.trim();
-    const fecha   = document.getElementById('f-fecha').value;
-    const now     = new Date();
-    const creado  = now.toLocaleString('es-CL', { timeZone: 'America/Santiago' });
-    const fotoExpiry = photoBase64
-      ? new Date(now.getTime() + 48 * 60 * 60 * 1000)
-          .toLocaleString('es-CL', { timeZone: 'America/Santiago' })
-      : '';
-
-    const payload = {
-      action:      'append',
-      sheet:       'CuñasAbastecimiento',
-      row: [
-        fecha,
-        patente,
-        anden,
-        creado,
-        fotoExpiry,
-        photoBase64 ? '✓ Con foto' : 'Sin foto'
-      ]
-    };
-
-    // Si hay foto, incluirla en payload separado (Drive)
-    if (photoBase64) {
-      payload.foto = {
-        base64:   photoBase64,
-        fileName: `cunas_${patente}_${fecha}.jpg`,
-        expiry:   fotoExpiry
-      };
+  fetch(APPS_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(res) {
+    if (res.ok) {
+      toast('✓ Registro guardado correctamente');
+      limpiarForm(true);
+    } else {
+      toast('Error: ' + (res.error || 'desconocido'), 'err');
     }
+  })
+  .catch(function(err) {
+    toast('Error de conexión. Intenta de nuevo.', 'err');
+  })
+  .finally(function() {
+    btn.disabled = false;
+    btn.textContent = '💾 Guardar en Google Sheets';
+    document.getElementById('loading').className = 'loading-overlay';
+  });
+}
 
-    showLoading(true);
-    document.getElementById('btn-save').disabled = true;
-
-    try {
-      const resp = await fetch(scriptUrl, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(payload)
-      });
-      const data = await resp.json();
-      if (data.status === 'ok' || data.result === 'success') {
-        showAlert('✅ Registro guardado correctamente.', 'success');
-        clearForm(true);
-      } else {
-        throw new Error(data.message || 'Error desconocido');
-      }
-    } catch (err) {
-      showAlert('⚠️ Error al guardar: ' + err.message, 'error');
-    } finally {
-      showLoading(false);
-      document.getElementById('btn-save').disabled = false;
-    }
-  }
-
-  // ── Utilidades UI ───────────────────────────────────────────────────────────
-  function showAlert(msg, type) {
-    const el = document.getElementById('main-alert');
-    el.textContent = msg;
-    el.className = 'alert ' + type + ' show';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => { el.className = 'alert'; }, 5000);
-  }
-
-  function showLoading(show) {
-    document.getElementById('loading').className = show ? 'loading-overlay show' : 'loading-overlay';
-  }
-
-  function clearForm(keepDate) {
-    document.getElementById('f-patente').value = '';
-    document.getElementById('f-anden').value   = '';
-    if (!keepDate) {
-      const today = new Date();
-      document.getElementById('f-fecha').value =
-        today.toISOString().split('T')[0];
-    }
-    removePhoto({ stopPropagation: () => {} });
-  }
+function limpiarForm(keepDate) {
+  document.getElementById('f-patente').value = '';
+  document.getElementById('f-anden').value   = '';
+  if (!keepDate) document.getElementById('f-fecha').valueAsDate = new Date();
+  removePhoto({ stopPropagation: function(){} });
+}
 </script>
 </body>
 </html>
