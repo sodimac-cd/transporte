@@ -1,553 +1,462 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>CD Lo Espejo — Transporte</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;background:#f0f2f8;color:#1a1a2e;height:100vh;overflow:hidden}
-.app{display:flex;height:100vh;overflow:hidden}
-/* SIDEBAR */
-.sb{width:215px;min-width:215px;background:#1a3a8f;color:#fff;display:flex;flex-direction:column;overflow-y:auto}
-.sb-logo{padding:16px;border-bottom:1px solid rgba(255,255,255,0.15)}
-.sb-logo .t{font-size:14px;font-weight:600}
-.sb-logo .s{font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px}
-.sb-sec{padding:8px 12px 4px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
-.si{display:flex;align-items:center;gap:8px;padding:7px 14px;font-size:13px;color:rgba(255,255,255,0.8);cursor:pointer;transition:background .15s}
-.si:hover{background:rgba(255,255,255,0.1);color:#fff}
-.si.on{background:rgba(255,255,255,0.18);color:#fff;font-weight:500}
-.si.sub{padding-left:28px;font-size:12px}
-.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);flex-shrink:0}
-.si.on .dot{background:#60c8ff}
-/* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.topbar{background:#2247b8;color:#fff;padding:0 20px;height:48px;display:flex;align-items:center;flex-shrink:0}
-.tl{font-size:13px;font-weight:600;margin-right:20px;white-space:nowrap}
-.tl span{font-size:11px;font-weight:400;opacity:.75;display:block}
-.navtabs{display:flex;height:100%;overflow-x:auto}
-.nt{padding:0 13px;font-size:13px;color:rgba(255,255,255,0.75);cursor:pointer;border-bottom:2px solid transparent;height:100%;display:flex;align-items:center;white-space:nowrap;transition:all .15s}
-.nt:hover{color:#fff;background:rgba(255,255,255,0.08)}
-.nt.on{color:#fff;border-bottom-color:#60c8ff;background:rgba(255,255,255,0.1)}
-.tr{margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.tclock{font-size:12px;opacity:.75;white-space:nowrap}
-.tupd{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer}
-.content{flex:1;overflow-y:auto;padding:20px;background:#f0f2f8}
-/* PAGES */
-.page{display:none}.page.on{display:block}
-.ph{margin-bottom:18px}
-.ph h2{font-size:18px;font-weight:600}
-.ph p{font-size:13px;color:#666;margin-top:3px}
-/* CARDS */
-.card{background:#fff;border:1px solid #e8eaf0;border-radius:10px;padding:16px 20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px;flex-wrap:wrap}
-.ct{font-size:14px;font-weight:600}
-.chright{display:flex;align-items:center;gap:8px}
-.badge{background:#e8f0fe;color:#1a3a8f;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
-/* TABLES */
-table{width:100%;border-collapse:collapse;font-size:12.5px}
-th{text-align:left;padding:7px 8px;color:#888;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #eee}
-td{padding:8px;border-bottom:1px solid #f5f5f5}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#fafbff}
-.gps{background:#fff3cd;color:#856404;font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;white-space:nowrap;display:inline-block}
-/* PILLS */
-.pe{background:#d1fae5;color:#065f46;font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;display:inline-block}
-.pp{background:#fff3cd;color:#856404;font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;display:inline-block}
-.pr{background:#e0e7ff;color:#3730a3;font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;display:inline-block}
-.pc{background:#fee2e2;color:#991b1b;font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;display:inline-block}
-.pd{background:#f3f4f6;color:#374151;font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;display:inline-block}
-/* BUTTONS */
-.btn{background:#fff;border:1px solid #d0d5e8;color:#444;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
-.btn:hover{background:#f0f2f8}
-.btn.blue{background:#1a3a8f;border-color:#1a3a8f;color:#fff}
-.btn.blue:hover{background:#15317a}
-.btn.green{background:#1d6f42;border-color:#1d6f42;color:#fff}
-.btn.green:hover{background:#155233}
-/* TABS */
-.tabrow{display:flex;border-bottom:1.5px solid #e0e0e0;margin-bottom:18px}
-.tabb{padding:8px 16px;font-size:13px;color:#666;cursor:pointer;border:none;border-bottom:2px solid transparent;margin-bottom:-1.5px;background:none}
-.tabb.on{color:#1a3a8f;border-bottom-color:#1a3a8f;font-weight:500}
-/* FORM */
-.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
-.fg label{font-size:12px;color:#555;font-weight:500}
-.fg input,.fg select{padding:7px 10px;border:1px solid #d0d5e8;border-radius:6px;font-size:13px;background:#fff;color:#1a1a2e;outline:none}
-.fg input:focus,.fg select:focus{border-color:#1a3a8f}
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.full{grid-column:1/-1}
-.ff{margin-top:14px;display:flex;gap:10px;justify-content:flex-end}
-.sdiv{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid #f0f0f0}
-/* STATS */
-.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
-.sc{background:#fff;border-radius:8px;padding:14px;border:1px solid #e8eaf0}
-.sc .lbl{font-size:12px;color:#888;margin-bottom:4px}
-.sc .val{font-size:22px;font-weight:600}
-.sc .sub{font-size:11px;color:#aaa;margin-top:2px}
-/* FILTERS */
-.fr{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-.fr select{padding:5px 9px;border:1px solid #d0d5e8;border-radius:6px;font-size:12px;background:#fff}
-.brow{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
-.es{text-align:center;padding:36px;color:#aaa;font-size:13px}
-/* QR */
-.qrgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.qrc{background:#fff;border:1px solid #e8eaf0;border-radius:14px;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
-.qrc h3{font-size:16px;font-weight:700;text-align:center}
-.qrs{font-size:12px;color:#888;text-align:center}
-.qrbox{background:#fff;padding:14px;border-radius:10px;border:1.5px solid #e8eaf0;display:flex;align-items:center;justify-content:center;min-height:200px;min-width:200px}
-.qrurl{background:#f0f4ff;border:1px solid #d0d8f0;border-radius:8px;padding:7px 12px;font-size:11px;color:#445;font-family:monospace;text-align:center;word-break:break-all;width:100%}
-.qrprint{background:#1a3a8f;color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
-/* OTHERS */
-.dbg{display:none;margin-top:14px;background:#f8f9ff;border:1px solid #e0e4f0;border-radius:8px;padding:12px}
-.dbg-t{font-size:11px;font-weight:600;color:#1a3a8f;margin-bottom:6px}
-pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Instalación Cuñas — CD Lo Espejo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f4f8;
+      color: #1a202c;
+      min-height: 100vh;
+      padding-bottom: 2rem;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a4fa0, #1565c0);
+      color: white;
+      padding: 1.25rem 1rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .header .logo {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 4px;
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .header .sub {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    .container { padding: 1rem; max-width: 480px; margin: 0 auto; }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1a4fa0;
+      margin-bottom: 1rem;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #e8f0fe;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 5px;
+    }
+    label .req { color: #e53e3e; }
+
+    input[type="text"],
+    input[type="date"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 15px;
+      color: #1a202c;
+      background: #fafafa;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -webkit-appearance: none;
+    }
+    input[type="text"]:focus,
+    input[type="date"]:focus {
+      outline: none;
+      border-color: #1a4fa0;
+      box-shadow: 0 0 0 3px rgba(26,79,160,0.12);
+      background: white;
+    }
+    input[type="text"]::placeholder { color: #9ca3af; }
+
+    /* Área de foto */
+    .photo-area {
+      border: 2px dashed #c3cfe8;
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      background: #f8faff;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .photo-area:active { background: #eef2ff; border-color: #1a4fa0; }
+    .photo-area .icon {
+      font-size: 36px;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .photo-area p { font-size: 14px; color: #6b7280; font-weight: 500; }
+    .photo-area .note {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    #file-input { display: none; }
+    #photo-preview-wrap { display: none; margin-top: 10px; position: relative; }
+    #photo-preview {
+      width: 100%;
+      border-radius: 10px;
+      max-height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .remove-photo {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(0,0,0,0.55);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
+      line-height: 28px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    /* Botón principal */
+    .btn-save {
+      width: 100%;
+      padding: 15px;
+      background: #1a4fa0;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: background 0.15s, transform 0.1s;
+      box-shadow: 0 3px 10px rgba(26,79,160,0.35);
+    }
+    .btn-save:active { transform: scale(0.98); background: #143d80; }
+    .btn-save:disabled { background: #9ca3af; box-shadow: none; cursor: not-allowed; }
+
+    .btn-clear {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: #6b7280;
+      border: 1.5px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.15s;
+    }
+    .btn-clear:active { background: #f3f4f6; }
+
+    /* Alertas */
+    .alert {
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .alert.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .alert.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .alert.show { display: block; }
+
+    /* Overlay cargando */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.85);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .loading-overlay.show { display: flex; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 4px solid #e5e7eb;
+      border-top-color: #1a4fa0;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-overlay p { font-size: 14px; color: #374151; font-weight: 500; }
+
+    .info-note {
+      background: #eff6ff;
+      border-left: 3px solid #1a4fa0;
+      border-radius: 0 8px 8px 0;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #1e40af;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
-<div class="app">
-<div class="sb">
-  <div class="sb-logo">
-    <div style="width:32px;height:32px;background:#60c8ff;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h8v4H3z" fill="#1a3a8f"/></svg>
-    </div>
-    <div class="t">CD Lo Espejo</div>
-    <div class="s">Área de Transporte</div>
-  </div>
-  <div class="sb-sec">Principal</div>
-  <div class="si on" id="sb-dashboard" onclick="go('dashboard')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg> Dashboard</div>
-  <div class="sb-sec">Módulos</div>
-  <div class="si" id="sb-abastecimiento" onclick="go('abastecimiento')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-4V5a2 2 0 00-4 0v2H8L6 21h12L20 7z"/></svg> Abastecimiento Tienda</div>
-  <div class="si" id="sb-despacho" onclick="go('despacho')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 3h15v13H1zm15 4l5 3v6h-5z"/></svg> Despacho a Domicilio</div>
-  <div class="si" id="sb-contenedores" onclick="go('contenedores')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M7 7V5a2 2 0 014 0v2"/></svg> Contenedores</div>
-  <div class="si sub" id="sb-programacion" onclick="go('programacion')"><span class="dot"></span> Programación</div>
-  <div class="si sub" id="sb-retiro" onclick="go('retiro')"><span class="dot"></span> Retiro Puerto</div>
-  <div class="si sub" id="sb-devolucion" onclick="go('devolucion')"><span class="dot"></span> Devolución Vacíos</div>
-  <div class="si sub" id="sb-qr" onclick="go('qr')"><span class="dot"></span> Códigos QR</div>
-  <div class="sb-sec">Sistema</div>
-  <div class="si" id="sb-config" onclick="go('config')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Configuración</div>
+
+<div class="header">
+  <div class="logo">CD Lo Espejo · Área de Transporte</div>
+  <h1>Instalación Cuñas</h1>
+  <div class="sub">Abastecimiento Tienda</div>
 </div>
-<div class="main">
-  <div class="topbar">
-    <div class="tl">CD Lo Espejo <span>Área de Transporte</span></div>
-    <div class="navtabs">
-      <div class="nt" id="nt-metricas" onclick="go('metricas')">Métricas</div>
-      <div class="nt" id="nt-config" onclick="go('config')">Configuración</div>
+
+<div class="container">
+
+  <div class="alert" id="main-alert"></div>
+
+  <div class="card">
+    <div class="section-label">Datos del registro</div>
+
+    <div class="form-group">
+      <label for="f-patente">Patente <span class="req">*</span></label>
+      <input type="text" id="f-patente" placeholder="Ej: BCDF-12" autocomplete="off"
+             oninput="this.value=this.value.toUpperCase()">
     </div>
-    <div class="tr">
-      <span class="tclock" id="clk"></span>
-      <button class="tupd" onclick="load()">↻ Actualizar</button>
+
+    <div class="form-group">
+      <label for="f-anden">Andén <span class="req">*</span></label>
+      <input type="text" id="f-anden" placeholder="Ej: Andén 3" autocomplete="off">
+    </div>
+
+    <div class="form-group">
+      <label for="f-fecha">Fecha de ingreso <span class="req">*</span></label>
+      <input type="date" id="f-fecha">
     </div>
   </div>
-  <div class="content">
 
-    <!-- DASHBOARD -->
-    <div id="p-dashboard" class="page on">
-      <div class="ph"><h2>Dashboard de Transporte</h2><p>Resumen general de todos los módulos</p></div>
-      <div class="sg">
-        <div class="sc"><div class="lbl">Total programado</div><div class="val" id="d-tot">—</div><div class="sub">contenedores</div></div>
-        <div class="sc"><div class="lbl">Entregados</div><div class="val" id="d-ent">—</div><div class="sub">confirmados</div></div>
-        <div class="sc"><div class="lbl">Pendientes</div><div class="val" id="d-pen">—</div><div class="sub">sin confirmar</div></div>
-        <div class="sc"><div class="lbl">Demurrage crítico</div><div class="val" id="d-dem">—</div><div class="sub">&lt;10 días libres</div></div>
-      </div>
-      <div class="card">
-        <div class="ch"><span class="ct">Asignaciones Retiro Puerto</span>
-          <div class="chright"><span class="badge" id="d-rcnt">0</span>
-            <button class="btn green" onclick="xls('retiro','Retiro_Puerto')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
-          </div></div>
-        <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th><th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th></tr></thead>
-        <tbody id="d-rtb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
-      </div>
-      <div class="card">
-        <div class="ch"><span class="ct">Devoluciones Vacíos Navieros</span>
-          <div class="chright"><span class="badge" id="d-dcnt">0</span>
-            <button class="btn green" onclick="xls('devolucion','Devolucion_Vacios')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
-          </div></div>
-        <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Transporte</th><th>Contenedor</th><th>EIR</th><th>Creado</th></tr></thead>
-        <tbody id="d-dtb"><tr><td colspan="6" class="es">Sin registros</td></tr></tbody></table></div>
+  <div class="card">
+    <div class="section-label">Foto del registro</div>
+
+    <div class="photo-area" onclick="document.getElementById('file-input').click()">
+      <span class="icon">📷</span>
+      <p>Toca para adjuntar foto</p>
+      <p class="note">⏱ La foto se eliminará del registro en 48 horas</p>
+      <div id="photo-preview-wrap">
+        <img id="photo-preview" alt="Vista previa">
+        <button class="remove-photo" onclick="removePhoto(event)" title="Quitar foto">✕</button>
       </div>
     </div>
-
-    <!-- PROGRAMACIÓN -->
-    <div id="p-programacion" class="page">
-      <div class="ph"><h2>Programación de Contenedores</h2><p>Programa activo del día</p></div>
-      <div class="sg">
-        <div class="sc"><div class="lbl">Total</div><div class="val" id="pg-t">—</div></div>
-        <div class="sc"><div class="lbl">Entregados</div><div class="val" id="pg-e">—</div></div>
-        <div class="sc"><div class="lbl">Pendientes</div><div class="val" id="pg-p">—</div></div>
-        <div class="sc"><div class="lbl">Demurrage crítico</div><div class="val" id="pg-d">—</div><div class="sub">&lt;10 días</div></div>
-      </div>
-      <div class="fr">
-        <select id="pg-ft" onchange="filterPG()"><option value="">Tipo: Todos</option><option>HC</option><option>STD</option><option>DRY</option></select>
-        <select id="pg-fe" onchange="filterPG()"><option value="">Estado: Todos</option><option>PENDIENTE</option><option>ENTREGADO</option><option>DESCONSOLIDADO</option><option>REPROGRAMADO</option><option>CANCELADO</option></select>
-        <button class="btn green" onclick="xls('programacion','Programacion_Actual')" style="margin-left:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel</button>
-      </div>
-      <div class="card">
-        <div class="ch"><span class="ct">Contenedores programados</span><span class="badge" id="pg-cnt">0</span></div>
-        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte</th><th>Bodega</th><th>Servicio</th><th>Estado</th></tr></thead>
-        <tbody id="pg-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
-      </div>
-    </div>
-
-    <!-- RETIRO PUERTO -->
-    <div id="p-retiro" class="page">
-      <div class="ph"><h2>Área de Transporte</h2><p>Retiro Puerto</p></div>
-      <div class="brow">
-        <button class="btn blue" id="brr" onclick="tab('retiro','reg')">≡ Registros</button>
-        <button class="btn" id="brn" onclick="tab('retiro','new')">+ Nueva Asignación</button>
-        <button class="btn green" onclick="xls('retiro','Retiro_Puerto')" style="margin-left:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel</button>
-      </div>
-      <div id="retiro-reg">
-        <div class="card">
-          <div class="ch"><span class="ct">Asignaciones Retiro Puerto</span><span class="badge" id="r-cnt">0</span></div>
-          <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th><th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th></tr></thead>
-          <tbody id="r-tb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
-        </div>
-      </div>
-      <div id="retiro-new" style="display:none">
-        <div class="card">
-          <div class="ct" style="margin-bottom:14px">Nueva Asignación — Retiro Puerto</div>
-          <div class="sdiv">Datos Generales</div>
-          <div class="fgrid">
-            <div class="fg"><label>Fecha *</label><input type="date" id="rf-f"/></div>
-            <div class="fg"><label>Tipo *</label><select id="rf-t"><option value="">Seleccionar...</option><option>Ingreso</option><option>Salida</option></select></div>
-            <div class="fg full"><label>Depósito *</label><select id="rf-d"><option value="">Seleccionar...</option><option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option><option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option><option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option><option>HGT SANTIAGO</option><option>DEPOSITO CD</option><option>TERCOP</option></select></div>
-          </div>
-          <div class="sdiv">Empresa de Transporte</div>
-          <div class="fgrid">
-            <div class="fg full"><label>Transportista *</label><select id="rf-tr"><option value="">Seleccionar...</option><option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option><option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option><option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option><option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option><option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option><option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option><option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option><option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option><option>76.381.392-4 JULIO HIDALGO</option></select></div>
-          </div>
-          <div class="sdiv">Datos del Conductor</div>
-          <div class="fgrid">
-            <div class="fg"><label>Nombre chofer *</label><input type="text" id="rf-ch" placeholder="Nombre completo"/></div>
-            <div class="fg"><label>RUT *</label><input type="text" id="rf-ru" placeholder="12.345.678-9"/></div>
-            <div class="fg"><label>Teléfono</label><input type="tel" id="rf-te" placeholder="+56 9 xxxx"/></div>
-            <div class="fg"><label>Patente tracto *</label><input type="text" id="rf-tc" placeholder="XXXX-XX"/></div>
-            <div class="fg"><label>Patente rampla *</label><input type="text" id="rf-ra" placeholder="XXXX-XX"/></div>
-            <div class="fg"><label>Chofer reemplazo</label><input type="text" id="rf-re" placeholder="Opcional"/></div>
-            <div class="fg full"><label>GPS *</label><select id="rf-gp"><option>Rampla + Tracto</option><option>Solo Tracto</option><option>Solo Rampla</option><option>Sin GPS</option></select></div>
-          </div>
-          <div class="ff"><button class="btn">Limpiar</button><button class="btn blue" onclick="saveRetiro()">Guardar en Google Sheets</button></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DEVOLUCIÓN -->
-    <div id="p-devolucion" class="page">
-      <div class="ph"><h2>Área de Transporte</h2><p>Devolución Vacíos</p></div>
-      <div class="brow">
-        <button class="btn blue" id="bdr" onclick="tab('dev','reg')">≡ Registros</button>
-        <button class="btn" id="bdn" onclick="tab('dev','new')">+ Nueva Devolución</button>
-        <button class="btn green" onclick="xls('devolucion','Devolucion_Vacios')" style="margin-left:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel</button>
-      </div>
-      <div id="dev-reg">
-        <div class="card">
-          <div class="ch"><span class="ct">Devoluciones Vacíos Navieros</span><span class="badge" id="dv-cnt">0</span></div>
-          <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Transporte</th><th>Contenedor</th><th>EIR</th><th>Creado</th></tr></thead>
-          <tbody id="dv-tb"><tr><td colspan="6" class="es">Sin registros</td></tr></tbody></table></div>
-        </div>
-      </div>
-      <div id="dev-new" style="display:none">
-        <div class="card">
-          <div class="ct" style="margin-bottom:14px">Nueva Devolución de Vacío Naviero</div>
-          <div class="fgrid">
-            <div class="fg"><label>Fecha *</label><input type="date" id="dv-f"/></div>
-            <div class="fg"><label>Depósito *</label><select id="dv-d"><option value="">Seleccionar...</option><option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option><option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option><option>DEPOSITO CD</option><option>TERCOP</option></select></div>
-            <div class="fg full"><label>Transportista *</label><select id="dv-tr"><option value="">Seleccionar...</option><option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option><option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option><option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option><option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option><option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option><option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option><option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option><option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option><option>76.381.392-4 JULIO HIDALGO</option></select></div>
-            <div class="fg"><label>Contenedor *</label><input type="text" id="dv-co" placeholder="XXXX0000000"/></div>
-            <div class="fg"><label>EIR *</label><input type="text" id="dv-ei" placeholder="Número EIR"/></div>
-          </div>
-          <div class="ff"><button class="btn">Limpiar</button><button class="btn blue" onclick="saveDev()">Guardar en Google Sheets</button></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ASIGNACIONES -->
-    <div id="p-asignaciones" class="page">
-      <div class="ph"><h2>Asignaciones transportistas</h2><p>Registros en tiempo real</p></div>
-      <div class="tabrow">
-        <button class="tabb on" id="dbt-r" onclick="sdt('r')">Registros en tiempo real</button>
-        <button class="tabb" id="dbt-i" onclick="sdt('i')">Ingresar asignación</button>
-      </div>
-      <div id="dt-r">
-        <div class="card">
-          <div class="ch"><span class="ct">Asignaciones Retiro Puerto</span>
-            <div class="chright"><span class="badge" id="as-cnt">0</span>
-              <button class="btn green" onclick="xls('retiro','Retiro_Puerto')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
-            </div></div>
-          <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Depósito</th><th>Transportista</th><th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th></tr></thead>
-          <tbody id="as-tb"><tr><td colspan="9" class="es">Cargando...</td></tr></tbody></table></div>
-        </div>
-      </div>
-      <div id="dt-i" style="display:none">
-        <div class="card">
-          <a href="https://sodimac-cd.github.io/transporte/" target="_blank" style="color:#1a3a8f;font-size:13px;display:inline-block;margin-bottom:14px">Pantalla completa ↗</a>
-          <div style="border:1px solid #e0e0e0;border-radius:8px;overflow:hidden"><iframe src="https://sodimac-cd.github.io/transporte/" style="width:100%;height:520px;border:none"></iframe></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROG RM -->
-    <div id="p-progRM" class="page">
-      <div class="ph"><h2>Programación RM</h2><p>Contenedores programados Región Metropolitana</p></div>
-      <div class="fr">
-        <select id="rm-fe" onchange="filterRM()"><option value="">Estado: Todos</option><option>PENDIENTE</option><option>ENTREGADO</option><option>DESCONSOLIDADO</option><option>REPROGRAMADO</option><option>CANCELADO</option></select>
-        <button class="btn green" onclick="xls('programacion','Programacion_RM')" style="margin-left:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel</button>
-      </div>
-      <div class="card">
-        <div class="ch"><span class="ct">Contenedores programados</span><span class="badge" id="rm-cnt">0</span></div>
-        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte</th><th>Bodega</th><th>Servicio</th><th>Estado</th></tr></thead>
-        <tbody id="rm-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
-      </div>
-    </div>
-
-    <!-- PROG PUERTO -->
-    <div id="p-progPuerto" class="page">
-      <div class="ph"><h2>Programa de Puerto</h2></div>
-      <div class="card"><div class="es">Conecta Google Sheets en Configuración</div></div>
-    </div>
-
-    <!-- MÉTRICAS -->
-    <div id="p-metricas" class="page">
-      <div class="ph"><h2>Métricas de cumplimiento</h2></div>
-      <div class="sg">
-        <div class="sc"><div class="lbl">Cumplimiento</div><div class="val" id="m-c">—</div><div class="sub">% entregado</div></div>
-        <div class="sc"><div class="lbl">Total</div><div class="val" id="m-t">—</div></div>
-        <div class="sc"><div class="lbl">Demurrage crítico</div><div class="val" id="m-d">—</div><div class="sub">&lt;10 días</div></div>
-        <div class="sc"><div class="lbl">Sin transportista</div><div class="val" id="m-s">—</div></div>
-      </div>
-      <div class="card">
-        <div class="ch"><span class="ct">Resumen por estado</span>
-          <button class="btn green" onclick="xls('programacion','Metricas')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
-        </div>
-        <table><thead><tr><th>Estado</th><th>Cantidad</th><th>%</th></tr></thead>
-        <tbody id="m-tb"><tr><td colspan="3" class="es">Cargando...</td></tr></tbody></table>
-      </div>
-    </div>
-
-    <!-- CONFIG -->
-    <div id="p-config" class="page">
-      <div class="ph"><h2>Configuración</h2><p>Conexión con Google Sheets</p></div>
-      <div class="card">
-        <div class="ct" style="margin-bottom:6px">⚡ Apps Script — URL de conexión</div>
-        <p style="font-size:12px;color:#888;margin-bottom:14px">La URL ya está configurada. Puedes cambiarla aquí si reimplementas el script.</p>
-        <div class="fg" style="margin-bottom:14px"><label>URL del Web App</label>
-          <input type="text" id="cfgUrl" style="width:100%"/>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn blue" onclick="saveUrl()">Guardar y cargar datos</button>
-          <button class="btn" onclick="demo()">Ver datos demo</button>
-        </div>
-        <div class="dbg" id="dbg-box"><div class="dbg-t">Hojas detectadas:</div><pre id="dbg-txt"></pre></div>
-      </div>
-    </div>
-
-    <!-- QR -->
-    <div id="p-qr" class="page">
-      <div class="ph"><h2>Códigos QR — Acceso transportistas</h2><p>Escanea para ingresar directamente al formulario correspondiente</p></div>
-      <div class="qrgrid">
-        <div class="qrc">
-          <div style="width:48px;height:48px;border-radius:12px;background:#e8f5e9;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="#2e7d32"><path d="M1 3h15v13H1zm15 4l5 3v6h-5z"/></svg></div>
-          <h3>Retiro Puerto</h3><div class="qrs">Nueva asignación de retiro</div>
-          <div class="qrbox"><img id="qr1" src="" alt="QR Retiro" width="200" height="200"/></div>
-          <div class="qrurl">https://sodimac-cd.github.io/transporte/retiro-movil.html</div>
-          <button class="qrprint" onclick="printQR('qr1','Retiro Puerto')">Imprimir</button>
-        </div>
-        <div class="qrc">
-          <div style="width:48px;height:48px;border-radius:12px;background:#e3f2fd;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="#1565c0"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M7 7V5a2 2 0 014 0v2"/></svg></div>
-          <h3>Devolución Vacíos</h3><div class="qrs">Nueva devolución naviera</div>
-          <div class="qrbox"><img id="qr2" src="" alt="QR Devolución" width="200" height="200"/></div>
-          <div class="qrurl">https://sodimac-cd.github.io/transporte/devolucion-movil.html</div>
-          <button class="qrprint" onclick="printQR('qr2','Devolución Vacíos')">Imprimir</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="p-abastecimiento" class="page"><div class="ph"><h2>Abastecimiento Tienda</h2></div><div class="card"><div class="es">🏗️ Próximamente</div></div></div>
-    <div id="p-despacho" class="page"><div class="ph"><h2>Despacho a Domicilio</h2></div><div class="card"><div class="es">🚚 Próximamente</div></div></div>
-    <div id="p-contenedores" class="page">
-      <div class="ph"><h2>Contenedores</h2><p>Resumen por módulo</p></div>
-      <div class="sg">
-        <div class="sc"><div class="lbl">Programados</div><div class="val" id="c-p">—</div></div>
-        <div class="sc"><div class="lbl">Retiro Puerto</div><div class="val" id="c-r">0</div></div>
-        <div class="sc"><div class="lbl">Devolución</div><div class="val" id="c-d">0</div></div>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn blue" onclick="go('programacion')">Programación →</button>
-        <button class="btn" onclick="go('retiro')">Retiro Puerto →</button>
-        <button class="btn" onclick="go('devolucion')">Devolución Vacíos →</button>
-        <button class="btn" onclick="go('qr')">Códigos QR →</button>
-      </div>
-    </div>
+    <input type="file" id="file-input" accept="image/*" capture="environment" onchange="previewPhoto(event)">
   </div>
+
+  <div class="info-note">
+    Los datos (patente, andén, fecha) quedan guardados en Google Sheets hasta ser eliminados manualmente. Solo la foto expira a las 48 hrs.
+  </div>
+  <br>
+
+  <button class="btn-save" id="btn-save" onclick="submitForm()">
+    💾 Guardar en Google Sheets
+  </button>
+  <button class="btn-clear" onclick="clearForm()">Limpiar formulario</button>
+
 </div>
+
+<div class="loading-overlay" id="loading">
+  <div class="spinner"></div>
+  <p>Guardando registro...</p>
 </div>
 
 <script>
-var URL_AS='https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec';
-var store={retiro:[],devolucion:[],programacion:[]};
-var pgData=[];
+  // ── Configuración ──────────────────────────────────────────────────────────
+  // IMPORTANTE: Reemplaza esta URL con la URL de tu Apps Script Web App
+  // Es la misma que ya tienes configurada en Configuración del sistema principal.
+  const APPS_SCRIPT_URL = (() => {
+    try {
+      return localStorage.getItem('transporte_script_url') || '';
+    } catch(e) { return ''; }
+  })();
 
-// CLOCK
-function tick(){var n=new Date();document.getElementById('clk').textContent=n.toLocaleDateString('es-CL',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+' · '+n.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});}
-tick();setInterval(tick,30000);
+  let photoBase64 = null;
 
-// INIT CONFIG URL
-(function(){var u=localStorage.getItem('asUrl')||URL_AS;localStorage.setItem('asUrl',u);document.getElementById('cfgUrl').value=u;})();
+  // ── Fecha de hoy por defecto ────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    document.getElementById('f-fecha').value = `${yyyy}-${mm}-${dd}`;
+  });
 
-// NAV
-var NM={metricas:'nt-metricas',config:'nt-config'};
-function go(id){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
-  var pg=document.getElementById('p-'+id);if(pg)pg.classList.add('on');
-  document.querySelectorAll('.nt').forEach(function(t){t.classList.remove('on');});
-  if(NM[id])document.getElementById(NM[id]).classList.add('on');
-  document.querySelectorAll('.si').forEach(function(i){i.classList.remove('on');});
-  var sb=document.getElementById('sb-'+id);if(sb)sb.classList.add('on');
-  if(id==='qr')genQR();
-}
-function tab(m,t){
-  if(m==='retiro'){
-    document.getElementById('retiro-reg').style.display=t==='reg'?'block':'none';
-    document.getElementById('retiro-new').style.display=t==='new'?'block':'none';
-    document.getElementById('brr').className='btn'+(t==='reg'?' blue':'');
-    document.getElementById('brn').className='btn'+(t==='new'?' blue':'');
-  }else{
-    document.getElementById('dev-reg').style.display=t==='reg'?'block':'none';
-    document.getElementById('dev-new').style.display=t==='new'?'block':'none';
-    document.getElementById('bdr').className='btn'+(t==='reg'?' blue':'');
-    document.getElementById('bdn').className='btn'+(t==='new'?' blue':'');
+  // ── Preview foto ────────────────────────────────────────────────────────────
+  function previewPhoto(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    compressImage(file, (base64) => {
+      photoBase64 = base64;
+      const img = document.getElementById('photo-preview');
+      const wrap = document.getElementById('photo-preview-wrap');
+      img.src = base64;
+      wrap.style.display = 'block';
+    });
   }
-}
-function sdt(t){
-  document.getElementById('dbt-r').className='tabb'+(t==='r'?' on':'');
-  document.getElementById('dbt-i').className='tabb'+(t==='i'?' on':'');
-  document.getElementById('dt-r').style.display=t==='r'?'block':'none';
-  document.getElementById('dt-i').style.display=t==='i'?'block':'none';
-}
 
-// CONFIG
-function saveUrl(){var u=document.getElementById('cfgUrl').value.trim();if(u){localStorage.setItem('asUrl',u);URL_AS=u;load();}}
+  function removePhoto(e) {
+    e.stopPropagation();
+    photoBase64 = null;
+    document.getElementById('photo-preview-wrap').style.display = 'none';
+    document.getElementById('photo-preview').src = '';
+    document.getElementById('file-input').value = '';
+  }
 
-// LOAD via JSONP
-function load(){
-  var url=localStorage.getItem('asUrl')||URL_AS;
-  var cb='_cb'+Date.now();
-  window[cb]=function(d){
-    try{delete window[cb];}catch(e){}
-    var s=document.getElementById('_jscript');if(s)s.remove();
-    if(d.debug){var box=document.getElementById('dbg-box'),txt=document.getElementById('dbg-txt');if(box&&txt){box.style.display='block';txt.textContent=JSON.stringify(d.debug,null,2);}}
-    if(d.retiro&&d.retiro.length)renderR(d.retiro);
-    if(d.devolucion&&d.devolucion.length)renderD(d.devolucion);
-    if(d.programacion&&d.programacion.length)renderP(d.programacion);
-  };
-  var s=document.createElement('script');
-  s.id='_jscript';
-  s.src=url+'?callback='+cb+'&t='+Date.now();
-  s.onerror=function(){console.warn('Error cargando datos');};
-  document.head.appendChild(s);
-}
+  // Comprimir imagen antes de enviar (max ~800px, calidad 0.75)
+  function compressImage(file, callback) {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        const maxW = 800;
+        let w = img.width, h = img.height;
+        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        callback(canvas.toDataURL('image/jpeg', 0.75));
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 
-// PILL
-function pill(e){var s=String(e||'').toUpperCase();var m={ENTREGADO:'pe',PENDIENTE:'pp',REPROGRAMADO:'pr',CANCELADO:'pc',DESCONSOLIDADO:'pd'};return '<span class="'+(m[s]||'pp')+'">'+e+'</span>';}
+  // ── Validación ──────────────────────────────────────────────────────────────
+  function validate() {
+    const patente = document.getElementById('f-patente').value.trim();
+    const anden   = document.getElementById('f-anden').value.trim();
+    const fecha   = document.getElementById('f-fecha').value;
+    if (!patente) { showAlert('Ingresa la patente.', 'error'); return false; }
+    if (!anden)   { showAlert('Ingresa el andén.', 'error'); return false; }
+    if (!fecha)   { showAlert('Selecciona la fecha de ingreso.', 'error'); return false; }
+    return true;
+  }
 
-// RENDER RETIRO
-function renderR(rows){
-  store.retiro=rows;
-  var h1=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
-  var h2=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+(r.tipo||'—')+'</td><td>'+r.deposito+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td></tr>';}).join('');
-  ['r-tb','d-rtb'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=h1||'<tr><td colspan="10" class="es">Sin registros</td></tr>';});
-  var at=document.getElementById('as-tb');if(at)at.innerHTML=h2||'<tr><td colspan="9" class="es">Sin registros</td></tr>';
-  ['r-cnt','d-rcnt','as-cnt','c-r'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
-}
+  // ── Envío ───────────────────────────────────────────────────────────────────
+  async function submitForm() {
+    if (!validate()) return;
 
-// RENDER DEVOLUCION
-function renderD(rows){
-  store.devolucion=rows;
-  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+r.contenedor+'</td><td>'+r.eir+'</td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
-  ['dv-tb','d-dtb'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=h||'<tr><td colspan="6" class="es">Sin registros</td></tr>';});
-  ['dv-cnt','d-dcnt','c-d'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
-}
+    const scriptUrl = APPS_SCRIPT_URL ||
+      prompt('Ingresa la URL del Apps Script (la misma de Configuración):');
+    if (!scriptUrl) {
+      showAlert('No se ha configurado la URL de Google Apps Script.', 'error');
+      return;
+    }
+    try { localStorage.setItem('transporte_script_url', scriptUrl); } catch(e) {}
 
-// RENDER PROGRAMACION
-function renderP(rows){
-  store.programacion=rows;pgData=rows;filterPG();filterRM();
-  var t=rows.length,e=rows.filter(function(r){return String(r.estado).toUpperCase()==='ENTREGADO';}).length;
-  var p=rows.filter(function(r){return String(r.estado).toUpperCase()==='PENDIENTE';}).length;
-  var dem=rows.filter(function(r){var n=parseInt(r.demurrage);return !isNaN(n)&&n<10&&n>-999;}).length;
-  var sin=rows.filter(function(r){return !r.transporte&&!r.transportista;}).length;
-  var pct=t>0?Math.round(e/t*100):0;
-  [['pg-t',t],['pg-e',e],['pg-p',p],['pg-d',dem],['d-tot',t],['d-ent',e],['d-pen',p],['d-dem',dem],['c-p',t],['rm-cnt',t],['m-c',pct+'%'],['m-t',t],['m-d',dem],['m-s',sin]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=x[1];});
-  var es={};rows.forEach(function(r){var s=r.estado||'SIN ESTADO';es[s]=(es[s]||0)+1;});
-  var mt=document.getElementById('m-tb');if(mt)mt.innerHTML=Object.keys(es).map(function(s){return '<tr><td>'+pill(s)+'</td><td>'+es[s]+'</td><td>'+(t>0?Math.round(es[s]/t*100):0)+'%</td></tr>';}).join('');
-}
+    const patente = document.getElementById('f-patente').value.trim().toUpperCase();
+    const anden   = document.getElementById('f-anden').value.trim();
+    const fecha   = document.getElementById('f-fecha').value;
+    const now     = new Date();
+    const creado  = now.toLocaleString('es-CL', { timeZone: 'America/Santiago' });
+    const fotoExpiry = photoBase64
+      ? new Date(now.getTime() + 48 * 60 * 60 * 1000)
+          .toLocaleString('es-CL', { timeZone: 'America/Santiago' })
+      : '';
 
-function filterPG(){
-  var ft=document.getElementById('pg-ft').value,fe=document.getElementById('pg-fe').value;
-  var rows=pgData.filter(function(r){return(!ft||r.tipo===ft)&&(!fe||String(r.estado).toUpperCase()===fe.toUpperCase());});
-  var cnt=document.getElementById('pg-cnt');if(cnt)cnt.textContent=rows.length;
-  var html=rows.length?rows.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td><td>'+pill(r.estado)+'</td></tr>';}).join(''):'<tr><td colspan="16" class="es">Sin registros</td></tr>';
-  var tb=document.getElementById('pg-tb');if(tb)tb.innerHTML=html;
-}
-function filterRM(){
-  var fe=document.getElementById('rm-fe').value;
-  var rows=pgData.filter(function(r){return !fe||String(r.estado).toUpperCase()===fe.toUpperCase();});
-  var cnt=document.getElementById('rm-cnt');if(cnt)cnt.textContent=rows.length;
-  var html=rows.length?rows.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td><td>'+pill(r.estado)+'</td></tr>';}).join(''):'<tr><td colspan="16" class="es">Sin registros</td></tr>';
-  var tb=document.getElementById('rm-tb');if(tb)tb.innerHTML=html;
-}
+    const payload = {
+      action:      'append',
+      sheet:       'CuñasAbastecimiento',
+      row: [
+        fecha,
+        patente,
+        anden,
+        creado,
+        fotoExpiry,
+        photoBase64 ? '✓ Con foto' : 'Sin foto'
+      ]
+    };
 
-// EXPORT CSV
-function xls(mod,nom){
-  var rows=store[mod];if(!rows||!rows.length){alert('Sin datos para exportar.');return;}
-  var h,c;
-  if(mod==='retiro'){h=['Fecha','Depósito','Tipo','Transporte','Chofer','RUT','Teléfono','Tracto','Rampla','Reemplazo','GPS','Creado'];c=['fecha','deposito','tipo','transportista','chofer','rut','telefono','tracto','rampla','reemplazo','gps','creado'];}
-  else if(mod==='devolucion'){h=['Fecha','Depósito','Transporte','Contenedor','EIR','Creado'];c=['fecha','deposito','transporte','contenedor','eir','creado'];}
-  else{h=['Fecha','Hora','Depósito','Tipo','Cap','Contenedor','Peso','Demurrage','BL','SKU','Descripción','Transporte','Bodega','Servicio','Estado'];c=['fecha','hora','deposito','tipo','capacidad','contenedor','peso','demurrage','bl','sku','descripcion','transporte','bodega','servicio','estado'];}
-  var csv='\uFEFF'+h.join(';')+'\n';
-  rows.forEach(function(r){csv+=c.map(function(k){return '"'+String(r[k]||'').replace(/"/g,'""')+'"';}).join(';')+'\n';});
-  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-  a.download=nom+'_'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);
-}
+    // Si hay foto, incluirla en payload separado (Drive)
+    if (photoBase64) {
+      payload.foto = {
+        base64:   photoBase64,
+        fileName: `cunas_${patente}_${fecha}.jpg`,
+        expiry:   fotoExpiry
+      };
+    }
 
-// SAVE RETIRO
-function saveRetiro(){
-  var url=localStorage.getItem('asUrl')||URL_AS;
-  var d={fecha:document.getElementById('rf-f').value,tipo:document.getElementById('rf-t').value,deposito:document.getElementById('rf-d').value,transportista:document.getElementById('rf-tr').value,chofer:document.getElementById('rf-ch').value,rut:document.getElementById('rf-ru').value,tel:document.getElementById('rf-te').value,tracto:document.getElementById('rf-tc').value,rampla:document.getElementById('rf-ra').value,reemplazo:document.getElementById('rf-re').value,gps:document.getElementById('rf-gp').value};
-  if(!d.fecha||!d.deposito||!d.transportista||!d.chofer||!d.rut){alert('Completa los campos obligatorios (*).');return;}
-  fetch(url,{method:'POST',body:JSON.stringify({modulo:'retiro',datos:d})}).then(function(){alert('Guardado.');tab('retiro','reg');load();}).catch(function(){alert('Error al guardar.');});
-}
+    showLoading(true);
+    document.getElementById('btn-save').disabled = true;
 
-// SAVE DEVOLUCION
-function saveDev(){
-  var url=localStorage.getItem('asUrl')||URL_AS;
-  var d={fecha:document.getElementById('dv-f').value,deposito:document.getElementById('dv-d').value,transportista:document.getElementById('dv-tr').value,contenedor:document.getElementById('dv-co').value,eir:document.getElementById('dv-ei').value};
-  if(!d.fecha||!d.deposito||!d.transportista||!d.contenedor||!d.eir){alert('Completa los campos obligatorios (*).');return;}
-  fetch(url,{method:'POST',body:JSON.stringify({modulo:'devolucion',datos:d})}).then(function(){alert('Guardado.');tab('dev','reg');load();}).catch(function(){alert('Error al guardar.');});
-}
+    try {
+      const resp = await fetch(scriptUrl, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
+      });
+      const data = await resp.json();
+      if (data.status === 'ok' || data.result === 'success') {
+        showAlert('✅ Registro guardado correctamente.', 'success');
+        clearForm(true);
+      } else {
+        throw new Error(data.message || 'Error desconocido');
+      }
+    } catch (err) {
+      showAlert('⚠️ Error al guardar: ' + err.message, 'error');
+    } finally {
+      showLoading(false);
+      document.getElementById('btn-save').disabled = false;
+    }
+  }
 
-// DEMO
-function demo(){
-  renderR([{fecha:'02-05-2026',deposito:'SITRANS SAN ANTONIO',tipo:'Ingreso',transportista:'H. BUSTOS',chofer:'Juan Pérez',rut:'12.345.678-9',tracto:'ABCD-12',rampla:'EFGH-34',gps:'RAMPLA-TRACTO',creado:'02-05-2026 16:28'}]);
-  renderP([{fecha:'05-05-2026',hora:'08:30',deposito:'SITRANS SAN ANTONIO',tipo:'HC',capacidad:'40',contenedor:'TCKU1234567',peso:'24500',demurrage:'5',bl:'BL123456',sku:'7891234',descripcion:'Herramientas',transporte:'H. BUSTOS',bodega:'CD LO ESPEJO',servicio:'DESPACHO',estado:'PENDIENTE'},{fecha:'05-05-2026',hora:'10:00',deposito:'MEDLOG VALPARAISO',tipo:'STD',capacidad:'20',contenedor:'MSCU7654321',peso:'18000',demurrage:'15',bl:'BL654321',sku:'1234567',descripcion:'Línea blanca',transporte:'SITRANS',bodega:'CD LO ESPEJO',servicio:'DESPACHO',estado:'ENTREGADO'}]);
-}
+  // ── Utilidades UI ───────────────────────────────────────────────────────────
+  function showAlert(msg, type) {
+    const el = document.getElementById('main-alert');
+    el.textContent = msg;
+    el.className = 'alert ' + type + ' show';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => { el.className = 'alert'; }, 5000);
+  }
 
-// QR
-var qrDone=false;
-function genQR(){
-  if(qrDone)return;
-  var b='https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=1a237e&bgcolor=ffffff&data=';
-  document.getElementById('qr1').src=b+encodeURIComponent('https://sodimac-cd.github.io/transporte/retiro-movil.html');
-  document.getElementById('qr2').src=b+encodeURIComponent('https://sodimac-cd.github.io/transporte/devolucion-movil.html');
-  qrDone=true;
-}
-function printQR(id,tit){
-  var img=document.getElementById(id);
-  var w=window.open('','_blank','width=420,height=500');
-  w.document.write('<!DOCTYPE html><html><head><title>QR '+tit+'</title><style>body{font-family:sans-serif;text-align:center;padding:32px}h2{color:#1a237e}p{color:#666;font-size:13px;margin:6px 0 20px}img{border:2px solid #e0e0e0;border-radius:8px;padding:12px}@media print{button{display:none}}</style></head><body><h2>CD Lo Espejo</h2><p>'+tit+'</p><img src="'+img.src+'" width="220"/><br><br><button onclick="window.print()" style="background:#1a237e;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:14px;cursor:pointer;margin-top:16px">Imprimir</button></body></html>');
-  w.document.close();
-}
+  function showLoading(show) {
+    document.getElementById('loading').className = show ? 'loading-overlay show' : 'loading-overlay';
+  }
 
-// AUTO LOAD
-window.addEventListener('load', load);
+  function clearForm(keepDate) {
+    document.getElementById('f-patente').value = '';
+    document.getElementById('f-anden').value   = '';
+    if (!keepDate) {
+      const today = new Date();
+      document.getElementById('f-fecha').value =
+        today.toISOString().split('T')[0];
+    }
+    removePhoto({ stopPropagation: () => {} });
+  }
 </script>
 </body>
 </html>
