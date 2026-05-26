@@ -123,6 +123,7 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
   <div class="si on" id="sb-dashboard" onclick="go('dashboard')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg> Dashboard</div>
   <div class="sb-sec">Módulos</div>
   <div class="si" id="sb-abastecimiento" onclick="go('abastecimiento')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-4V5a2 2 0 00-4 0v2H8L6 21h12L20 7z"/></svg> Abastecimiento Tienda</div>
+  <div class="si sub" id="sb-cunas-qr" onclick="go('abastecimiento')"><span class="dot"></span> Código QR</div>
   <div class="si" id="sb-despacho" onclick="go('despacho')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 3h15v13H1zm15 4l5 3v6h-5z"/></svg> Despacho a Domicilio</div>
   <div class="si" id="sb-contenedores" onclick="go('contenedores')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M7 7V5a2 2 0 014 0v2"/></svg> Contenedores</div>
   <div class="si sub" id="sb-programacion" onclick="go('programacion')"><span class="dot"></span> Programación</div>
@@ -433,6 +434,8 @@ function go(id){
   document.querySelectorAll('.si').forEach(function(i){i.classList.remove('on');});
   var sb=document.getElementById('sb-'+id);if(sb)sb.classList.add('on');
   if(id==='qr'||id==='abastecimiento')genQR();
+  if(id==='abastecimiento'){var sub=document.getElementById('sb-cunas-qr');if(sub)sub.classList.add('on');}
+
 }
 function tab(m,t){
   if(m==='retiro'){
