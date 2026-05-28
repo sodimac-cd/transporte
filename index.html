@@ -107,10 +107,14 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
 .cunas-qr-info p{font-size:13px;color:#666;margin-bottom:14px;line-height:1.5}
 .cunas-qr-info .qrurl{display:inline-block;margin-bottom:14px}
 .cunas-qr-info .cunas-btns{display:flex;gap:10px;flex-wrap:wrap}
+/* EMPTY STATE INFO */
+.info-banner{background:#e8f0fe;border:1px solid #c5d4f7;border-radius:8px;padding:14px 18px;font-size:13px;color:#1a3a8f;margin-bottom:16px;display:flex;align-items:center;gap:10px}
 </style>
 </head>
 <body>
 <div class="app">
+
+<!-- SIDEBAR -->
 <div class="sb">
   <div class="sb-logo">
     <div style="width:32px;height:32px;background:#60c8ff;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px">
@@ -119,20 +123,36 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
     <div class="t">CD Lo Espejo</div>
     <div class="s">Área de Transporte</div>
   </div>
+
   <div class="sb-sec">Principal</div>
-  <div class="si on" id="sb-dashboard" onclick="go('dashboard')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg> Dashboard</div>
+  <div class="si on" id="sb-dashboard" onclick="go('dashboard')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg> Dashboard
+  </div>
+
   <div class="sb-sec">Módulos</div>
-  <div class="si" id="sb-abastecimiento" onclick="go('abastecimiento')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-4V5a2 2 0 00-4 0v2H8L6 21h12L20 7z"/></svg> Abastecimiento Tienda</div>
+  <div class="si" id="sb-abastecimiento" onclick="go('abastecimiento')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-4V5a2 2 0 00-4 0v2H8L6 21h12L20 7z"/></svg> Abastecimiento Tienda
+  </div>
   <div class="si sub" id="sb-cunas-qr" onclick="go('abastecimiento')"><span class="dot"></span> Código QR</div>
-  <div class="si" id="sb-despacho" onclick="go('despacho')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 3h15v13H1zm15 4l5 3v6h-5z"/></svg> Despacho a Domicilio</div>
-  <div class="si" id="sb-contenedores" onclick="go('contenedores')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M7 7V5a2 2 0 014 0v2"/></svg> Contenedores</div>
-  <div class="si sub" id="sb-programacion" onclick="go('programacion')"><span class="dot"></span> Programación</div>
+  <div class="si" id="sb-despacho" onclick="go('despacho')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 3h15v13H1zm15 4l5 3v6h-5z"/></svg> Despacho a Domicilio
+  </div>
+  <div class="si" id="sb-contenedores" onclick="go('contenedores')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M7 7V5a2 2 0 014 0v2"/></svg> Contenedores
+  </div>
+  <div class="si sub" id="sb-progRM" onclick="go('progRM')"><span class="dot"></span> Programación RM</div>
+  <div class="si sub" id="sb-progPuerto" onclick="go('progPuerto')"><span class="dot"></span> Programación Puerto</div>
   <div class="si sub" id="sb-retiro" onclick="go('retiro')"><span class="dot"></span> Retiro Puerto</div>
   <div class="si sub" id="sb-devolucion" onclick="go('devolucion')"><span class="dot"></span> Devolución Vacíos</div>
   <div class="si sub" id="sb-qr" onclick="go('qr')"><span class="dot"></span> Códigos QR</div>
+
   <div class="sb-sec">Sistema</div>
-  <div class="si" id="sb-config" onclick="go('config')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Configuración</div>
+  <div class="si" id="sb-config" onclick="go('config')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Configuración
+  </div>
 </div>
+
+<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <div class="tl">CD Lo Espejo <span>Área de Transporte</span></div>
@@ -145,6 +165,7 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
       <button class="tupd" onclick="load()">↻ Actualizar</button>
     </div>
   </div>
+
   <div class="content">
 
     <!-- DASHBOARD -->
@@ -160,56 +181,101 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
         <div class="ch"><span class="ct">Asignaciones Retiro Puerto</span>
           <div class="chright"><span class="badge" id="d-rcnt">0</span>
             <button class="btn green" onclick="xls('retiro','Retiro_Puerto')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
-          </div></div>
+          </div>
+        </div>
         <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th><th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th></tr></thead>
-        <tbody id="d-rtb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
+          <tbody id="d-rtb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
       </div>
       <div class="card">
         <div class="ch"><span class="ct">Devoluciones Vacíos Navieros</span>
           <div class="chright"><span class="badge" id="d-dcnt">0</span>
             <button class="btn green" onclick="xls('devolucion','Devolucion_Vacios')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
-          </div></div>
+          </div>
+        </div>
         <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Transporte</th><th>Contenedor</th><th>EIR</th><th>Creado</th></tr></thead>
-        <tbody id="d-dtb"><tr><td colspan="6" class="es">Sin registros</td></tr></tbody></table></div>
+          <tbody id="d-dtb"><tr><td colspan="6" class="es">Sin registros</td></tr></tbody></table></div>
       </div>
     </div>
 
-    <!-- PROGRAMACIÓN -->
-    <div id="p-programacion" class="page">
-      <div class="ph"><h2>Programación de Contenedores</h2><p>Programa activo del día</p></div>
+    <!-- PROGRAMACIÓN RM -->
+    <div id="p-progRM" class="page">
+      <div class="ph"><h2>Programación RM</h2><p>Contenedores programados — Región Metropolitana</p></div>
       <div class="sg">
-        <div class="sc"><div class="lbl">Total</div><div class="val" id="pg-t">—</div></div>
-        <div class="sc"><div class="lbl">Entregados</div><div class="val" id="pg-e">—</div></div>
-        <div class="sc"><div class="lbl">Pendientes</div><div class="val" id="pg-p">—</div></div>
-        <div class="sc"><div class="lbl">Demurrage crítico</div><div class="val" id="pg-d">—</div><div class="sub">&lt;10 días</div></div>
+        <div class="sc"><div class="lbl">Total</div><div class="val" id="rm-t">—</div></div>
+        <div class="sc"><div class="lbl">Entregados</div><div class="val" id="rm-e">—</div></div>
+        <div class="sc"><div class="lbl">Pendientes</div><div class="val" id="rm-p">—</div></div>
+        <div class="sc"><div class="lbl">Demurrage crítico</div><div class="val" id="rm-d">—</div><div class="sub">&lt;10 días</div></div>
       </div>
       <div class="fr">
-        <select id="pg-ft" onchange="filterPG()"><option value="">Tipo: Todos</option><option>HC</option><option>STD</option><option>DRY</option></select>
-        <select id="pg-fe" onchange="filterPG()"><option value="">Estado: Todos</option><option>PENDIENTE</option><option>ENTREGADO</option><option>DESCONSOLIDADO</option><option>REPROGRAMADO</option><option>CANCELADO</option></select>
-        <button class="btn green" onclick="xls('programacion','Programacion_Actual')" style="margin-left:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel</button>
+        <select id="rm-ft" onchange="filterRM()"><option value="">Tipo: Todos</option><option>HC</option><option>STD</option><option>DRY</option></select>
+        <select id="rm-fe" onchange="filterRM()"><option value="">Estado: Todos</option><option>PENDIENTE</option><option>ENTREGADO</option><option>DESCONSOLIDADO</option><option>REPROGRAMADO</option><option>CANCELADO</option></select>
+        <button class="btn green" onclick="xls('programacionRM','Programacion_RM')" style="margin-left:auto">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel
+        </button>
       </div>
       <div class="card">
-        <div class="ch"><span class="ct">Contenedores programados</span><span class="badge" id="pg-cnt">0</span></div>
+        <div class="ch"><span class="ct">Contenedores programados RM</span><span class="badge" id="rm-cnt">0</span></div>
         <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte</th><th>Bodega</th><th>Servicio</th><th>Estado</th></tr></thead>
-        <tbody id="pg-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
+          <tbody id="rm-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- PROGRAMACIÓN PUERTO -->
+    <div id="p-progPuerto" class="page">
+      <div class="ph"><h2>Programación Puerto</h2><p>Contenedores programados — Puerto</p></div>
+      <div class="sg">
+        <div class="sc"><div class="lbl">Total</div><div class="val" id="pp-t">—</div></div>
+        <div class="sc"><div class="lbl">Entregados</div><div class="val" id="pp-e">—</div></div>
+        <div class="sc"><div class="lbl">Pendientes</div><div class="val" id="pp-p">—</div></div>
+        <div class="sc"><div class="lbl">Demurrage crítico</div><div class="val" id="pp-d">—</div><div class="sub">&lt;10 días</div></div>
+      </div>
+      <div class="fr">
+        <select id="pp-ft" onchange="filterPP()"><option value="">Tipo: Todos</option><option>HC</option><option>STD</option><option>DRY</option></select>
+        <select id="pp-fe" onchange="filterPP()"><option value="">Estado: Todos</option><option>PENDIENTE</option><option>ENTREGADO</option><option>DESCONSOLIDADO</option><option>REPROGRAMADO</option><option>CANCELADO</option></select>
+        <button class="btn green" onclick="xls('programacionPuerto','Programacion_Puerto')" style="margin-left:auto">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel
+        </button>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="ct">Contenedores programados Puerto</span><span class="badge" id="pp-cnt">0</span></div>
+        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte</th><th>Bodega</th><th>Servicio</th><th>Estado</th></tr></thead>
+          <tbody id="pp-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
       </div>
     </div>
 
     <!-- RETIRO PUERTO -->
     <div id="p-retiro" class="page">
-      <div class="ph"><h2>Área de Transporte</h2><p>Retiro Puerto</p></div>
+      <div class="ph"><h2>Retiro Puerto</h2><p>Asignaciones de retiro de contenedores en puerto</p></div>
       <div class="brow">
         <button class="btn blue" id="brr" onclick="tab('retiro','reg')">≡ Registros</button>
         <button class="btn" id="brn" onclick="tab('retiro','new')">+ Nueva Asignación</button>
-        <button class="btn green" onclick="xls('retiro','Retiro_Puerto')" style="margin-left:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel</button>
+        <button class="btn green" onclick="xls('retiro','Retiro_Puerto')" style="margin-left:auto">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel
+        </button>
       </div>
+
       <div id="retiro-reg">
+        <div class="sg">
+          <div class="sc"><div class="lbl">Total registros</div><div class="val" id="r-tot">0</div></div>
+          <div class="sc"><div class="lbl">Ingresos</div><div class="val" id="r-ing">0</div></div>
+          <div class="sc"><div class="lbl">Salidas</div><div class="val" id="r-sal">0</div></div>
+        </div>
+        <div class="fr">
+          <select id="r-ft" onchange="filterRetiro()"><option value="">Tipo: Todos</option><option>Ingreso</option><option>Salida</option></select>
+          <select id="r-fd" onchange="filterRetiro()"><option value="">Depósito: Todos</option>
+            <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option>
+            <option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
+            <option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option><option>HGT SANTIAGO</option>
+            <option>DEPOSITO CD</option><option>TERCOP</option>
+          </select>
+        </div>
         <div class="card">
           <div class="ch"><span class="ct">Asignaciones Retiro Puerto</span><span class="badge" id="r-cnt">0</span></div>
           <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th><th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th></tr></thead>
-          <tbody id="r-tb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
+            <tbody id="r-tb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
         </div>
       </div>
+
       <div id="retiro-new" style="display:none">
         <div class="card">
           <div class="ct" style="margin-bottom:14px">Nueva Asignación — Retiro Puerto</div>
@@ -217,11 +283,28 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
           <div class="fgrid">
             <div class="fg"><label>Fecha *</label><input type="date" id="rf-f"/></div>
             <div class="fg"><label>Tipo *</label><select id="rf-t"><option value="">Seleccionar...</option><option>Ingreso</option><option>Salida</option></select></div>
-            <div class="fg full"><label>Depósito *</label><select id="rf-d"><option value="">Seleccionar...</option><option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option><option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option><option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option><option>HGT SANTIAGO</option><option>DEPOSITO CD</option><option>TERCOP</option></select></div>
+            <div class="fg full"><label>Depósito *</label><select id="rf-d">
+              <option value="">Seleccionar...</option>
+              <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option>
+              <option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
+              <option>HGT VALPARAISO</option><option>SITRANS SANTIAGO</option><option>HGT SANTIAGO</option>
+              <option>DEPOSITO CD</option><option>TERCOP</option>
+            </select></div>
           </div>
           <div class="sdiv">Empresa de Transporte</div>
           <div class="fgrid">
-            <div class="fg full"><label>Transportista *</label><select id="rf-tr"><option value="">Seleccionar...</option><option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option><option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option><option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option><option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option><option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option><option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option><option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option><option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option><option>76.381.392-4 JULIO HIDALGO</option></select></div>
+            <div class="fg full"><label>Transportista *</label><select id="rf-tr">
+              <option value="">Seleccionar...</option>
+              <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
+              <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
+              <option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option>
+              <option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option>
+              <option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option>
+              <option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option>
+              <option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option>
+              <option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option>
+              <option>76.381.392-4 JULIO HIDALGO</option>
+            </select></div>
           </div>
           <div class="sdiv">Datos del Conductor</div>
           <div class="fgrid">
@@ -231,39 +314,77 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
             <div class="fg"><label>Patente tracto *</label><input type="text" id="rf-tc" placeholder="XXXX-XX"/></div>
             <div class="fg"><label>Patente rampla *</label><input type="text" id="rf-ra" placeholder="XXXX-XX"/></div>
             <div class="fg"><label>Chofer reemplazo</label><input type="text" id="rf-re" placeholder="Opcional"/></div>
-            <div class="fg full"><label>GPS *</label><select id="rf-gp"><option>Rampla + Tracto</option><option>Solo Tracto</option><option>Solo Rampla</option><option>Sin GPS</option></select></div>
+            <div class="fg full"><label>GPS *</label><select id="rf-gp">
+              <option>Rampla + Tracto</option><option>Solo Tracto</option><option>Solo Rampla</option><option>Sin GPS</option>
+            </select></div>
           </div>
-          <div class="ff"><button class="btn">Limpiar</button><button class="btn blue" onclick="saveRetiro()">Guardar en Google Sheets</button></div>
+          <div class="ff">
+            <button class="btn" onclick="limpiarRetiro()">Limpiar</button>
+            <button class="btn blue" onclick="saveRetiro()">Guardar en Google Sheets</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- DEVOLUCIÓN -->
+    <!-- DEVOLUCIÓN VACÍOS -->
     <div id="p-devolucion" class="page">
-      <div class="ph"><h2>Área de Transporte</h2><p>Devolución Vacíos</p></div>
+      <div class="ph"><h2>Devolución Vacíos</h2><p>Registro de devoluciones de contenedores vacíos navieros</p></div>
       <div class="brow">
         <button class="btn blue" id="bdr" onclick="tab('dev','reg')">≡ Registros</button>
         <button class="btn" id="bdn" onclick="tab('dev','new')">+ Nueva Devolución</button>
-        <button class="btn green" onclick="xls('devolucion','Devolucion_Vacios')" style="margin-left:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel</button>
+        <button class="btn green" onclick="xls('devolucion','Devolucion_Vacios')" style="margin-left:auto">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel
+        </button>
       </div>
+
       <div id="dev-reg">
+        <div class="sg">
+          <div class="sc"><div class="lbl">Total devoluciones</div><div class="val" id="dv-tot">0</div></div>
+        </div>
+        <div class="fr">
+          <select id="dv-fd" onchange="filterDev()"><option value="">Depósito: Todos</option>
+            <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option>
+            <option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
+            <option>DEPOSITO CD</option><option>TERCOP</option>
+          </select>
+        </div>
         <div class="card">
           <div class="ch"><span class="ct">Devoluciones Vacíos Navieros</span><span class="badge" id="dv-cnt">0</span></div>
           <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Transporte</th><th>Contenedor</th><th>EIR</th><th>Creado</th></tr></thead>
-          <tbody id="dv-tb"><tr><td colspan="6" class="es">Sin registros</td></tr></tbody></table></div>
+            <tbody id="dv-tb"><tr><td colspan="6" class="es">Sin registros</td></tr></tbody></table></div>
         </div>
       </div>
+
       <div id="dev-new" style="display:none">
         <div class="card">
           <div class="ct" style="margin-bottom:14px">Nueva Devolución de Vacío Naviero</div>
           <div class="fgrid">
             <div class="fg"><label>Fecha *</label><input type="date" id="dv-f"/></div>
-            <div class="fg"><label>Depósito *</label><select id="dv-d"><option value="">Seleccionar...</option><option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option><option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option><option>DEPOSITO CD</option><option>TERCOP</option></select></div>
-            <div class="fg full"><label>Transportista *</label><select id="dv-tr"><option value="">Seleccionar...</option><option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option><option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option><option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option><option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option><option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option><option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option><option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option><option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option><option>76.381.392-4 JULIO HIDALGO</option></select></div>
+            <div class="fg"><label>Depósito *</label><select id="dv-d">
+              <option value="">Seleccionar...</option>
+              <option>SITRANS SAN ANTONIO</option><option>CIS SAN ANTONIO</option><option>HGT SAN ANTONIO</option>
+              <option>MEDLOG VALPARAISO</option><option>MEDLOG SAN ANTONIO</option><option>SITRANS VALPARAISO</option>
+              <option>DEPOSITO CD</option><option>TERCOP</option>
+            </select></div>
+            <div class="fg full"><label>Transportista *</label><select id="dv-tr">
+              <option value="">Seleccionar...</option>
+              <option>85.131.900-K CASABLANCA</option><option>76.651.987-3 FR RENTAL</option>
+              <option>76107615-9 BYD</option><option>76.840.809-2 JUC CHILE</option>
+              <option>76.421.758-6 SERMOV</option><option>96.979.980-4 SAN FABIAN</option>
+              <option>76.501.883-8 CASTELLINI</option><option>77.082.997-6 CF</option>
+              <option>77.248.307-4 GLOBAL LOGISTIC</option><option>77.079.719-5 H. BUSTOS</option>
+              <option>77.304.186-5 CELMAR</option><option>96.500.950-7 SITRANS</option>
+              <option>77.090.481-1 PRECAM</option><option>76.228.166-K TRANVIAL</option>
+              <option>76.388.144-K MOVEONTRUCK</option><option>76.172.595-5 MEDLOG</option>
+              <option>76.381.392-4 JULIO HIDALGO</option>
+            </select></div>
             <div class="fg"><label>Contenedor *</label><input type="text" id="dv-co" placeholder="XXXX0000000"/></div>
             <div class="fg"><label>EIR *</label><input type="text" id="dv-ei" placeholder="Número EIR"/></div>
           </div>
-          <div class="ff"><button class="btn">Limpiar</button><button class="btn blue" onclick="saveDev()">Guardar en Google Sheets</button></div>
+          <div class="ff">
+            <button class="btn" onclick="limpiarDev()">Limpiar</button>
+            <button class="btn blue" onclick="saveDev()">Guardar en Google Sheets</button>
+          </div>
         </div>
       </div>
     </div>
@@ -280,9 +401,10 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
           <div class="ch"><span class="ct">Asignaciones Retiro Puerto</span>
             <div class="chright"><span class="badge" id="as-cnt">0</span>
               <button class="btn green" onclick="xls('retiro','Retiro_Puerto')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
-            </div></div>
+            </div>
+          </div>
           <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Depósito</th><th>Transportista</th><th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th></tr></thead>
-          <tbody id="as-tb"><tr><td colspan="9" class="es">Cargando...</td></tr></tbody></table></div>
+            <tbody id="as-tb"><tr><td colspan="9" class="es">Cargando...</td></tr></tbody></table></div>
         </div>
       </div>
       <div id="dt-i" style="display:none">
@@ -291,26 +413,6 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
           <div style="border:1px solid #e0e0e0;border-radius:8px;overflow:hidden"><iframe src="https://sodimac-cd.github.io/transporte/" style="width:100%;height:520px;border:none"></iframe></div>
         </div>
       </div>
-    </div>
-
-    <!-- PROG RM -->
-    <div id="p-progRM" class="page">
-      <div class="ph"><h2>Programación RM</h2><p>Contenedores programados Región Metropolitana</p></div>
-      <div class="fr">
-        <select id="rm-fe" onchange="filterRM()"><option value="">Estado: Todos</option><option>PENDIENTE</option><option>ENTREGADO</option><option>DESCONSOLIDADO</option><option>REPROGRAMADO</option><option>CANCELADO</option></select>
-        <button class="btn green" onclick="xls('programacion','Programacion_RM')" style="margin-left:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Exportar Excel</button>
-      </div>
-      <div class="card">
-        <div class="ch"><span class="ct">Contenedores programados</span><span class="badge" id="rm-cnt">0</span></div>
-        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte</th><th>Bodega</th><th>Servicio</th><th>Estado</th></tr></thead>
-        <tbody id="rm-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
-      </div>
-    </div>
-
-    <!-- PROG PUERTO -->
-    <div id="p-progPuerto" class="page">
-      <div class="ph"><h2>Programa de Puerto</h2></div>
-      <div class="card"><div class="es">Conecta Google Sheets en Configuración</div></div>
     </div>
 
     <!-- MÉTRICAS -->
@@ -324,10 +426,10 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
       </div>
       <div class="card">
         <div class="ch"><span class="ct">Resumen por estado</span>
-          <button class="btn green" onclick="xls('programacion','Metricas')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
+          <button class="btn green" onclick="xls('programacionRM','Metricas')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
         </div>
         <table><thead><tr><th>Estado</th><th>Cantidad</th><th>%</th></tr></thead>
-        <tbody id="m-tb"><tr><td colspan="3" class="es">Cargando...</td></tr></tbody></table>
+          <tbody id="m-tb"><tr><td colspan="3" class="es">Cargando...</td></tr></tbody></table>
       </div>
     </div>
 
@@ -394,28 +496,32 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
     </div>
 
     <div id="p-despacho" class="page"><div class="ph"><h2>Despacho a Domicilio</h2></div><div class="card"><div class="es">🚚 Próximamente</div></div></div>
+
     <div id="p-contenedores" class="page">
       <div class="ph"><h2>Contenedores</h2><p>Resumen por módulo</p></div>
       <div class="sg">
-        <div class="sc"><div class="lbl">Programados</div><div class="val" id="c-p">—</div></div>
+        <div class="sc"><div class="lbl">Prog. RM</div><div class="val" id="c-rm">—</div></div>
+        <div class="sc"><div class="lbl">Prog. Puerto</div><div class="val" id="c-pp">—</div></div>
         <div class="sc"><div class="lbl">Retiro Puerto</div><div class="val" id="c-r">0</div></div>
         <div class="sc"><div class="lbl">Devolución</div><div class="val" id="c-d">0</div></div>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn blue" onclick="go('programacion')">Programación →</button>
+        <button class="btn blue" onclick="go('progRM')">Programación RM →</button>
+        <button class="btn blue" onclick="go('progPuerto')">Programación Puerto →</button>
         <button class="btn" onclick="go('retiro')">Retiro Puerto →</button>
         <button class="btn" onclick="go('devolucion')">Devolución Vacíos →</button>
         <button class="btn" onclick="go('qr')">Códigos QR →</button>
       </div>
     </div>
-  </div>
-</div>
-</div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /app -->
 
 <script>
 var URL_AS='https://script.google.com/macros/s/AKfycbykZe2S_KzXGD1qdYZMGtgK_HpBNIa218kXvPczwvBa-_l8mYy1waPC9Bc1TQblELclFQ/exec';
-var store={retiro:[],devolucion:[],programacion:[]};
-var pgData=[];
+var store={retiro:[],devolucion:[],programacionRM:[],programacionPuerto:[]};
+var rmData=[],ppData=[];
 
 // CLOCK
 function tick(){var n=new Date();document.getElementById('clk').textContent=n.toLocaleDateString('es-CL',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+' · '+n.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});}
@@ -435,8 +541,8 @@ function go(id){
   var sb=document.getElementById('sb-'+id);if(sb)sb.classList.add('on');
   if(id==='qr'||id==='abastecimiento')genQR();
   if(id==='abastecimiento'){var sub=document.getElementById('sb-cunas-qr');if(sub)sub.classList.add('on');}
-
 }
+
 function tab(m,t){
   if(m==='retiro'){
     document.getElementById('retiro-reg').style.display=t==='reg'?'block':'none';
@@ -450,6 +556,7 @@ function tab(m,t){
     document.getElementById('bdn').className='btn'+(t==='new'?' blue':'');
   }
 }
+
 function sdt(t){
   document.getElementById('dbt-r').className='tabb'+(t==='r'?' on':'');
   document.getElementById('dbt-i').className='tabb'+(t==='i'?' on':'');
@@ -460,16 +567,22 @@ function sdt(t){
 // CONFIG
 function saveUrl(){var u=document.getElementById('cfgUrl').value.trim();if(u){localStorage.setItem('asUrl',u);URL_AS=u;load();}}
 
-// LOAD via JSONP
+// LOAD
 function load(){
   var url='https://script.google.com/macros/s/AKfycbxBEMzBuxo7BpkCk1Bu0JOs4hymuqY2VH2m76Z28vBNkvZJBijuqlCtI5Gop_xdE6WTtg/exec';
   fetch(url+'?t='+Date.now())
     .then(function(r){return r.json();})
     .then(function(d){
+      // Retiro Puerto
       if(d.retiro&&d.retiro.length)renderR(d.retiro);
+      // Devolución Vacíos
       if(d.devolucion&&d.devolucion.length)renderD(d.devolucion);
-      if(d.programacion&&d.programacion.length)renderP(d.programacion);
-      if(d.programaPuerto&&d.programaPuerto.length&&typeof renderPP==='function')renderPP(d.programaPuerto);
+      // Programación RM — acepta claves: programacionRM, programacion_rm, programacion
+      var rm=d.programacionRM||d.programacion_rm||d.programacion||[];
+      if(rm.length)renderRM(rm);
+      // Programación Puerto — acepta claves: programacionPuerto, programacion_puerto, programaPuerto
+      var pp=d.programacionPuerto||d.programacion_puerto||d.programaPuerto||[];
+      if(pp.length)renderPP(pp);
     })
     .catch(function(x){console.warn('Error cargando datos',x);});
 }
@@ -480,47 +593,90 @@ function pill(e){var s=String(e||'').toUpperCase();var m={ENTREGADO:'pe',PENDIEN
 // RENDER RETIRO
 function renderR(rows){
   store.retiro=rows;
-  var h1=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
+  filterRetiro();
   var h2=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+(r.tipo||'—')+'</td><td>'+r.deposito+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td></tr>';}).join('');
-  ['r-tb','d-rtb'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=h1||'<tr><td colspan="10" class="es">Sin registros</td></tr>';});
   var at=document.getElementById('as-tb');if(at)at.innerHTML=h2||'<tr><td colspan="9" class="es">Sin registros</td></tr>';
-  ['r-cnt','d-rcnt','as-cnt','c-r'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
+  ['d-rcnt','as-cnt','c-r'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
+  // stats
+  var ing=rows.filter(function(r){return String(r.tipo||'').toLowerCase()==='ingreso';}).length;
+  var sal=rows.filter(function(r){return String(r.tipo||'').toLowerCase()==='salida';}).length;
+  var el;
+  el=document.getElementById('r-tot');if(el)el.textContent=rows.length;
+  el=document.getElementById('r-ing');if(el)el.textContent=ing;
+  el=document.getElementById('r-sal');if(el)el.textContent=sal;
 }
 
-// RENDER DEVOLUCION
+function filterRetiro(){
+  var ft=document.getElementById('r-ft')?document.getElementById('r-ft').value:'';
+  var fd=document.getElementById('r-fd')?document.getElementById('r-fd').value:'';
+  var rows=store.retiro.filter(function(r){
+    return(!ft||String(r.tipo||'').toLowerCase()===ft.toLowerCase())&&(!fd||r.deposito===fd);
+  });
+  var cnt=document.getElementById('r-cnt');if(cnt)cnt.textContent=rows.length;
+  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
+  var tb=document.getElementById('r-tb');if(tb)tb.innerHTML=h||'<tr><td colspan="10" class="es">Sin registros</td></tr>';
+  var dt=document.getElementById('d-rtb');if(dt)dt.innerHTML=h||'<tr><td colspan="10" class="es">Sin registros</td></tr>';
+}
+
+// RENDER DEVOLUCIÓN
 function renderD(rows){
   store.devolucion=rows;
+  filterDev();
+  ['dv-cnt','d-dcnt','c-d','dv-tot'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
   var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+r.contenedor+'</td><td>'+r.eir+'</td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
-  ['dv-tb','d-dtb'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=h||'<tr><td colspan="6" class="es">Sin registros</td></tr>';});
-  ['dv-cnt','d-dcnt','c-d'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
+  var dt=document.getElementById('d-dtb');if(dt)dt.innerHTML=h||'<tr><td colspan="6" class="es">Sin registros</td></tr>';
 }
 
-// RENDER PROGRAMACION
-function renderP(rows){
-  store.programacion=rows;pgData=rows;filterPG();filterRM();
+function filterDev(){
+  var fd=document.getElementById('dv-fd')?document.getElementById('dv-fd').value:'';
+  var rows=store.devolucion.filter(function(r){return !fd||r.deposito===fd;});
+  var cnt=document.getElementById('dv-cnt');if(cnt)cnt.textContent=rows.length;
+  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+r.contenedor+'</td><td>'+r.eir+'</td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
+  var tb=document.getElementById('dv-tb');if(tb)tb.innerHTML=h||'<tr><td colspan="6" class="es">Sin registros</td></tr>';
+}
+
+// RENDER PROGRAMACIÓN RM
+function renderRM(rows){
+  store.programacionRM=rows;rmData=rows;
+  filterRM();
   var t=rows.length,e=rows.filter(function(r){return String(r.estado).toUpperCase()==='ENTREGADO';}).length;
   var p=rows.filter(function(r){return String(r.estado).toUpperCase()==='PENDIENTE';}).length;
   var dem=rows.filter(function(r){var n=parseInt(r.demurrage);return !isNaN(n)&&n<10&&n>-999;}).length;
   var sin=rows.filter(function(r){return !r.transporte&&!r.transportista;}).length;
   var pct=t>0?Math.round(e/t*100):0;
-  [['pg-t',t],['pg-e',e],['pg-p',p],['pg-d',dem],['d-tot',t],['d-ent',e],['d-pen',p],['d-dem',dem],['c-p',t],['rm-cnt',t],['m-c',pct+'%'],['m-t',t],['m-d',dem],['m-s',sin]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=x[1];});
+  [['rm-t',t],['rm-e',e],['rm-p',p],['rm-d',dem],['d-tot',t],['d-ent',e],['d-pen',p],['d-dem',dem],['c-rm',t],
+   ['m-c',pct+'%'],['m-t',t],['m-d',dem],['m-s',sin]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=x[1];});
   var es={};rows.forEach(function(r){var s=r.estado||'SIN ESTADO';es[s]=(es[s]||0)+1;});
-  var mt=document.getElementById('m-tb');if(mt)mt.innerHTML=Object.keys(es).map(function(s){return '<tr><td>'+pill(s)+'</td><td>'+es[s]+'</td><td>'+(t>0?Math.round(es[s]/t*100):0)+'%</td></tr>';}).join('');
+  var mt=document.getElementById('m-tb');
+  if(mt)mt.innerHTML=Object.keys(es).map(function(s){return '<tr><td>'+pill(s)+'</td><td>'+es[s]+'</td><td>'+(t>0?Math.round(es[s]/t*100):0)+'%</td></tr>';}).join('');
 }
 
-function filterPG(){
-  var ft=document.getElementById('pg-ft').value,fe=document.getElementById('pg-fe').value;
-  var rows=pgData.filter(function(r){return(!ft||r.tipo===ft)&&(!fe||String(r.estado).toUpperCase()===fe.toUpperCase());});
-  var cnt=document.getElementById('pg-cnt');if(cnt)cnt.textContent=rows.length;
-  var html=rows.length?rows.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td><td>'+pill(r.estado)+'</td></tr>';}).join(''):'<tr><td colspan="16" class="es">Sin registros</td></tr>';
-  var tb=document.getElementById('pg-tb');if(tb)tb.innerHTML=html;
-}
 function filterRM(){
-  var fe=document.getElementById('rm-fe').value;
-  var rows=pgData.filter(function(r){return !fe||String(r.estado).toUpperCase()===fe.toUpperCase();});
+  var ft=document.getElementById('rm-ft')?document.getElementById('rm-ft').value:'';
+  var fe=document.getElementById('rm-fe')?document.getElementById('rm-fe').value:'';
+  var rows=rmData.filter(function(r){return(!ft||r.tipo===ft)&&(!fe||String(r.estado).toUpperCase()===fe.toUpperCase());});
   var cnt=document.getElementById('rm-cnt');if(cnt)cnt.textContent=rows.length;
   var html=rows.length?rows.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td><td>'+pill(r.estado)+'</td></tr>';}).join(''):'<tr><td colspan="16" class="es">Sin registros</td></tr>';
   var tb=document.getElementById('rm-tb');if(tb)tb.innerHTML=html;
+}
+
+// RENDER PROGRAMACIÓN PUERTO
+function renderPP(rows){
+  store.programacionPuerto=rows;ppData=rows;
+  filterPP();
+  var t=rows.length,e=rows.filter(function(r){return String(r.estado).toUpperCase()==='ENTREGADO';}).length;
+  var p=rows.filter(function(r){return String(r.estado).toUpperCase()==='PENDIENTE';}).length;
+  var dem=rows.filter(function(r){var n=parseInt(r.demurrage);return !isNaN(n)&&n<10&&n>-999;}).length;
+  [['pp-t',t],['pp-e',e],['pp-p',p],['pp-d',dem],['c-pp',t]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=x[1];});
+}
+
+function filterPP(){
+  var ft=document.getElementById('pp-ft')?document.getElementById('pp-ft').value:'';
+  var fe=document.getElementById('pp-fe')?document.getElementById('pp-fe').value:'';
+  var rows=ppData.filter(function(r){return(!ft||r.tipo===ft)&&(!fe||String(r.estado).toUpperCase()===fe.toUpperCase());});
+  var cnt=document.getElementById('pp-cnt');if(cnt)cnt.textContent=rows.length;
+  var html=rows.length?rows.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td><td>'+pill(r.estado)+'</td></tr>';}).join(''):'<tr><td colspan="16" class="es">Sin registros</td></tr>';
+  var tb=document.getElementById('pp-tb');if(tb)tb.innerHTML=html;
 }
 
 // EXPORT CSV
@@ -541,21 +697,45 @@ function saveRetiro(){
   var url=localStorage.getItem('asUrl')||URL_AS;
   var d={fecha:document.getElementById('rf-f').value,tipo:document.getElementById('rf-t').value,deposito:document.getElementById('rf-d').value,transportista:document.getElementById('rf-tr').value,chofer:document.getElementById('rf-ch').value,rut:document.getElementById('rf-ru').value,tel:document.getElementById('rf-te').value,tracto:document.getElementById('rf-tc').value,rampla:document.getElementById('rf-ra').value,reemplazo:document.getElementById('rf-re').value,gps:document.getElementById('rf-gp').value};
   if(!d.fecha||!d.deposito||!d.transportista||!d.chofer||!d.rut){alert('Completa los campos obligatorios (*).');return;}
-  fetch(url,{method:'POST',body:JSON.stringify({modulo:'retiro',datos:d})}).then(function(){alert('Guardado.');tab('retiro','reg');load();}).catch(function(){alert('Error al guardar.');});
+  fetch(url,{method:'POST',body:JSON.stringify({modulo:'retiro',datos:d})}).then(function(){alert('Guardado correctamente.');limpiarRetiro();tab('retiro','reg');load();}).catch(function(){alert('Error al guardar. Verifica la URL del script.');});
 }
 
-// SAVE DEVOLUCION
+function limpiarRetiro(){
+  ['rf-f','rf-ch','rf-ru','rf-te','rf-tc','rf-ra','rf-re'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  var sel;
+  sel=document.getElementById('rf-t');if(sel)sel.value='';
+  sel=document.getElementById('rf-d');if(sel)sel.value='';
+  sel=document.getElementById('rf-tr');if(sel)sel.value='';
+}
+
+// SAVE DEVOLUCIÓN
 function saveDev(){
   var url=localStorage.getItem('asUrl')||URL_AS;
   var d={fecha:document.getElementById('dv-f').value,deposito:document.getElementById('dv-d').value,transportista:document.getElementById('dv-tr').value,contenedor:document.getElementById('dv-co').value,eir:document.getElementById('dv-ei').value};
   if(!d.fecha||!d.deposito||!d.transportista||!d.contenedor||!d.eir){alert('Completa los campos obligatorios (*).');return;}
-  fetch(url,{method:'POST',body:JSON.stringify({modulo:'devolucion',datos:d})}).then(function(){alert('Guardado.');tab('dev','reg');load();}).catch(function(){alert('Error al guardar.');});
+  fetch(url,{method:'POST',body:JSON.stringify({modulo:'devolucion',datos:d})}).then(function(){alert('Guardado correctamente.');limpiarDev();tab('dev','reg');load();}).catch(function(){alert('Error al guardar. Verifica la URL del script.');});
+}
+
+function limpiarDev(){
+  ['dv-f','dv-co','dv-ei'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  var sel;
+  sel=document.getElementById('dv-d');if(sel)sel.value='';
+  sel=document.getElementById('dv-tr');if(sel)sel.value='';
 }
 
 // DEMO
 function demo(){
-  renderR([{fecha:'02-05-2026',deposito:'SITRANS SAN ANTONIO',tipo:'Ingreso',transportista:'H. BUSTOS',chofer:'Juan Pérez',rut:'12.345.678-9',tracto:'ABCD-12',rampla:'EFGH-34',gps:'RAMPLA-TRACTO',creado:'02-05-2026 16:28'}]);
-  renderP([{fecha:'05-05-2026',hora:'08:30',deposito:'SITRANS SAN ANTONIO',tipo:'HC',capacidad:'40',contenedor:'TCKU1234567',peso:'24500',demurrage:'5',bl:'BL123456',sku:'7891234',descripcion:'Herramientas',transporte:'H. BUSTOS',bodega:'CD LO ESPEJO',servicio:'DESPACHO',estado:'PENDIENTE'},{fecha:'05-05-2026',hora:'10:00',deposito:'MEDLOG VALPARAISO',tipo:'STD',capacidad:'20',contenedor:'MSCU7654321',peso:'18000',demurrage:'15',bl:'BL654321',sku:'1234567',descripcion:'Línea blanca',transporte:'SITRANS',bodega:'CD LO ESPEJO',servicio:'DESPACHO',estado:'ENTREGADO'}]);
+  renderR([{fecha:'02-05-2026',deposito:'SITRANS SAN ANTONIO',tipo:'Ingreso',transportista:'H. BUSTOS',chofer:'Juan Pérez',rut:'12.345.678-9',tracto:'ABCD-12',rampla:'EFGH-34',gps:'Rampla + Tracto',creado:'02-05-2026 16:28'},
+           {fecha:'03-05-2026',deposito:'MEDLOG VALPARAISO',tipo:'Salida',transportista:'SITRANS',chofer:'Pedro González',rut:'11.222.333-4',tracto:'WXYZ-56',rampla:'MNOP-78',gps:'Solo Tracto',creado:'03-05-2026 09:15'}]);
+  renderD([{fecha:'02-05-2026',deposito:'CIS SAN ANTONIO',transporte:'CASTELLINI',contenedor:'TCKU1234567',eir:'EIR-9876',creado:'02-05-2026 14:30'}]);
+  renderRM([
+    {fecha:'05-05-2026',hora:'08:30',deposito:'SITRANS SAN ANTONIO',tipo:'HC',capacidad:'40',contenedor:'TCKU1234567',peso:'24500',demurrage:'5',bl:'BL123456',sku:'7891234',descripcion:'Herramientas',transporte:'H. BUSTOS',bodega:'CD LO ESPEJO',servicio:'DESPACHO',estado:'PENDIENTE'},
+    {fecha:'05-05-2026',hora:'10:00',deposito:'MEDLOG VALPARAISO',tipo:'STD',capacidad:'20',contenedor:'MSCU7654321',peso:'18000',demurrage:'15',bl:'BL654321',sku:'1234567',descripcion:'Línea blanca',transporte:'SITRANS',bodega:'CD LO ESPEJO',servicio:'DESPACHO',estado:'ENTREGADO'}
+  ]);
+  renderPP([
+    {fecha:'06-05-2026',hora:'07:00',deposito:'HGT SAN ANTONIO',tipo:'HC',capacidad:'40',contenedor:'HLCU8888888',peso:'27000',demurrage:'8',bl:'BL888000',sku:'5554433',descripcion:'Electrodomésticos',transporte:'CELMAR',bodega:'CD LO ESPEJO',servicio:'DESPACHO',estado:'PENDIENTE'},
+    {fecha:'06-05-2026',hora:'09:30',deposito:'SITRANS VALPARAISO',tipo:'STD',capacidad:'20',contenedor:'APMU3333333',peso:'15000',demurrage:'20',bl:'BL333111',sku:'9998877',descripcion:'Pinturas',transporte:'MOVEONTRUCK',bodega:'CD LO ESPEJO',servicio:'DESPACHO',estado:'REPROGRAMADO'}
+  ]);
 }
 
 // QR
@@ -570,6 +750,7 @@ function genQR(){
   if(qi)qi.src=b+encodeURIComponent('https://sodimac-cd.github.io/transporte/cunas-movil.html');
   qrDone=true;
 }
+
 function printQR(id,tit){
   var img=document.getElementById(id);
   var w=window.open('','_blank','width=420,height=500');
