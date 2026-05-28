@@ -461,7 +461,31 @@ function sdt(t){
 function saveUrl(){var u=document.getElementById('cfgUrl').value.trim();if(u){localStorage.setItem('asUrl',u);URL_AS=u;load();}}
 
 // LOAD via JSONP
-function load(){  var url='https://script.google.com/macros/s/AKfycbxBEMzBuxo7BpkCk1Bu0JOs4hymuqY2VH2m76Z28vBNkvZJBijuqlCtI5Gop_xdE6WTtg/exec';  fetch(url+'?t='+Date.now())    .then(function(r){return r.json();})    .then(function(d){      if(d.retiro&&d.retiro.length)renderR(d.retiro);      if(d.devolucion&&d.devolucion.length)renderD(d.devolucion);      if(d.programacion&&d.programacion.length)renderP(d.programacion);      if(d.programaPuerto&&d.programaPuerto.length&&typeof renderPP==='function')renderPP(d.programaPuerto);    })    .catch(function(x){console.warn('Error cargando datos',x);});}
+function load(){
+  var url='https://script.google.com/macros/s/AKfycbxBEMzBuxo7BpkCk1Bu0JOs4hymuqY2VH2m76Z28vBNkvZJBijuqlCtI5Gop_xdE6WTtg/exec';
+  fetch(url+'?t='+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.retiro&&d.retiro.length)renderR(d.retiro);
+      if(d.devolucion&&d.devolucion.length)renderD(d.devolucion);
+      if(d.programacion&&d.programacion.length)renderP(d.programacion);
+      if(d.programaPuerto&&d.programaPuerto.length&&typeof renderPP==='function')renderPP(d.programaPuerto);
+    })
+    .catch(function(x){console.warn('Error cargando datos',x);});
+}
+
+// PILL
+function pill(e){var s=String(e||'').toUpperCase();var m={ENTREGADO:'pe',PENDIENTE:'pp',REPROGRAMADO:'pr',CANCELADO:'pc',DESCONSOLIDADO:'pd'};return '<span class="'+(m[s]||'pp')+'">'+e+'</span>';}
+
+// RENDER RETIRO
+function renderR(rows){
+  store.retiro=rows;
+  var h1=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
+  var h2=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+(r.tipo||'—')+'</td><td>'+r.deposito+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td></tr>';}).join('');
+  ['r-tb','d-rtb'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=h1||'<tr><td colspan="10" class="es">Sin registros</td></tr>';});
+  var at=document.getElementById('as-tb');if(at)at.innerHTML=h2||'<tr><td colspan="9" class="es">Sin registros</td></tr>';
+  ['r-cnt','d-rcnt','as-cnt','c-r'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
+}
 
 // RENDER DEVOLUCION
 function renderD(rows){
@@ -484,7 +508,7 @@ function renderP(rows){
   var mt=document.getElementById('m-tb');if(mt)mt.innerHTML=Object.keys(es).map(function(s){return '<tr><td>'+pill(s)+'</td><td>'+es[s]+'</td><td>'+(t>0?Math.round(es[s]/t*100):0)+'%</td></tr>';}).join('');
 }
 
-function pill(e){var s=String(e||'').toUpperCase();var m={ENTREGADO:'pe',PENDIENTE:'pp',REPROGRAMADO:'pr',CANCELADO:'pc',DESCONSOLIDADO:'pd'};return '<span class="'+(m[s]||'pp')+'">'+e+'</span>';}// RENDER RETIROfunction renderR(rows){  store.retiro=rows;  var h1=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');  var h2=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+(r.tipo||'—')+'</td><td>'+r.deposito+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td></tr>';}).join('');  ['r-tb','d-rtb'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=h1||'<tr><td colspan="10" class="es">Sin registros</td></tr>';});  var at=document.getElementById('as-tb');if(at)at.innerHTML=h2||'<tr><td colspan="9" class="es">Sin registros</td></tr>';  ['r-cnt','d-rcnt','as-cnt','c-r'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});}function filterPG(){
+function filterPG(){
   var ft=document.getElementById('pg-ft').value,fe=document.getElementById('pg-fe').value;
   var rows=pgData.filter(function(r){return(!ft||r.tipo===ft)&&(!fe||String(r.estado).toUpperCase()===fe.toUpperCase());});
   var cnt=document.getElementById('pg-cnt');if(cnt)cnt.textContent=rows.length;
