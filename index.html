@@ -109,6 +109,16 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
 .cunas-qr-info .cunas-btns{display:flex;gap:10px;flex-wrap:wrap}
 /* EMPTY STATE INFO */
 .info-banner{background:#e8f0fe;border:1px solid #c5d4f7;border-radius:8px;padding:14px 18px;font-size:13px;color:#1a3a8f;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+/* EDITABLE CELLS */
+.cell-edit{position:relative;cursor:pointer;}
+.cell-edit:hover{background:#f0f4ff !important;}
+.cell-edit::after{content:'✎';position:absolute;right:3px;top:50%;transform:translateY(-50%);font-size:10px;color:#b0b8d4;opacity:0;transition:opacity .15s;}
+.cell-edit:hover::after{opacity:1;}
+td.cell-edit select{width:100%;padding:4px 6px;border:1.5px solid #1a3a8f;border-radius:5px;font-size:12px;background:#fff;color:#1a1a2e;outline:none;cursor:auto;}
+.saving-row td{background:#fffbe6 !important;}
+.saved-row td{background:#f0fdf4 !important;transition:background 1s;}
+.rm-edit-badge{background:#fff3cd;color:#856404;font-size:10px;font-weight:600;padding:2px 8px;border-radius:12px;margin-left:8px;display:none;}
+.rm-edit-badge.on{display:inline-block;}
 </style>
 </head>
 <body>
@@ -214,8 +224,21 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
         </button>
       </div>
       <div class="card">
-        <div class="ch"><span class="ct">Contenedores programados RM</span><span class="badge" id="rm-cnt">0</span></div>
-        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte</th><th>Bodega</th><th>Servicio</th><th>Estado</th></tr></thead>
+        <div class="ch">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span class="ct">Contenedores programados RM</span>
+            <span class="badge" id="rm-cnt">0</span>
+            <span class="rm-edit-badge" id="rm-pending-badge">● cambios sin guardar</span>
+          </div>
+          <div class="chright">
+            <button class="btn" id="rm-save-btn" onclick="saveRMEdits()" style="display:none;background:#fff3cd;border-color:#f0c040;color:#856404;font-weight:600;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+        <p style="font-size:11px;color:#aaa;margin-bottom:10px;">Haz clic en <strong>Transporte ✎</strong> o <strong>Estado ✎</strong> de cualquier fila para editar directamente.</p>
+        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte ✎</th><th>Bodega</th><th>Servicio</th><th>Estado ✎</th></tr></thead>
           <tbody id="rm-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
       </div>
     </div>
@@ -651,13 +674,120 @@ function renderRM(rows){
   if(mt)mt.innerHTML=Object.keys(es).map(function(s){return '<tr><td>'+pill(s)+'</td><td>'+es[s]+'</td><td>'+(t>0?Math.round(es[s]/t*100):0)+'%</td></tr>';}).join('');
 }
 
+var rmPendingEdits={};
+var TRANSPORTISTAS=['85.131.900-K CASABLANCA','76.651.987-3 FR RENTAL','76107615-9 BYD','76.840.809-2 JUC CHILE','76.421.758-6 SERMOV','96.979.980-4 SAN FABIAN','76.501.883-8 CASTELLINI','77.082.997-6 CF','77.248.307-4 GLOBAL LOGISTIC','77.079.719-5 H. BUSTOS','77.304.186-5 CELMAR','96.500.950-7 SITRANS','77.090.481-1 PRECAM','76.228.166-K TRANVIAL','76.388.144-K MOVEONTRUCK','76.172.595-5 MEDLOG','76.381.392-4 JULIO HIDALGO'];
+var ESTADOS_RM=['PENDIENTE','ENTREGADO','DESCONSOLIDADO','REPROGRAMADO','CANCELADO','FULL'];
+
 function filterRM(){
   var ft=document.getElementById('rm-ft')?document.getElementById('rm-ft').value:'';
   var fe=document.getElementById('rm-fe')?document.getElementById('rm-fe').value:'';
-  var rows=rmData.filter(function(r){return(!ft||r.tipo===ft)&&(!fe||String(r.estado).toUpperCase()===fe.toUpperCase());});
-  var cnt=document.getElementById('rm-cnt');if(cnt)cnt.textContent=rows.length;
-  var html=rows.length?rows.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td><td>'+pill(r.estado)+'</td></tr>';}).join(''):'<tr><td colspan="16" class="es">Sin registros</td></tr>';
+  var filtered=rmData.map(function(r,i){return {r:r,i:i};}).filter(function(x){
+    return(!ft||x.r.tipo===ft)&&(!fe||String(x.r.estado).toUpperCase()===fe.toUpperCase());
+  });
+  var cnt=document.getElementById('rm-cnt');if(cnt)cnt.textContent=filtered.length;
+  if(!filtered.length){var tb=document.getElementById('rm-tb');if(tb)tb.innerHTML='<tr><td colspan="16" class="es">Sin registros</td></tr>';return;}
+  var html=filtered.map(function(x,seq){
+    var r=x.r,idx=x.i;
+    var hasPending=rmPendingEdits[idx]!==undefined;
+    var trClass=hasPending?'saving-row':'';
+    var curTransp=(r.transporte||r.transportista||'');
+    var curEstado=(r.estado||'PENDIENTE');
+    var transpCell='<td class="cell-edit" id="rm-tc-'+idx+'" title="Clic para editar transporte" onclick="rmStartEditTransp('+idx+')">'+(curTransp||'—')+'</td>';
+    var estadoCell='<td class="cell-edit" id="rm-ec-'+idx+'" title="Clic para editar estado" onclick="rmStartEditEstado('+idx+')">'+pill(curEstado)+'</td>';
+    return '<tr class="'+trClass+'" id="rm-row-'+idx+'"><td>'+(seq+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td>'
+      +transpCell+'<td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td>'+estadoCell+'</tr>';
+  }).join('');
   var tb=document.getElementById('rm-tb');if(tb)tb.innerHTML=html;
+}
+
+function rmStartEditTransp(idx){
+  var td=document.getElementById('rm-tc-'+idx);if(!td||td.querySelector('select'))return;
+  var cur=rmData[idx].transporte||rmData[idx].transportista||'';
+  var opts='<option value="">— sin asignar —</option>'+TRANSPORTISTAS.map(function(t){return '<option value="'+t+'"'+(t===cur?' selected':'')+'>'+t+'</option>';}).join('');
+  td.innerHTML='<select onclick="event.stopPropagation()" onchange="rmSetTransp('+idx+',this.value)" onblur="rmBlurTransp('+idx+',this.value)">'+opts+'</select>';
+  var sel=td.querySelector('select');if(sel){sel.focus();}
+}
+
+function rmSetTransp(idx,val){
+  rmData[idx].transporte=val;
+  if(!rmPendingEdits[idx])rmPendingEdits[idx]={};
+  rmPendingEdits[idx].transporte=val;
+  rmMarkPending();
+}
+
+function rmBlurTransp(idx,val){
+  rmSetTransp(idx,val);
+  setTimeout(function(){filterRM();},120);
+}
+
+function rmStartEditEstado(idx){
+  var td=document.getElementById('rm-ec-'+idx);if(!td||td.querySelector('select'))return;
+  var cur=rmData[idx].estado||'PENDIENTE';
+  var opts=ESTADOS_RM.map(function(e){return '<option value="'+e+'"'+(e===cur?' selected':'')+'>'+e+'</option>';}).join('');
+  td.innerHTML='<select onclick="event.stopPropagation()" onchange="rmSetEstado('+idx+',this.value)" onblur="rmBlurEstado('+idx+',this.value)">'+opts+'</select>';
+  var sel=td.querySelector('select');if(sel){sel.focus();}
+}
+
+function rmSetEstado(idx,val){
+  rmData[idx].estado=val;
+  if(!rmPendingEdits[idx])rmPendingEdits[idx]={};
+  rmPendingEdits[idx].estado=val;
+  rmMarkPending();
+}
+
+function rmBlurEstado(idx,val){
+  rmSetEstado(idx,val);
+  setTimeout(function(){filterRM();renderRMStats();},120);
+}
+
+function renderRMStats(){
+  var rows=rmData;
+  var t=rows.length,e=rows.filter(function(r){return String(r.estado).toUpperCase()==='ENTREGADO';}).length;
+  var p=rows.filter(function(r){return String(r.estado).toUpperCase()==='PENDIENTE';}).length;
+  var dem=rows.filter(function(r){var n=parseInt(r.demurrage);return !isNaN(n)&&n<10&&n>-999;}).length;
+  var sin=rows.filter(function(r){return !r.transporte&&!r.transportista;}).length;
+  var pct=t>0?Math.round(e/t*100):0;
+  [['rm-t',t],['rm-e',e],['rm-p',p],['rm-d',dem]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=x[1];});
+  var mt=document.getElementById('m-tb');
+  if(mt){var es={};rows.forEach(function(r){var s=r.estado||'SIN ESTADO';es[s]=(es[s]||0)+1;});
+  mt.innerHTML=Object.keys(es).map(function(s){return '<tr><td>'+pill(s)+'</td><td>'+es[s]+'</td><td>'+(t>0?Math.round(es[s]/t*100):0)+'%</td></tr>';}).join('');}
+}
+
+function rmMarkPending(){
+  var n=Object.keys(rmPendingEdits).length;
+  var badge=document.getElementById('rm-pending-badge');
+  var btn=document.getElementById('rm-save-btn');
+  if(badge){badge.className='rm-edit-badge'+(n>0?' on':'');if(n>0)badge.textContent='● '+n+' cambio'+(n>1?'s':'')+' sin guardar';}
+  if(btn)btn.style.display=n>0?'inline-flex':'none';
+}
+
+function saveRMEdits(){
+  var n=Object.keys(rmPendingEdits).length;if(!n)return;
+  var btn=document.getElementById('rm-save-btn');
+  if(btn){btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5h2v2h-2zm0-8h2v6h-2z"/></svg> Guardando...';btn.disabled=true;}
+  var url=localStorage.getItem('asUrl')||URL_AS;
+  var edits=Object.keys(rmPendingEdits).map(function(idx){
+    var r=rmData[idx],p=rmPendingEdits[idx];
+    return {contenedor:r.contenedor,bl:r.bl||'',transporte:p.transporte!==undefined?p.transporte:(r.transporte||r.transportista||''),estado:p.estado!==undefined?p.estado:(r.estado||'')};
+  });
+  fetch(url,{method:'POST',body:JSON.stringify({modulo:'editarProgramacionRM',datos:edits})})
+    .then(function(res){return res.json();})
+    .then(function(data){
+      Object.keys(rmPendingEdits).forEach(function(idx){
+        var row=document.getElementById('rm-row-'+idx);
+        if(row){row.className='saved-row';setTimeout(function(){if(row&&row.className==='saved-row')row.className='';},2000);}
+      });
+      rmPendingEdits={};rmMarkPending();
+      if(btn){btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Guardar cambios';btn.disabled=false;}
+      if(data&&data.programacionRM&&data.programacionRM.length)renderRM(data.programacionRM);
+      else filterRM();
+    })
+    .catch(function(){
+      alert('Los cambios se aplicaron localmente. Para sincronizar con Google Sheets, verifica la URL del script en Configuración.');
+      rmPendingEdits={};rmMarkPending();
+      if(btn){btn.innerHTML='Guardar cambios';btn.disabled=false;}
+      filterRM();
+    });
 }
 
 // RENDER PROGRAMACIÓN PUERTO
