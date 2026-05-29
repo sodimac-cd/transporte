@@ -107,6 +107,9 @@ pre{font-size:11px;color:#555;white-space:pre-wrap;margin:0}
 .cunas-qr-info p{font-size:13px;color:#666;margin-bottom:14px;line-height:1.5}
 .cunas-qr-info .qrurl{display:inline-block;margin-bottom:14px}
 .cunas-qr-info .cunas-btns{display:flex;gap:10px;flex-wrap:wrap}
+/* CONTENEDORES MODULE CARDS */
+.mod-card-hover:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+.mod-card-hover{transition:all .2s;}
 /* EMPTY STATE INFO */
 .info-banner{background:#e8f0fe;border:1px solid #c5d4f7;border-radius:8px;padding:14px 18px;font-size:13px;color:#1a3a8f;margin-bottom:16px;display:flex;align-items:center;gap:10px}
 /* EDITABLE CELLS */
@@ -193,7 +196,7 @@ td.cell-edit select{width:100%;padding:4px 6px;border:1.5px solid #1a3a8f;border
             <button class="btn green" onclick="xls('retiro','Retiro_Puerto')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Excel</button>
           </div>
         </div>
-        <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th><th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th></tr></thead>
+        <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th><th>Chofer</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th></tr></thead>
           <tbody id="d-rtb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
       </div>
       <div class="card">
@@ -260,8 +263,21 @@ td.cell-edit select{width:100%;padding:4px 6px;border:1.5px solid #1a3a8f;border
         </button>
       </div>
       <div class="card">
-        <div class="ch"><span class="ct">Contenedores programados Puerto</span><span class="badge" id="pp-cnt">0</span></div>
-        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte</th><th>Bodega</th><th>Servicio</th><th>Estado</th></tr></thead>
+        <div class="ch">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span class="ct">Contenedores programados Puerto</span>
+            <span class="badge" id="pp-cnt">0</span>
+            <span class="rm-edit-badge" id="pp-pending-badge">● cambios sin guardar</span>
+          </div>
+          <div class="chright">
+            <button class="btn" id="pp-save-btn" onclick="savePPEdits()" style="display:none;background:#fff3cd;border-color:#f0c040;color:#856404;font-weight:600;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/></svg>
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+        <p style="font-size:11px;color:#aaa;margin-bottom:10px;">Haz clic en <strong>Transporte ✎</strong> o <strong>Estado ✎</strong> de cualquier fila para editar directamente.</p>
+        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte ✎</th><th>Bodega</th><th>Servicio</th><th>Estado ✎</th></tr></thead>
           <tbody id="pp-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
       </div>
     </div>
@@ -294,7 +310,7 @@ td.cell-edit select{width:100%;padding:4px 6px;border:1.5px solid #1a3a8f;border
         </div>
         <div class="card">
           <div class="ch"><span class="ct">Asignaciones Retiro Puerto</span><span class="badge" id="r-cnt">0</span></div>
-          <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th><th>Chofer</th><th>RUT</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th></tr></thead>
+          <div style="overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Depósito</th><th>Tipo</th><th>Transporte</th><th>Chofer</th><th>Tracto</th><th>Rampla</th><th>GPS</th><th>Creado</th></tr></thead>
             <tbody id="r-tb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
         </div>
       </div>
@@ -522,18 +538,138 @@ td.cell-edit select{width:100%;padding:4px 6px;border:1.5px solid #1a3a8f;border
 
     <div id="p-contenedores" class="page">
       <div class="ph"><h2>Contenedores</h2><p>Resumen por módulo</p></div>
-      <div class="sg">
-        <div class="sc"><div class="lbl">Prog. RM</div><div class="val" id="c-rm">—</div></div>
-        <div class="sc"><div class="lbl">Prog. Puerto</div><div class="val" id="c-pp">—</div></div>
-        <div class="sc"><div class="lbl">Retiro Puerto</div><div class="val" id="c-r">0</div></div>
-        <div class="sc"><div class="lbl">Devolución</div><div class="val" id="c-d">0</div></div>
+
+      <!-- TOP KPI ROW -->
+      <div class="sg" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+        <div class="sc" style="text-align:center">
+          <div class="lbl">Prog. RM</div>
+          <div class="val" id="c-rm" style="color:#1a3a8f">—</div>
+          <div class="sub">contenedores</div>
+        </div>
+        <div class="sc" style="text-align:center">
+          <div class="lbl">Prog. Puerto</div>
+          <div class="val" id="c-pp" style="color:#1a3a8f">—</div>
+          <div class="sub">contenedores</div>
+        </div>
+        <div class="sc" style="text-align:center">
+          <div class="lbl">Retiro Puerto</div>
+          <div class="val" id="c-r" style="color:#059669">0</div>
+          <div class="sub">asignaciones</div>
+        </div>
+        <div class="sc" style="text-align:center">
+          <div class="lbl">Devolución</div>
+          <div class="val" id="c-d" style="color:#7c3aed">0</div>
+          <div class="sub">vacíos</div>
+        </div>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn blue" onclick="go('progRM')">Programación RM →</button>
-        <button class="btn blue" onclick="go('progPuerto')">Programación Puerto →</button>
-        <button class="btn" onclick="go('retiro')">Retiro Puerto →</button>
-        <button class="btn" onclick="go('devolucion')">Devolución Vacíos →</button>
-        <button class="btn" onclick="go('qr')">Códigos QR →</button>
+
+      <!-- MODULE DETAIL CARDS 2x2 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+
+        <!-- PROG RM CARD -->
+        <div class="card" style="border-top:3px solid #1a3a8f">
+          <div class="ch" style="margin-bottom:14px">
+            <div>
+              <div class="ct" style="color:#1a3a8f">📋 Programación RM</div>
+              <div style="font-size:11px;color:#888;margin-top:2px">Región Metropolitana</div>
+            </div>
+            <button class="btn" onclick="go('progRM')" style="font-size:11px;padding:4px 10px">Ver →</button>
+          </div>
+          <!-- Stats -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+            <div style="text-align:center;padding:8px;background:#f0fdf4;border-radius:8px">
+              <div style="font-size:20px;font-weight:700;color:#059669" id="c-rm-e">—</div>
+              <div style="font-size:10px;color:#666">Entregados</div>
+            </div>
+            <div style="text-align:center;padding:8px;background:#fffbeb;border-radius:8px">
+              <div style="font-size:20px;font-weight:700;color:#d97706" id="c-rm-p">—</div>
+              <div style="font-size:10px;color:#666">Pendientes</div>
+            </div>
+            <div style="text-align:center;padding:8px;background:#fef2f2;border-radius:8px">
+              <div style="font-size:20px;font-weight:700;color:#dc2626" id="c-rm-dem">—</div>
+              <div style="font-size:10px;color:#666">Demurrage</div>
+            </div>
+          </div>
+          <!-- Progress bar -->
+          <div style="margin-bottom:6px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-bottom:4px">
+              <span>Cumplimiento</span><span id="c-rm-pct">—%</span>
+            </div>
+            <div style="background:#e5e7eb;border-radius:99px;height:8px;overflow:hidden">
+              <div id="c-rm-bar" style="height:8px;background:linear-gradient(90deg,#059669,#34d399);border-radius:99px;width:0%;transition:width .5s"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROG PUERTO CARD -->
+        <div class="card" style="border-top:3px solid #0369a1">
+          <div class="ch" style="margin-bottom:14px">
+            <div>
+              <div class="ct" style="color:#0369a1">🚢 Programación Puerto</div>
+              <div style="font-size:11px;color:#888;margin-top:2px">San Antonio / Valparaíso</div>
+            </div>
+            <button class="btn" onclick="go('progPuerto')" style="font-size:11px;padding:4px 10px">Ver →</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+            <div style="text-align:center;padding:8px;background:#f0fdf4;border-radius:8px">
+              <div style="font-size:20px;font-weight:700;color:#059669" id="c-pp-e">—</div>
+              <div style="font-size:10px;color:#666">Entregados</div>
+            </div>
+            <div style="text-align:center;padding:8px;background:#fffbeb;border-radius:8px">
+              <div style="font-size:20px;font-weight:700;color:#d97706" id="c-pp-p">—</div>
+              <div style="font-size:10px;color:#666">Pendientes</div>
+            </div>
+            <div style="text-align:center;padding:8px;background:#eff6ff;border-radius:8px">
+              <div style="font-size:20px;font-weight:700;color:#2563eb" id="c-pp-ret">—</div>
+              <div style="font-size:10px;color:#666">Retirados</div>
+            </div>
+          </div>
+          <div style="margin-bottom:6px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-bottom:4px">
+              <span>Cumplimiento</span><span id="c-pp-pct">—%</span>
+            </div>
+            <div style="background:#e5e7eb;border-radius:99px;height:8px;overflow:hidden">
+              <div id="c-pp-bar" style="height:8px;background:linear-gradient(90deg,#0369a1,#38bdf8);border-radius:99px;width:0%;transition:width .5s"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RETIRO PUERTO CARD -->
+        <div class="card" style="border-top:3px solid #059669">
+          <div class="ch" style="margin-bottom:12px">
+            <div>
+              <div class="ct" style="color:#059669">🚛 Retiro Puerto</div>
+              <div style="font-size:11px;color:#888;margin-top:2px">Asignaciones por transportista</div>
+            </div>
+            <button class="btn" onclick="go('retiro')" style="font-size:11px;padding:4px 10px">Ver →</button>
+          </div>
+          <div id="c-retiro-detail" style="font-size:12px;color:#aaa">Sin datos</div>
+        </div>
+
+        <!-- DEVOLUCIÓN CARD -->
+        <div class="card" style="border-top:3px solid #7c3aed">
+          <div class="ch" style="margin-bottom:12px">
+            <div>
+              <div class="ct" style="color:#7c3aed">📦 Devolución Vacíos</div>
+              <div style="font-size:11px;color:#888;margin-top:2px">Conteo por día</div>
+            </div>
+            <button class="btn" onclick="go('devolucion')" style="font-size:11px;padding:4px 10px">Ver →</button>
+          </div>
+          <div id="c-dev-detail" style="font-size:12px;color:#aaa">Sin datos</div>
+        </div>
+
+      </div>
+
+      <!-- QUICK ACCESS -->
+      <div class="card" style="background:#f8f9ff;border-style:dashed">
+        <div style="font-size:12px;font-weight:600;color:#888;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Acceso rápido</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn blue" onclick="go('progRM')">📋 Prog. RM</button>
+          <button class="btn blue" onclick="go('progPuerto')" style="background:#0369a1;border-color:#0369a1">🚢 Prog. Puerto</button>
+          <button class="btn" onclick="go('retiro')">🚛 Retiro Puerto</button>
+          <button class="btn" onclick="go('devolucion')">📦 Devolución Vacíos</button>
+          <button class="btn" onclick="go('qr')">📱 Códigos QR</button>
+        </div>
       </div>
     </div>
 
@@ -592,7 +728,7 @@ function saveUrl(){var u=document.getElementById('cfgUrl').value.trim();if(u){lo
 
 // LOAD
 function load(){
-  var url='https://script.google.com/macros/s/AKfycbxBEMzBuxo7BpkCk1Bu0JOs4hymuqY2VH2m76Z28vBNkvZJBijuqlCtI5Gop_xdE6WTtg/exec';
+  var url=localStorage.getItem('asUrl')||URL_AS;
   fetch(url+'?t='+Date.now())
     .then(function(r){return r.json();})
     .then(function(d){
@@ -613,12 +749,16 @@ function load(){
 // PILL
 function pill(e){var s=String(e||'').toUpperCase();var m={ENTREGADO:'pe',PENDIENTE:'pp',REPROGRAMADO:'pr',CANCELADO:'pc',DESCONSOLIDADO:'pd'};return '<span class="'+(m[s]||'pp')+'">'+e+'</span>';}
 
+// TRANSPORT NAME (strip RUT prefix)
+function nt(t){if(!t||t==='—')return '—';var m=String(t).match(/^[\d\.\-k]+\s+(.+)$/i);return m?m[1].trim():String(t);}
+
 // RENDER RETIRO
 function renderR(rows){
   store.retiro=rows;
   filterRetiro();
-  var h2=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+(r.tipo||'—')+'</td><td>'+r.deposito+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td></tr>';}).join('');
+  var h2=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+(r.tipo||'—')+'</td><td>'+r.deposito+'</td><td>'+nt(r.transportista||r.transporte||'')+'</td><td>'+r.chofer+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td></tr>';}).join('');
   var at=document.getElementById('as-tb');if(at)at.innerHTML=h2||'<tr><td colspan="9" class="es">Sin registros</td></tr>';
+  renderContenedoresStats();
   ['d-rcnt','as-cnt','c-r'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
   // stats
   var ing=rows.filter(function(r){return String(r.tipo||'').toLowerCase()==='ingreso';}).length;
@@ -636,17 +776,18 @@ function filterRetiro(){
     return(!ft||String(r.tipo||'').toLowerCase()===ft.toLowerCase())&&(!fd||r.deposito===fd);
   });
   var cnt=document.getElementById('r-cnt');if(cnt)cnt.textContent=rows.length;
-  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.transportista||r.transporte||'—')+'</td><td>'+r.chofer+'</td><td>'+r.rut+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
-  var tb=document.getElementById('r-tb');if(tb)tb.innerHTML=h||'<tr><td colspan="10" class="es">Sin registros</td></tr>';
-  var dt=document.getElementById('d-rtb');if(dt)dt.innerHTML=h||'<tr><td colspan="10" class="es">Sin registros</td></tr>';
+  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+nt(r.transportista||r.transporte||'')+'</td><td>'+r.chofer+'</td><td>'+r.tracto+'</td><td>'+r.rampla+'</td><td><span class="gps">'+(r.gps||'—')+'</span></td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
+  var tb=document.getElementById('r-tb');if(tb)tb.innerHTML=h||'<tr><td colspan="9" class="es">Sin registros</td></tr>';
+  var dt=document.getElementById('d-rtb');if(dt)dt.innerHTML=h||'<tr><td colspan="9" class="es">Sin registros</td></tr>';
 }
 
 // RENDER DEVOLUCIÓN
 function renderD(rows){
   store.devolucion=rows;
   filterDev();
+  renderContenedoresStats();
   ['dv-cnt','d-dcnt','c-d','dv-tot'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rows.length;});
-  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+r.contenedor+'</td><td>'+r.eir+'</td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
+  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+nt(r.transporte||r.transportista||'')+'</td><td>'+(r.contenedor||'—')+'</td><td>'+(r.eir||'—')+'</td><td style="font-size:11px;color:#999">'+(r.creado||'—')+'</td></tr>';}).join('');
   var dt=document.getElementById('d-dtb');if(dt)dt.innerHTML=h||'<tr><td colspan="6" class="es">Sin registros</td></tr>';
 }
 
@@ -654,7 +795,7 @@ function filterDev(){
   var fd=document.getElementById('dv-fd')?document.getElementById('dv-fd').value:'';
   var rows=store.devolucion.filter(function(r){return !fd||r.deposito===fd;});
   var cnt=document.getElementById('dv-cnt');if(cnt)cnt.textContent=rows.length;
-  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+r.contenedor+'</td><td>'+r.eir+'</td><td style="font-size:11px;color:#999">'+r.creado+'</td></tr>';}).join('');
+  var h=rows.map(function(r){return '<tr><td>'+r.fecha+'</td><td>'+r.deposito+'</td><td>'+nt(r.transporte||r.transportista||'')+'</td><td>'+(r.contenedor||'—')+'</td><td>'+(r.eir||'—')+'</td><td style="font-size:11px;color:#999">'+(r.creado||'—')+'</td></tr>';}).join('');
   var tb=document.getElementById('dv-tb');if(tb)tb.innerHTML=h||'<tr><td colspan="6" class="es">Sin registros</td></tr>';
 }
 
@@ -669,7 +810,7 @@ function renderRM(rows){
   var pct=t>0?Math.round(e/t*100):0;
   [['rm-t',t],['rm-e',e],['rm-p',p],['rm-d',dem],['d-tot',t],['d-ent',e],['d-pen',p],['d-dem',dem],['c-rm',t],
    ['m-c',pct+'%'],['m-t',t],['m-d',dem],['m-s',sin]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=x[1];});
-  var es={};rows.forEach(function(r){var s=r.estado||'SIN ESTADO';es[s]=(es[s]||0)+1;});
+  var es={};rows.forEach(function(r){var s=r.estado||'SIN ESTADO';es[s]=(es[s]||0)+1;});renderContenedoresStats();
   var mt=document.getElementById('m-tb');
   if(mt)mt.innerHTML=Object.keys(es).map(function(s){return '<tr><td>'+pill(s)+'</td><td>'+es[s]+'</td><td>'+(t>0?Math.round(es[s]/t*100):0)+'%</td></tr>';}).join('');
 }
@@ -692,7 +833,7 @@ function filterRM(){
     var trClass=hasPending?'saving-row':'';
     var curTransp=(r.transporte||r.transportista||'');
     var curEstado=(r.estado||'PENDIENTE');
-    var transpCell='<td class="cell-edit" id="rm-tc-'+idx+'" title="Clic para editar transporte" onclick="rmStartEditTransp('+idx+')">'+(curTransp||'—')+'</td>';
+    var transpCell='<td class="cell-edit" id="rm-tc-'+idx+'" title="Clic para editar transporte" onclick="rmStartEditTransp('+idx+')">'+nt(curTransp)+'</td>';
     var estadoCell='<td class="cell-edit" id="rm-ec-'+idx+'" title="Clic para editar estado" onclick="rmStartEditEstado('+idx+')">'+pill(curEstado)+'</td>';
     return '<tr class="'+trClass+'" id="rm-row-'+idx+'"><td>'+(seq+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td>'
       +transpCell+'<td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td>'+estadoCell+'</tr>';
@@ -703,7 +844,7 @@ function filterRM(){
 function rmStartEditTransp(idx){
   var td=document.getElementById('rm-tc-'+idx);if(!td||td.querySelector('select'))return;
   var cur=rmData[idx].transporte||rmData[idx].transportista||'';
-  var opts='<option value="">— sin asignar —</option>'+TRANSPORTISTAS.map(function(t){return '<option value="'+t+'"'+(t===cur?' selected':'')+'>'+t+'</option>';}).join('');
+  var opts='<option value="">— sin asignar —</option>'+TRANSPORTISTAS.map(function(t){return '<option value="'+t+'"'+(t===cur?' selected':'')+'>'+nt(t)+'</option>';}).join('');
   td.innerHTML='<select onclick="event.stopPropagation()" onchange="rmSetTransp('+idx+',this.value)" onblur="rmBlurTransp('+idx+',this.value)">'+opts+'</select>';
   var sel=td.querySelector('select');if(sel){sel.focus();}
 }
@@ -751,6 +892,7 @@ function renderRMStats(){
   var mt=document.getElementById('m-tb');
   if(mt){var es={};rows.forEach(function(r){var s=r.estado||'SIN ESTADO';es[s]=(es[s]||0)+1;});
   mt.innerHTML=Object.keys(es).map(function(s){return '<tr><td>'+pill(s)+'</td><td>'+es[s]+'</td><td>'+(t>0?Math.round(es[s]/t*100):0)+'%</td></tr>';}).join('');}
+  renderContenedoresStats();
 }
 
 function rmMarkPending(){
@@ -793,21 +935,181 @@ function saveRMEdits(){
 // RENDER PROGRAMACIÓN PUERTO
 function renderPP(rows){
   store.programacionPuerto=rows;ppData=rows;
+  renderPPStats();
   filterPP();
-  var t=rows.length,e=rows.filter(function(r){return String(r.estado).toUpperCase()==='ENTREGADO';}).length;
-  var p=rows.filter(function(r){return String(r.estado).toUpperCase()==='PENDIENTE';}).length;
-  var dem=rows.filter(function(r){var n=parseInt(r.demurrage);return !isNaN(n)&&n<10&&n>-999;}).length;
-  [['pp-t',t],['pp-e',e],['pp-p',p],['pp-d',dem],['c-pp',t]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=x[1];});
+  renderContenedoresStats();
 }
+
+
+// ——— PROG PUERTO EDITABLE ———
+var ppPendingEdits={};
+var ESTADOS_PP=['PENDIENTE','ENTREGADO','RETIRADO','DESCONSOLIDADO','REPROGRAMADO','CANCELADO'];
 
 function filterPP(){
   var ft=document.getElementById('pp-ft')?document.getElementById('pp-ft').value:'';
   var fe=document.getElementById('pp-fe')?document.getElementById('pp-fe').value:'';
-  var rows=ppData.filter(function(r){return(!ft||r.tipo===ft)&&(!fe||String(r.estado).toUpperCase()===fe.toUpperCase());});
+  var rows=ppData.filter(function(r){return(!ft||r.tipo===ft)&&(!fe||String(r.estado||'').toUpperCase()===fe.toUpperCase());});
   var cnt=document.getElementById('pp-cnt');if(cnt)cnt.textContent=rows.length;
-  var html=rows.length?rows.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+r.tipo+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td><td>'+(r.transporte||r.transportista||'—')+'</td><td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td><td>'+pill(r.estado)+'</td></tr>';}).join(''):'<tr><td colspan="16" class="es">Sin registros</td></tr>';
+  if(!rows.length){var tb=document.getElementById('pp-tb');if(tb)tb.innerHTML='<tr><td colspan="16" class="es">Sin registros</td></tr>';return;}
+  var html=rows.map(function(r,i){
+    var idx=ppData.indexOf(r);
+    var curT=r.transporte||r.transportista||'';
+    var curE=r.estado||'PENDIENTE';
+    var tCell='<td class="cell-edit" id="pp-tc-'+idx+'" title="Clic para editar" onclick="ppStartEditTransp('+idx+')">'+nt(curT)+'</td>';
+    var eCell='<td class="cell-edit" id="pp-ec-'+idx+'" title="Clic para editar" onclick="ppStartEditEstado('+idx+')">'+pill(curE)+'</td>';
+    return '<tr id="pp-row-'+idx+'"><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td>'+tCell+'<td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td>'+eCell+'</tr>';
+  }).join('');
   var tb=document.getElementById('pp-tb');if(tb)tb.innerHTML=html;
 }
+
+function ppStartEditTransp(idx){
+  var td=document.getElementById('pp-tc-'+idx);if(!td||td.querySelector('select'))return;
+  var cur=ppData[idx].transporte||ppData[idx].transportista||'';
+  var opts='<option value="">— sin asignar —</option>'+TRANSPORTISTAS.map(function(t){return '<option value="'+t+'"'+(t===cur?' selected':'')+'>'+nt(t)+'</option>';}).join('');
+  td.innerHTML='<select onclick="event.stopPropagation()" onchange="ppSetTransp('+idx+',this.value)" onblur="ppBlurTransp('+idx+',this.value)">'+opts+'</select>';
+  var sel=td.querySelector('select');if(sel)sel.focus();
+}
+
+function ppSetTransp(idx,val){
+  ppData[idx].transporte=val;
+  if(!ppPendingEdits[idx])ppPendingEdits[idx]={};
+  ppPendingEdits[idx].transporte=val;
+  ppMarkPending();
+}
+
+function ppBlurTransp(idx,val){ppSetTransp(idx,val);setTimeout(function(){filterPP();},120);}
+
+function ppStartEditEstado(idx){
+  var td=document.getElementById('pp-ec-'+idx);if(!td||td.querySelector('select'))return;
+  var cur=ppData[idx].estado||'PENDIENTE';
+  var opts=ESTADOS_PP.map(function(e){return '<option value="'+e+'"'+(e===cur?' selected':'')+'>'+e+'</option>';}).join('');
+  td.innerHTML='<select onclick="event.stopPropagation()" onchange="ppSetEstado('+idx+',this.value)" onblur="ppBlurEstado('+idx+',this.value)">'+opts+'</select>';
+  var sel=td.querySelector('select');if(sel)sel.focus();
+}
+
+function ppSetEstado(idx,val){
+  ppData[idx].estado=val;
+  if(!ppPendingEdits[idx])ppPendingEdits[idx]={};
+  ppPendingEdits[idx].estado=val;
+  ppMarkPending();
+}
+
+function ppBlurEstado(idx,val){
+  ppSetEstado(idx,val);
+  setTimeout(function(){filterPP();renderPPStats();},120);
+}
+
+function renderPPStats(){
+  var rows=ppData;
+  var t=rows.length;
+  var e=rows.filter(function(r){return String(r.estado||'').toUpperCase()==='ENTREGADO';}).length;
+  var p=rows.filter(function(r){return String(r.estado||'').toUpperCase()==='PENDIENTE';}).length;
+  var ret=rows.filter(function(r){return String(r.estado||'').toUpperCase()==='RETIRADO';}).length;
+  var dem=rows.filter(function(r){var n=parseInt(r.demurrage);return !isNaN(n)&&n<10&&n>-999;}).length;
+  [['pp-t',t],['pp-e',e],['pp-p',p],['pp-d',dem],['c-pp',t],['c-pp-e',e],['c-pp-p',p],['c-pp-ret',ret]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=x[1];});
+  var pct=t>0?Math.round((e+ret)/t*100):0;
+  var pctEl=document.getElementById('c-pp-pct');if(pctEl)pctEl.textContent=pct+'%';
+  var bar=document.getElementById('c-pp-bar');if(bar)bar.style.width=pct+'%';
+}
+
+function ppMarkPending(){
+  var n=Object.keys(ppPendingEdits).length;
+  var badge=document.getElementById('pp-pending-badge');
+  var btn=document.getElementById('pp-save-btn');
+  if(badge){badge.className='rm-edit-badge'+(n>0?' on':'');if(n>0)badge.textContent='● '+n+' cambio'+(n>1?'s':'')+' sin guardar';}
+  if(btn)btn.style.display=n>0?'inline-flex':'none';
+}
+
+function savePPEdits(){
+  var n=Object.keys(ppPendingEdits).length;if(!n)return;
+  var btn=document.getElementById('pp-save-btn');
+  if(btn){btn.textContent='Guardando...';btn.disabled=true;}
+  var url=localStorage.getItem('asUrl')||URL_AS;
+  var edits=Object.keys(ppPendingEdits).map(function(idx){
+    var r=ppData[idx],p=ppPendingEdits[idx];
+    return{contenedor:r.contenedor,bl:r.bl||'',transporte:p.transporte!==undefined?p.transporte:(r.transporte||r.transportista||''),estado:p.estado!==undefined?p.estado:(r.estado||'')};
+  });
+  fetch(url,{method:'POST',body:JSON.stringify({modulo:'editarProgramacionPuerto',datos:edits})})
+    .then(function(res){return res.json();})
+    .then(function(data){
+      Object.keys(ppPendingEdits).forEach(function(idx){var row=document.getElementById('pp-row-'+idx);if(row){row.className='saved-row';setTimeout(function(){if(row)row.className='';},2000);}});
+      ppPendingEdits={};ppMarkPending();
+      if(btn){btn.textContent='Guardar cambios';btn.disabled=false;}
+      if(data&&data.programacionPuerto&&data.programacionPuerto.length)renderPP(data.programacionPuerto);
+      else filterPP();
+    })
+    .catch(function(){
+      alert('Cambios aplicados localmente. Verifica la URL en Configuración.');
+      ppPendingEdits={};ppMarkPending();
+      if(btn){btn.textContent='Guardar cambios';btn.disabled=false;}
+      filterPP();
+    });
+}
+
+// ——— UPDATE CONTENEDORES STATS ———
+function renderContenedoresStats(){
+  // RM stats
+  var rm=rmData||[];
+  var rmt=rm.length;
+  var rme=rm.filter(function(r){return String(r.estado||'').toUpperCase()==='ENTREGADO';}).length;
+  var rmp=rm.filter(function(r){return String(r.estado||'').toUpperCase()==='PENDIENTE';}).length;
+  var rmdem=rm.filter(function(r){var n=parseInt(r.demurrage);return !isNaN(n)&&n<10&&n>-999;}).length;
+  var rmpct=rmt>0?Math.round(rme/rmt*100):0;
+  var el;
+  el=document.getElementById('c-rm-e');if(el)el.textContent=rme;
+  el=document.getElementById('c-rm-p');if(el)el.textContent=rmp;
+  el=document.getElementById('c-rm-dem');if(el)el.textContent=rmdem;
+  el=document.getElementById('c-rm-pct');if(el)el.textContent=rmpct+'%';
+  el=document.getElementById('c-rm-bar');if(el)el.style.width=rmpct+'%';
+
+  // Retiro detail
+  var retiro=store.retiro||[];
+  var retEl=document.getElementById('c-retiro-detail');
+  if(retEl){
+    if(!retiro.length){retEl.innerHTML='<span style="color:#aaa">Sin asignaciones registradas</span>';}
+    else{
+      var byT={};
+      retiro.forEach(function(r){
+        var t=nt(r.transportista||r.transporte||'Sin asignar');
+        byT[t]=(byT[t]||0)+1;
+      });
+      var rows=Object.keys(byT).sort(function(a,b){return byT[b]-byT[a];});
+      var maxV=byT[rows[0]]||1;
+      retEl.innerHTML='<div style="display:flex;flex-direction:column;gap:6px">'+
+        rows.map(function(t){
+          var pct=Math.round(byT[t]/maxV*100);
+          return '<div style="display:flex;align-items:center;gap:8px">'+
+            '<div style="font-size:12px;font-weight:500;min-width:110px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t+'</div>'+
+            '<div style="flex:1;background:#e5e7eb;border-radius:99px;height:6px;overflow:hidden"><div style="height:6px;background:#059669;border-radius:99px;width:'+pct+'%"></div></div>'+
+            '<span style="font-size:12px;font-weight:700;color:#059669;min-width:20px;text-align:right">'+byT[t]+'</span></div>';
+        }).join('')+
+      '</div>';
+    }
+  }
+
+  // Dev detail
+  var dev=store.devolucion||[];
+  var devEl=document.getElementById('c-dev-detail');
+  if(devEl){
+    if(!dev.length){devEl.innerHTML='<span style="color:#aaa">Sin devoluciones registradas</span>';}
+    else{
+      var byD={};
+      dev.forEach(function(r){var d=String(r.fecha||'—').substring(0,10);byD[d]=(byD[d]||0)+1;});
+      var dkeys=Object.keys(byD).sort().reverse().slice(0,5);
+      var maxDV=Math.max.apply(null,dkeys.map(function(d){return byD[d];}));
+      devEl.innerHTML='<div style="display:flex;flex-direction:column;gap:6px">'+
+        dkeys.map(function(d){
+          var pct=Math.round(byD[d]/maxDV*100);
+          return '<div style="display:flex;align-items:center;gap:8px">'+
+            '<div style="font-size:12px;font-weight:500;min-width:90px">'+d+'</div>'+
+            '<div style="flex:1;background:#e5e7eb;border-radius:99px;height:6px;overflow:hidden"><div style="height:6px;background:#7c3aed;border-radius:99px;width:'+pct+'%"></div></div>'+
+            '<span style="font-size:12px;font-weight:700;color:#7c3aed;min-width:20px;text-align:right">'+byD[d]+'</span></div>';
+        }).join('')+
+      '</div>';
+    }
+  }
+}
+
 
 // EXPORT CSV
 function xls(mod,nom){
@@ -841,7 +1143,7 @@ function limpiarRetiro(){
 // SAVE DEVOLUCIÓN
 function saveDev(){
   var url=localStorage.getItem('asUrl')||URL_AS;
-  var d={fecha:document.getElementById('dv-f').value,deposito:document.getElementById('dv-d').value,transportista:document.getElementById('dv-tr').value,contenedor:document.getElementById('dv-co').value,eir:document.getElementById('dv-ei').value};
+  var d={fecha:document.getElementById('dv-f').value,deposito:document.getElementById('dv-d').value,transporte:document.getElementById('dv-tr').value,contenedor:document.getElementById('dv-co').value,eir:document.getElementById('dv-ei').value};
   if(!d.fecha||!d.deposito||!d.transportista||!d.contenedor||!d.eir){alert('Completa los campos obligatorios (*).');return;}
   fetch(url,{method:'POST',body:JSON.stringify({modulo:'devolucion',datos:d})}).then(function(){alert('Guardado correctamente.');limpiarDev();tab('dev','reg');load();}).catch(function(){alert('Error al guardar. Verifica la URL del script.');});
 }
