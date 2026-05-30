@@ -241,7 +241,7 @@ td.cell-edit select{width:100%;padding:4px 6px;border:1.5px solid #1a3a8f;border
           </div>
         </div>
         <p style="font-size:11px;color:#aaa;margin-bottom:10px;">Haz clic en <strong>Transporte ✎</strong> o <strong>Estado ✎</strong> de cualquier fila para editar directamente.</p>
-        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte ✎</th><th>Bodega</th><th>Servicio</th><th>Estado ✎</th></tr></thead>
+        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>Transporte ✎</th><th>Bodega</th><th>Servicio</th><th>Estado ✎</th></tr></thead>
           <tbody id="rm-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
       </div>
     </div>
@@ -277,8 +277,8 @@ td.cell-edit select{width:100%;padding:4px 6px;border:1.5px solid #1a3a8f;border
           </div>
         </div>
         <p style="font-size:11px;color:#aaa;margin-bottom:10px;">Haz clic en <strong>Transporte ✎</strong> o <strong>Estado ✎</strong> de cualquier fila para editar directamente.</p>
-        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Fecha</th><th>Hora</th><th>Depósito</th><th>Tipo</th><th>Cap</th><th>Contenedor</th><th>Peso</th><th>Demurrage</th><th>BL</th><th>SKU</th><th>Descripción</th><th>Transporte ✎</th><th>Bodega</th><th>Servicio</th><th>Estado ✎</th></tr></thead>
-          <tbody id="pp-tb"><tr><td colspan="16" class="es">Cargando...</td></tr></tbody></table></div>
+        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Depósito</th><th>Contenedor</th><th>Peso</th><th>Tipo</th><th>CC</th><th>Demurrage</th><th>Transporte ✎</th><th>Destino</th><th>Estado ✎</th></tr></thead>
+          <tbody id="pp-tb"><tr><td colspan="10" class="es">Cargando...</td></tr></tbody></table></div>
       </div>
     </div>
 
@@ -957,7 +957,7 @@ function filterPP(){
     var curE=r.estado||'PENDIENTE';
     var tCell='<td class="cell-edit" id="pp-tc-'+idx+'" title="Clic para editar" onclick="ppStartEditTransp('+idx+')">'+nt(curT)+'</td>';
     var eCell='<td class="cell-edit" id="pp-ec-'+idx+'" title="Clic para editar" onclick="ppStartEditEstado('+idx+')">'+pill(curE)+'</td>';
-    return '<tr id="pp-row-'+idx+'"><td>'+(i+1)+'</td><td>'+r.fecha+'</td><td>'+(r.hora||'—')+'</td><td>'+r.deposito+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.capacidad||'—')+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.bl||'—')+'</td><td>'+(r.sku||'—')+'</td><td>'+(r.descripcion||'—')+'</td>'+tCell+'<td>'+(r.bodega||'—')+'</td><td>'+(r.servicio||'—')+'</td>'+eCell+'</tr>';
+    return '<tr id="pp-row-'+idx+'"><td>'+(i+1)+'</td><td>'+r.deposito+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'(r.tipo||'—')+'</td><td>'+(r.cc||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>''+tCell+'<td>'+(r.destino||'—')+'</td>'+eCell+'</tr>';
   }).join('');
   var tb=document.getElementById('pp-tb');if(tb)tb.innerHTML=html;
 }
