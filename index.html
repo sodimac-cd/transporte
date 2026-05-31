@@ -957,7 +957,7 @@ function filterPP(){
     var curE=r.estado||'PENDIENTE';
     var tCell='<td class="cell-edit" id="pp-tc-'+idx+'" title="Clic para editar" onclick="ppStartEditTransp('+idx+')">'+nt(curT)+'</td>';
     var eCell='<td class="cell-edit" id="pp-ec-'+idx+'" title="Clic para editar" onclick="ppStartEditEstado('+idx+')">'+pill(curE)+'</td>';
-    return '<tr id="pp-row-'+idx+'"><td>'+(i+1)+'</td><td>'+r.deposito+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'(r.tipo||'—')+'</td><td>'+(r.cc||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>''+tCell+'<td>'+(r.destino||'—')+'</td>'+eCell+'</tr>';
+    return '<tr id="pp-row-'+idx+'"><td>'+(i+1)+'</td><td>'+r.deposito+'</td><td>'+r.contenedor+'</td><td>'+(r.peso||'—')+'</td><td>'+(r.tipo||'—')+'</td><td>'+(r.cc||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>'+(r.demurrage||'—')+'</td><td>''+tCell+'<td>'+(r.destino||'—')+'</td>'+eCell+'</tr>';
   }).join('');
   var tb=document.getElementById('pp-tb');if(tb)tb.innerHTML=html;
 }
